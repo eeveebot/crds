@@ -1,0 +1,8 @@
+.github
+docker-bake.hcl
+Dockerfile
+entrypoint.sh
+eslint.config.mjs
+Makefile
+node_modules
+tag-and-push.sh

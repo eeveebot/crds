@@ -1,0 +1,69 @@
+name: Build
+
+on:
+  push:
+    tags:
+      - '*-build'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: write
+
+concurrency:
+  group: eeveebot-crds
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          token: "${{ secrets.GH_PAT }}"
+          ref: main
+          clean: true
+          fetch-depth: 1
+          fetch-tags: true
+          set-safe-directory: true
+
+      - name: Setup nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Lint, Generate crds, Compile Typescript, Git push
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          export NODE_ENV=development
+          cat <<EOF >> $HOME/.npmrc
+          //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+          @eeveebot:registry=https://npm.pkg.github.com/
+          @thehonker:registry=https://npm.pkg.github.com/
+          EOF
+          npm install --include=dev --legacy-peer-deps
+          npx tsc
+          cd src && npx pepr crd generate --output ../crds
+          git add -f crds/**
+          git add -f dist/**
+          git diff
+          git diff --staged
+          git diff --quiet && git diff --staged --quiet || git commit -m "${GITHUB_REF_NAME%-*} - Build for ${{ github.sha }}"
+          git tag "${GITHUB_REF_NAME%-*}"
+          git push
+          git push --tags
