@@ -27,7 +27,7 @@ export class ApiResource implements cdk8splus.IApiResource {
   resourceType: string = 'ipcConfig';
 }
 
-export class IpcConfig extends ApiObject {
+export class IpcConfig extends ApiObject implements IpcConfigSpec {
   public nats?: NatsConfig;
 
   /**
