@@ -1,4 +1,4 @@
-#!env bash
+#!bash
 
 # where this .sh file lives
 DIRNAME=$(dirname "$0")
@@ -22,9 +22,9 @@ VERSION=$(increment_version "$OLD_VERSION")
 
 export VERSION
 
-cat package.json | jq -r '.version = $ENV.VERSION' | tee package.json
+(jq -r '.version = $ENV.VERSION' package.json | tee package.json)
 
-npm install --include=dev --legacy-peer-deps
+npm install --include=dev --legacy-peer-deps || exit 1
 
 git add package.json package-lock.json
 
