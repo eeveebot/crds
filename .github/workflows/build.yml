@@ -58,7 +58,8 @@ jobs:
           EOF
           npm install --include=dev --legacy-peer-deps
           npx tsc
-          cd src && npx pepr crd generate --output ../crds
+          cd "${GITHUB_WORKSPACE}/src" && npx pepr crd generate --output ../crds
+          cd "${GITHUB_WORKSPACE}"
           git add -f crds/**
           git add -f dist/**
           git diff
