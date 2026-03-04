@@ -43,14 +43,14 @@ jobs:
         shell: bash
         run: |
           cat <<EOF >> $HOME/.npmrc
-          //npm.pkg.github.com/:_authToken=${GH_PAT}
+          //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
           @eeveebot:registry=https://npm.pkg.github.com/
           @thehonker:registry=https://npm.pkg.github.com/
           EOF
           npm install --include=dev --legacy-peer-deps
           npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GH_PAT }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create tarball of crds
         shell: bash
