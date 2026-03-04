@@ -22,7 +22,7 @@ VERSION=$(increment_version "$OLD_VERSION")
 
 export VERSION
 
-cat package.json | jq '.version = $ENV.VERSION' | tee package.json
+cat package.json | jq -r '.version = $ENV.VERSION' | tee package.json
 
 npm install --include=dev --legacy-peer-deps
 
