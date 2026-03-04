@@ -1,6 +1,6 @@
 {
   "name": "@eeveebot/crds",
-  "version": "0.5.14",
+  "version": "0.5.15",
   "description": "crds for eeveebot",
   "keywords": [],
   "homepage": "https://github.com/eeveebot/crds#readme",
@@ -20,7 +20,9 @@
   "main": "dist/index.mjs",
   "typings": "dist/index.d.mjs",
   "module": "dist/index.mjs",
-  "scripts": {},
+  "scripts": {
+    "build": "npx tsc && cd src && npx pepr crd generate --output ../crds"
+  },
   "publishConfig": {
     "@eeveebot:registry": "https://npm.pkg.github.com/"
   },

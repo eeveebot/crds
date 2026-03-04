@@ -1,6 +1,6 @@
 'use strict';
 
-// Kind: ipcConfig
+// Kind: IpcConfig
 // Group: eevee.bot
 // Version: v1
 // Domain: bot
@@ -35,7 +35,7 @@ export class IpcConfig extends ApiObject implements IpcConfigSpec {
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
-    kind: 'ipcConfig',
+    kind: 'IpcConfig',
   }
 
   /**
