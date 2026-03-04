@@ -13,7 +13,7 @@ export declare class ApiResource implements cdk8splus.IApiResource {
     apiGroup: string;
     resourceType: string;
 }
-export declare class IpcConfig extends ApiObject {
+export declare class IpcConfig extends ApiObject implements IpcConfigSpec {
     nats?: NatsConfig;
     /**
      * Returns the apiVersion and kind for "ipcConfig"
