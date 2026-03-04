@@ -1,0 +1,85 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: ipcConfigs.eevee.bot.bot
+spec:
+  group: eevee.bot.bot
+  names:
+    kind: IpcConfig
+    plural: ipcConfigs
+    singular: ipcconfig
+    shortNames:
+      - ipcConfig
+  scope: Namespaced
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              description: IpcConfigSpec defines the desired state of IpcConfig
+              properties:
+                nats:
+                  type: object
+                  properties:
+                    managed:
+                      type: object
+                      properties:
+                        enabled:
+                          type: boolean
+                          description: Should the eevee-operator deploy a NATS cluster for us?
+                        spec:
+                          type: string
+                          description: NATS deployment config - direct passthrough to NATS Helm chart
+                      required:
+                        - enabled
+                      description: Managed NATS deployment configuration
+                    token:
+                      type: object
+                      properties:
+                        generate:
+                          type: boolean
+                          description: Should the eevee-operator generate a token for NATS auth?
+                        secretKeyRef:
+                          type: object
+                          properties:
+                            secret:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                  description: name is unique within a namespace to reference a secret resource.
+                                namespace:
+                                  type: string
+                                  description: namespace defines the space within which the secret name must be
+                                    unique.
+                            key:
+                              type: string
+                          required:
+                            - secret
+                            - key
+                          description: Where to access the NATS auth token
+                      required:
+                        - generate
+                      description: NATS token authentication configuration
+                  description: NATS configuration
+              required: []
+            status:
+              type: object
+              description: IpcConfigStatus defines the observed state of IpcConfig
+              properties:
+                conditions:
+                  type: array
+                  description: Conditions describing the current state
+                  items:
+                    type: object
+                    description: Condition contains details for one aspect of the current state of
+                      this API Resource.
+                    properties: {}
+                    required: []
+      subresources:
+        status: {}
