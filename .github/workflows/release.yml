@@ -91,7 +91,7 @@ jobs:
       - name: Build and Push CRD Job Image
         uses: docker/bake-action@v6
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
         with:
           push: true
           source: .
