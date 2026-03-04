@@ -5,7 +5,7 @@ export class ApiResource {
     resourceType = 'ChatConnectionIrc';
 }
 export class ChatConnectionIrc extends ApiObject {
-    Connections;
+    connections;
     /**
      * Returns the apiVersion and kind for "ChatConnectionIrc"
      */
@@ -37,7 +37,7 @@ export class ChatConnectionIrc extends ApiObject {
             ...ChatConnectionIrc.GVK,
             ...props,
         });
-        this.Connections = props?.spec?.Connections || [];
+        this.connections = props?.spec?.connections || [];
     }
     /**
      * Renders the object to Kubernetes JSON.
@@ -66,7 +66,7 @@ export function toJson_ChatConnectionIrcSpec(obj) {
         return undefined;
     }
     const result = {
-        'connections': obj.Connections?.map(toJson_IrcConnection),
+        'connections': obj.connections?.map(toJson_IrcConnection),
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});

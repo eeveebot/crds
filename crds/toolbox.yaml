@@ -1,0 +1,67 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: Toolboxes.eevee.bot.bot
+spec:
+  group: eevee.bot.bot
+  names:
+    kind: Toolbox
+    plural: Toolboxes
+    singular: toolbox
+    shortNames:
+      - toolbox
+  scope: Namespaced
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              description: ToolboxSpec defines the desired state of Toolbox
+              properties:
+                size:
+                  type: number
+                  description: Size defines the number of Toolbox instances
+                containerImage:
+                  type: string
+                  description: |-
+                    ContainerImage defines the container image to use
+                    Default: "ghcr.io/eeveebot/cli:latest"
+                pullPolicy:
+                  type: string
+                  description: |-
+                    PullPolicy defines the image pull policy to use
+                    Default: "Always"
+                natsAuthSecret:
+                  type: string
+                  description: |-
+                    NatsAuthSecret defines the secret with NATS auth parameters
+                    Default: "nats-auth"
+                metrics:
+                  type: boolean
+                  description: |-
+                    Metrics defines whether to enable metrics or not
+                    Default: false
+                ipcConfig:
+                  type: string
+                  description: IPC configuration name
+              required: []
+            status:
+              type: object
+              description: ToolboxStatus defines the observed state of Toolbox
+              properties:
+                conditions:
+                  type: array
+                  description: Conditions describing the current state
+                  items:
+                    type: object
+                    description: Condition contains details for one aspect of the current state of
+                      this API Resource.
+                    properties: {}
+                    required: []
+      subresources:
+        status: {}

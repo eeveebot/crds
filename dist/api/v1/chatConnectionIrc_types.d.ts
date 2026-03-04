@@ -14,7 +14,7 @@ export declare class ApiResource implements cdk8splus.IApiResource {
     resourceType: string;
 }
 export declare class ChatConnectionIrc extends ApiObject implements ChatConnectionIrcSpec {
-    Connections: IrcConnection[];
+    connections: IrcConnection[];
     /**
      * Returns the apiVersion and kind for "ChatConnectionIrc"
      */
@@ -47,9 +47,13 @@ export declare function toJson_ChatConnectionIrcProps(obj: ChatConnectionIrcProp
 export declare function toJson_ChatConnectionIrcSpec(obj: ChatConnectionIrcSpec | undefined): Record<string, unknown> | undefined;
 export interface ChatConnectionIrcSpec {
     /**
+     * IPC configuration name
+     */
+    ipcConfig?: string;
+    /**
      * List of IRC connections
      */
-    Connections?: IrcConnection[];
+    connections?: IrcConnection[];
 }
 export interface IrcConnection {
     /**

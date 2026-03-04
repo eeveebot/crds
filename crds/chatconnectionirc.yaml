@@ -24,6 +24,9 @@ spec:
               description: ChatConnectionIrcSpec defines the desired state of
                 ChatConnectionIrc
               properties:
+                ipcConfig:
+                  type: string
+                  description: IPC configuration name
                 connections:
                   type: array
                   items:
