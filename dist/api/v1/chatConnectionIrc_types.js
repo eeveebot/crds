@@ -2,7 +2,7 @@
 import { ApiObject } from 'cdk8s';
 export class ApiResource {
     apiGroup = 'eevee.bot';
-    resourceType = 'ChatConnectionIrc';
+    resourceType = 'chatconnectionirc';
 }
 export class ChatConnectionIrc extends ApiObject {
     connections;
@@ -11,7 +11,7 @@ export class ChatConnectionIrc extends ApiObject {
      */
     static GVK = {
         apiVersion: 'eevee.bot/v1',
-        kind: 'ChatConnectionIrc',
+        kind: 'chatconnectionirc',
     };
     /**
      * Renders a Kubernetes manifest for "ChatConnectionIrc".

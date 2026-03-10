@@ -2,7 +2,7 @@
 import { ApiObject } from 'cdk8s';
 export class ApiResource {
     apiGroup = 'eevee.bot';
-    resourceType = 'ipcConfig';
+    resourceType = 'ipcconfig';
 }
 export class IpcConfig extends ApiObject {
     nats;
@@ -11,7 +11,7 @@ export class IpcConfig extends ApiObject {
      */
     static GVK = {
         apiVersion: 'eevee.bot/v1',
-        kind: 'IpcConfig',
+        kind: 'ipcconfig',
     };
     /**
      * Renders a Kubernetes manifest for "ipcConfig".
