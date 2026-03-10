@@ -17,9 +17,9 @@ import {
   StatusReasons,
 } from './enums/index.mjs';
 
-export interface ChatConnectionIrcResource extends KubernetesObject {
-  spec: ChatConnectionIrcSpec;
-  status: ChatConnectionIrcStatus;
+export interface chatconnectionircResource extends KubernetesObject {
+  spec: chatconnectionircSpec;
+  status: chatconnectionircStatus;
   metadata?: V1ObjectMeta | undefined;
 }
 
@@ -28,11 +28,11 @@ export class ApiResource implements cdk8splus.IApiResource {
   resourceType: string = 'chatconnectionirc';
 }
 
-export class ChatConnectionIrc extends ApiObject implements ChatConnectionIrcSpec {
+export class chatconnectionirc extends ApiObject implements chatconnectionircSpec {
   public connections: IrcConnection[];
 
   /**
-   * Returns the apiVersion and kind for "ChatConnectionIrc"
+   * Returns the apiVersion and kind for "chatconnectionirc"
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
@@ -40,28 +40,28 @@ export class ChatConnectionIrc extends ApiObject implements ChatConnectionIrcSpe
   }
 
   /**
-   * Renders a Kubernetes manifest for "ChatConnectionIrc".
+   * Renders a Kubernetes manifest for "chatconnectionirc".
    *
    * This can be used to inline resource manifests inside other objects (e.g. as templates).
    *
    * @param props initialization props
    */
-  public static manifest(props: ChatConnectionIrcProps): unknown {
+  public static manifest(props: chatconnectionircProps): unknown {
     return {
-      ...ChatConnectionIrc.GVK,
-      ...toJson_ChatConnectionIrcProps(props),
+      ...chatconnectionirc.GVK,
+      ...toJson_chatconnectionircProps(props),
     };
   }
 
   /**
-   * Defines a "ChatConnectionIrc" API object
+   * Defines a "chatconnectionirc" API object
    * @param scope the scope in which to define this object
    * @param id a scope-local name for the object
    * @param props initialization props
    */
-  public constructor(scope: Construct, id: string, props: ChatConnectionIrcProps) {
+  public constructor(scope: Construct, id: string, props: chatconnectionircProps) {
     super(scope, id, {
-      ...ChatConnectionIrc.GVK,
+      ...chatconnectionirc.GVK,
       ...props,
     });
     this.connections = props?.spec?.connections || [];
@@ -74,28 +74,28 @@ export class ChatConnectionIrc extends ApiObject implements ChatConnectionIrcSpe
     const resolved = super.toJson();
 
     return {
-      ...ChatConnectionIrc.GVK,
-      ...toJson_ChatConnectionIrcProps(resolved),
+      ...chatconnectionirc.GVK,
+      ...toJson_chatconnectionircProps(resolved),
     };
   }
 }
 
-export interface ChatConnectionIrcProps {
+export interface chatconnectionircProps {
   readonly metadata?: ApiObjectMetadata;
-  readonly spec?: ChatConnectionIrcSpec;
+  readonly spec?: chatconnectionircSpec;
 }
 
-export function toJson_ChatConnectionIrcProps(obj: ChatConnectionIrcProps | undefined): Record<string, unknown> | undefined {
+export function toJson_chatconnectionircProps(obj: chatconnectionircProps | undefined): Record<string, unknown> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'metadata': obj.metadata,
-    'spec': toJson_ChatConnectionIrcSpec(obj.spec),
+    'spec': toJson_chatconnectionircSpec(obj.spec),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 
-export function toJson_ChatConnectionIrcSpec(obj: ChatConnectionIrcSpec | undefined): Record<string, unknown> | undefined {
+export function toJson_chatconnectionircSpec(obj: chatconnectionircSpec | undefined): Record<string, unknown> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'connections': obj.connections?.map(toJson_IrcConnection),
@@ -104,7 +104,7 @@ export function toJson_ChatConnectionIrcSpec(obj: ChatConnectionIrcSpec | undefi
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 
-export interface ChatConnectionIrcSpec {
+export interface chatconnectionircSpec {
   /**
    * IPC configuration name
    */
@@ -421,7 +421,7 @@ export function toJson_IrcCommands(obj: IrcCommands | undefined): Record<string,
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 
-export interface ChatConnectionIrcStatus {
+export interface chatconnectionircStatus {
   /**
    * lastTransitionTime is the last time the condition transitioned from one status to another. This is not guaranteed to be set in happensBefore order across different conditions for a given object. It may be unset in some circumstances.
    */
@@ -444,12 +444,12 @@ export interface ChatConnectionIrcStatus {
 }
 
 export const details = {
-  name: 'ChatConnectionIrc',
-  plural: 'ChatConnectionIrcs',
+  name: 'chatconnectionirc',
+  plural: 'chatconnectionircs',
   group: 'eevee.bot',
   version: 'v1',
   scope: 'Namespaced',
-  shortName: 'ChatConnectionIrc',
+  shortName: 'chatconnectionirc',
 };
 
 

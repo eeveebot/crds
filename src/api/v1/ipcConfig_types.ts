@@ -16,9 +16,9 @@ import {
   StatusReasons,
 } from './enums/index.mjs';
 
-export interface IpcConfigResource extends KubernetesObject {
-  spec: IpcConfigSpec;
-  status: IpcConfigStatus;
+export interface ipcconfigResource extends KubernetesObject {
+  spec: ipcconfigSpec;
+  status: ipcconfigStatus;
   metadata?: V1ObjectMeta | undefined;
 }
 
@@ -27,7 +27,7 @@ export class ApiResource implements cdk8splus.IApiResource {
   resourceType: string = 'ipcconfig';
 }
 
-export class IpcConfig extends ApiObject implements IpcConfigSpec {
+export class ipcconfig extends ApiObject implements ipcconfigSpec {
   public nats?: NatsConfig;
 
   /**
@@ -45,10 +45,10 @@ export class IpcConfig extends ApiObject implements IpcConfigSpec {
    *
    * @param props initialization props
    */
-  public static manifest(props: IpcConfigProps): unknown {
+  public static manifest(props: ipcconfigProps): unknown {
     return {
-      ...IpcConfig.GVK,
-      ...toJson_IpcConfigProps(props),
+      ...ipcconfig.GVK,
+      ...toJson_ipcconfigProps(props),
     };
   }
 
@@ -58,9 +58,9 @@ export class IpcConfig extends ApiObject implements IpcConfigSpec {
    * @param id a scope-local name for the object
    * @param props initialization props
    */
-  public constructor(scope: Construct, id: string, props: IpcConfigProps) {
+  public constructor(scope: Construct, id: string, props: ipcconfigProps) {
     super(scope, id, {
-      ...IpcConfig.GVK,
+      ...ipcconfig.GVK,
       ...props,
     });
     this.nats = props?.spec?.nats;
@@ -73,28 +73,28 @@ export class IpcConfig extends ApiObject implements IpcConfigSpec {
     const resolved = super.toJson();
 
     return {
-      ...IpcConfig.GVK,
-      ...toJson_IpcConfigProps(resolved),
+      ...ipcconfig.GVK,
+      ...toJson_ipcconfigProps(resolved),
     };
   }
 }
 
-export interface IpcConfigProps {
+export interface ipcconfigProps {
   readonly metadata?: ApiObjectMetadata;
-  readonly spec?: IpcConfigSpec;
+  readonly spec?: ipcconfigSpec;
 }
 
-export function toJson_IpcConfigProps(obj: IpcConfigProps | undefined): Record<string, unknown> | undefined {
+export function toJson_ipcconfigProps(obj: ipcconfigProps | undefined): Record<string, unknown> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'metadata': obj.metadata,
-    'spec': toJson_IpcConfigSpec(obj.spec),
+    'spec': toJson_ipcconfigSpec(obj.spec),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 
-export function toJson_IpcConfigSpec(obj: IpcConfigSpec | undefined): Record<string, unknown> | undefined {
+export function toJson_ipcconfigSpec(obj: ipcconfigSpec | undefined): Record<string, unknown> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'nats': toJson_NatsConfig(obj.nats),
@@ -103,7 +103,7 @@ export function toJson_IpcConfigSpec(obj: IpcConfigSpec | undefined): Record<str
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 
-export interface IpcConfigSpec {
+export interface ipcconfigSpec {
   /**
    * NATS configuration
    */
@@ -179,7 +179,7 @@ export function toJson_NatsTokenConfig(obj: NatsTokenConfig | undefined): Record
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 
-export interface IpcConfigStatus {
+export interface ipcconfigStatus {
   /**
    * lastTransitionTime is the last time the condition transitioned from one status to another. This is not guaranteed to be set in happensBefore order across different conditions for a given object. It may be unset in some circumstances.
    */
@@ -202,10 +202,10 @@ export interface IpcConfigStatus {
 }
 
 export const details = {
-  name: 'ipcConfig',
-  plural: 'ipcConfigs',
+  name: 'ipcconfig',
+  plural: 'ipcconfigs',
   group: 'eevee.bot',
   version: 'v1',
   scope: 'Namespaced',
-  shortName: 'ipcConfig',
+  shortName: 'ipcconfig',
 };

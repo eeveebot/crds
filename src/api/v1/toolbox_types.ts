@@ -16,9 +16,9 @@ import {
   StatusReasons,
 } from './enums/index.mjs';
 
-export interface ToolboxResource extends KubernetesObject {
-  spec: ToolboxSpec;
-  status: ToolboxStatus;
+export interface toolboxResource extends KubernetesObject {
+  spec: toolboxSpec;
+  status: toolboxStatus;
   metadata?: V1ObjectMeta | undefined;
 }
 
@@ -27,7 +27,7 @@ export class ApiResource implements cdk8splus.IApiResource {
   resourceType: string = 'toolbox';
 }
 
-export class Toolbox extends ApiObject implements ToolboxSpec {
+export class toolbox extends ApiObject implements toolboxSpec {
   public size: number;
   public containerImage: string;
   public pullPolicy: string;
@@ -35,7 +35,7 @@ export class Toolbox extends ApiObject implements ToolboxSpec {
   public ipcConfig: string;
 
   /**
-   * Returns the apiVersion and kind for "Toolbox"
+   * Returns the apiVersion and kind for "toolbox"
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
@@ -43,28 +43,28 @@ export class Toolbox extends ApiObject implements ToolboxSpec {
   }
 
   /**
-   * Renders a Kubernetes manifest for "Toolbox".
+   * Renders a Kubernetes manifest for "toolbox".
    *
    * This can be used to inline resource manifests inside other objects (e.g. as templates).
    *
    * @param props initialization props
    */
-  public static manifest(props: ToolboxProps): unknown {
+  public static manifest(props: toolboxProps): unknown {
     return {
-      ...Toolbox.GVK,
-      ...toJson_ToolboxProps(props),
+      ...toolbox.GVK,
+      ...toJson_toolboxProps(props),
     };
   }
 
   /**
-   * Defines a "Toolbox" API object
+   * Defines a "toolbox" API object
    * @param scope the scope in which to define this object
    * @param id a scope-local name for the object
    * @param props initialization props
    */
-  public constructor(scope: Construct, id: string, props: ToolboxProps) {
+  public constructor(scope: Construct, id: string, props: toolboxProps) {
     super(scope, id, {
-      ...Toolbox.GVK,
+      ...toolbox.GVK,
       ...props,
     });
     this.size = props?.spec?.size || 1;
@@ -81,28 +81,28 @@ export class Toolbox extends ApiObject implements ToolboxSpec {
     const resolved = super.toJson();
 
     return {
-      ...Toolbox.GVK,
-      ...toJson_ToolboxProps(resolved),
+      ...toolbox.GVK,
+      ...toJson_toolboxProps(resolved),
     };
   }
 }
 
-export interface ToolboxProps {
+export interface toolboxProps {
   readonly metadata?: ApiObjectMetadata;
-  readonly spec?: ToolboxSpec;
+  readonly spec?: toolboxSpec;
 }
 
-export function toJson_ToolboxProps(obj: ToolboxProps | undefined): Record<string, unknown> | undefined {
+export function toJson_toolboxProps(obj: toolboxProps | undefined): Record<string, unknown> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'metadata': obj.metadata,
-    'spec': toJson_ToolboxSpec(obj.spec),
+    'spec': toJson_toolboxSpec(obj.spec),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 
-export function toJson_ToolboxSpec(obj: ToolboxSpec | undefined): Record<string, unknown> | undefined {
+export function toJson_toolboxSpec(obj: toolboxSpec | undefined): Record<string, unknown> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'size': obj.size,
@@ -115,9 +115,9 @@ export function toJson_ToolboxSpec(obj: ToolboxSpec | undefined): Record<string,
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 
-export interface ToolboxSpec {
+export interface toolboxSpec {
   /**
-   * Size defines the number of Toolbox instances
+   * Size defines the number of toolbox instances
    */
   size?: number;
 
@@ -145,9 +145,9 @@ export interface ToolboxSpec {
   ipcConfig?: string;
 }
 
-export interface ToolboxStatus {
+export interface toolboxStatus {
   /**
-   * Conditions represent the latest available observations of a Toolbox's current state.
+   * Conditions represent the latest available observations of a toolbox's current state.
    * Known condition types are: "Available", "Progressing", and "Degraded"
    */
   conditions?: {
@@ -183,7 +183,7 @@ export interface ToolboxStatus {
   }[];
 }
 
-export function toJson_ToolboxStatus(obj: ToolboxStatus | undefined): Record<string, unknown> | undefined {
+export function toJson_toolboxStatus(obj: toolboxStatus | undefined): Record<string, unknown> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'conditions': obj.conditions,
@@ -193,8 +193,8 @@ export function toJson_ToolboxStatus(obj: ToolboxStatus | undefined): Record<str
 }
 
 export const details = {
-  name: 'Toolbox',
-  plural: 'Toolboxes',
+  name: 'toolbox',
+  plural: 'toolboxes',
   group: 'eevee.bot',
   version: 'v1',
   scope: 'Namespaced',
