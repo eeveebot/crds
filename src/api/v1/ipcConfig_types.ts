@@ -1,6 +1,6 @@
 'use strict';
 
-// Kind: IpcConfig
+// Kind: ipcconfig
 // Group: eevee.bot
 // Version: v1
 // Domain: bot
@@ -24,7 +24,7 @@ export interface IpcConfigResource extends KubernetesObject {
 
 export class ApiResource implements cdk8splus.IApiResource {
   apiGroup: string = 'eevee.bot';
-  resourceType: string = 'ipcConfig';
+  resourceType: string = 'ipcconfig';
 }
 
 export class IpcConfig extends ApiObject implements IpcConfigSpec {
@@ -35,7 +35,7 @@ export class IpcConfig extends ApiObject implements IpcConfigSpec {
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
-    kind: 'IpcConfig',
+    kind: 'ipcconfig',
   }
 
   /**

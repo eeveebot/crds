@@ -1,6 +1,6 @@
 'use strict';
 
-// Kind: ChatConnectionIrc
+// Kind: chatconnectionirc
 // Group: eevee
 // Version: v1
 // Domain: bot
@@ -25,7 +25,7 @@ export interface ChatConnectionIrcResource extends KubernetesObject {
 
 export class ApiResource implements cdk8splus.IApiResource {
   apiGroup: string = 'eevee.bot';
-  resourceType: string = 'ChatConnectionIrc';
+  resourceType: string = 'chatconnectionirc';
 }
 
 export class ChatConnectionIrc extends ApiObject implements ChatConnectionIrcSpec {
@@ -36,7 +36,7 @@ export class ChatConnectionIrc extends ApiObject implements ChatConnectionIrcSpe
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
-    kind: 'ChatConnectionIrc',
+    kind: 'chatconnectionirc',
   }
 
   /**

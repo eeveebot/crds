@@ -1,7 +1,7 @@
 'use strict';
 
-// Kind: Toolbox
-// Group: eevee.bot
+// Kind: toolbox
+// Group: eevee
 // Version: v1
 // Domain: bot
 
@@ -24,7 +24,7 @@ export interface ToolboxResource extends KubernetesObject {
 
 export class ApiResource implements cdk8splus.IApiResource {
   apiGroup: string = 'eevee.bot';
-  resourceType: string = 'Toolbox';
+  resourceType: string = 'toolbox';
 }
 
 export class Toolbox extends ApiObject implements ToolboxSpec {
@@ -39,7 +39,7 @@ export class Toolbox extends ApiObject implements ToolboxSpec {
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
-    kind: 'Toolbox',
+    kind: 'toolbox',
   }
 
   /**
