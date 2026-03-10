@@ -69,7 +69,7 @@ export interface ManagedNatsConfig {
     /**
      * NATS deployment config - direct passthrough to NATS Helm chart
      */
-    spec?: any;
+    spec?: unknown;
 }
 export interface NatsTokenConfig {
     /**
