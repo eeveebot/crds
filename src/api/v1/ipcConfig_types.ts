@@ -1,7 +1,7 @@
 'use strict';
 
 // Kind: ipcconfig
-// Group: eevee.bot
+// Group: eevee
 // Version: v1
 // Domain: bot
 
