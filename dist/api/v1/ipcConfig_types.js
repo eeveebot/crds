@@ -4,7 +4,7 @@ export class ApiResource {
     apiGroup = 'eevee.bot';
     resourceType = 'ipcconfig';
 }
-export class IpcConfig extends ApiObject {
+export class ipcconfig extends ApiObject {
     nats;
     /**
      * Returns the apiVersion and kind for "ipcConfig"
@@ -22,8 +22,8 @@ export class IpcConfig extends ApiObject {
      */
     static manifest(props) {
         return {
-            ...IpcConfig.GVK,
-            ...toJson_IpcConfigProps(props),
+            ...ipcconfig.GVK,
+            ...toJson_ipcconfigProps(props),
         };
     }
     /**
@@ -34,7 +34,7 @@ export class IpcConfig extends ApiObject {
      */
     constructor(scope, id, props) {
         super(scope, id, {
-            ...IpcConfig.GVK,
+            ...ipcconfig.GVK,
             ...props,
         });
         this.nats = props?.spec?.nats;
@@ -45,23 +45,23 @@ export class IpcConfig extends ApiObject {
     toJson() {
         const resolved = super.toJson();
         return {
-            ...IpcConfig.GVK,
-            ...toJson_IpcConfigProps(resolved),
+            ...ipcconfig.GVK,
+            ...toJson_ipcconfigProps(resolved),
         };
     }
 }
-export function toJson_IpcConfigProps(obj) {
+export function toJson_ipcconfigProps(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
         'metadata': obj.metadata,
-        'spec': toJson_IpcConfigSpec(obj.spec),
+        'spec': toJson_ipcconfigSpec(obj.spec),
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-export function toJson_IpcConfigSpec(obj) {
+export function toJson_ipcconfigSpec(obj) {
     if (obj === undefined) {
         return undefined;
     }
@@ -105,10 +105,10 @@ export function toJson_NatsTokenConfig(obj) {
     return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 export const details = {
-    name: 'ipcConfig',
-    plural: 'ipcConfigs',
+    name: 'ipcconfig',
+    plural: 'ipcconfigs',
     group: 'eevee.bot',
     version: 'v1',
     scope: 'Namespaced',
-    shortName: 'ipcConfig',
+    shortName: 'ipcconfig',
 };

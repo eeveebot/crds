@@ -4,17 +4,17 @@ export class ApiResource {
     apiGroup = 'eevee.bot';
     resourceType = 'chatconnectionirc';
 }
-export class ChatConnectionIrc extends ApiObject {
+export class chatconnectionirc extends ApiObject {
     connections;
     /**
-     * Returns the apiVersion and kind for "ChatConnectionIrc"
+     * Returns the apiVersion and kind for "chatconnectionirc"
      */
     static GVK = {
         apiVersion: 'eevee.bot/v1',
         kind: 'chatconnectionirc',
     };
     /**
-     * Renders a Kubernetes manifest for "ChatConnectionIrc".
+     * Renders a Kubernetes manifest for "chatconnectionirc".
      *
      * This can be used to inline resource manifests inside other objects (e.g. as templates).
      *
@@ -22,19 +22,19 @@ export class ChatConnectionIrc extends ApiObject {
      */
     static manifest(props) {
         return {
-            ...ChatConnectionIrc.GVK,
-            ...toJson_ChatConnectionIrcProps(props),
+            ...chatconnectionirc.GVK,
+            ...toJson_chatconnectionircProps(props),
         };
     }
     /**
-     * Defines a "ChatConnectionIrc" API object
+     * Defines a "chatconnectionirc" API object
      * @param scope the scope in which to define this object
      * @param id a scope-local name for the object
      * @param props initialization props
      */
     constructor(scope, id, props) {
         super(scope, id, {
-            ...ChatConnectionIrc.GVK,
+            ...chatconnectionirc.GVK,
             ...props,
         });
         this.connections = props?.spec?.connections || [];
@@ -45,23 +45,23 @@ export class ChatConnectionIrc extends ApiObject {
     toJson() {
         const resolved = super.toJson();
         return {
-            ...ChatConnectionIrc.GVK,
-            ...toJson_ChatConnectionIrcProps(resolved),
+            ...chatconnectionirc.GVK,
+            ...toJson_chatconnectionircProps(resolved),
         };
     }
 }
-export function toJson_ChatConnectionIrcProps(obj) {
+export function toJson_chatconnectionircProps(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
         'metadata': obj.metadata,
-        'spec': toJson_ChatConnectionIrcSpec(obj.spec),
+        'spec': toJson_chatconnectionircSpec(obj.spec),
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-export function toJson_ChatConnectionIrcSpec(obj) {
+export function toJson_chatconnectionircSpec(obj) {
     if (obj === undefined) {
         return undefined;
     }
@@ -168,10 +168,10 @@ export function toJson_IrcCommands(obj) {
     return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 export const details = {
-    name: 'ChatConnectionIrc',
-    plural: 'ChatConnectionIrcs',
+    name: 'chatconnectionirc',
+    plural: 'chatconnectionircs',
     group: 'eevee.bot',
     version: 'v1',
     scope: 'Namespaced',
-    shortName: 'ChatConnectionIrc',
+    shortName: 'chatconnectionirc',
 };

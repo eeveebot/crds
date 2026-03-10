@@ -4,48 +4,48 @@ import { V1ObjectMeta } from '@kubernetes/client-node';
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
 import { StatusReasons } from './enums/index.mjs';
-export interface ChatConnectionIrcResource extends KubernetesObject {
-    spec: ChatConnectionIrcSpec;
-    status: ChatConnectionIrcStatus;
+export interface chatconnectionircResource extends KubernetesObject {
+    spec: chatconnectionircSpec;
+    status: chatconnectionircStatus;
     metadata?: V1ObjectMeta | undefined;
 }
 export declare class ApiResource implements cdk8splus.IApiResource {
     apiGroup: string;
     resourceType: string;
 }
-export declare class ChatConnectionIrc extends ApiObject implements ChatConnectionIrcSpec {
+export declare class chatconnectionirc extends ApiObject implements chatconnectionircSpec {
     connections: IrcConnection[];
     /**
-     * Returns the apiVersion and kind for "ChatConnectionIrc"
+     * Returns the apiVersion and kind for "chatconnectionirc"
      */
     static readonly GVK: GroupVersionKind;
     /**
-     * Renders a Kubernetes manifest for "ChatConnectionIrc".
+     * Renders a Kubernetes manifest for "chatconnectionirc".
      *
      * This can be used to inline resource manifests inside other objects (e.g. as templates).
      *
      * @param props initialization props
      */
-    static manifest(props: ChatConnectionIrcProps): unknown;
+    static manifest(props: chatconnectionircProps): unknown;
     /**
-     * Defines a "ChatConnectionIrc" API object
+     * Defines a "chatconnectionirc" API object
      * @param scope the scope in which to define this object
      * @param id a scope-local name for the object
      * @param props initialization props
      */
-    constructor(scope: Construct, id: string, props: ChatConnectionIrcProps);
+    constructor(scope: Construct, id: string, props: chatconnectionircProps);
     /**
      * Renders the object to Kubernetes JSON.
      */
     toJson(): unknown;
 }
-export interface ChatConnectionIrcProps {
+export interface chatconnectionircProps {
     readonly metadata?: ApiObjectMetadata;
-    readonly spec?: ChatConnectionIrcSpec;
+    readonly spec?: chatconnectionircSpec;
 }
-export declare function toJson_ChatConnectionIrcProps(obj: ChatConnectionIrcProps | undefined): Record<string, unknown> | undefined;
-export declare function toJson_ChatConnectionIrcSpec(obj: ChatConnectionIrcSpec | undefined): Record<string, unknown> | undefined;
-export interface ChatConnectionIrcSpec {
+export declare function toJson_chatconnectionircProps(obj: chatconnectionircProps | undefined): Record<string, unknown> | undefined;
+export declare function toJson_chatconnectionircSpec(obj: chatconnectionircSpec | undefined): Record<string, unknown> | undefined;
+export interface chatconnectionircSpec {
     /**
      * IPC configuration name
      */
@@ -240,7 +240,7 @@ export declare function toJson_IrcRbac(obj: IrcRbac | undefined): Record<string,
 export declare function toJson_IrcPostConnectAction(obj: IrcPostConnectAction | undefined): Record<string, unknown> | undefined;
 export declare function toJson_IrcChannel(obj: IrcChannel | undefined): Record<string, unknown> | undefined;
 export declare function toJson_IrcCommands(obj: IrcCommands | undefined): Record<string, unknown> | undefined;
-export interface ChatConnectionIrcStatus {
+export interface chatconnectionircStatus {
     /**
      * lastTransitionTime is the last time the condition transitioned from one status to another. This is not guaranteed to be set in happensBefore order across different conditions for a given object. It may be unset in some circumstances.
      */

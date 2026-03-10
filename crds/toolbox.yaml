@@ -1,12 +1,12 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: Toolboxes.eevee.bot.bot
+  name: toolboxes.eevee.bot
 spec:
-  group: eevee.bot.bot
+  group: eevee.bot
   names:
-    kind: Toolbox
-    plural: Toolboxes
+    kind: toolbox
+    plural: toolboxes
     singular: toolbox
     shortNames:
       - toolbox
@@ -21,11 +21,11 @@ spec:
           properties:
             spec:
               type: object
-              description: ToolboxSpec defines the desired state of Toolbox
+              description: toolboxSpec defines the desired state of toolbox
               properties:
                 size:
                   type: number
-                  description: Size defines the number of Toolbox instances
+                  description: Size defines the number of toolbox instances
                 containerImage:
                   type: string
                   description: |-
@@ -47,7 +47,7 @@ spec:
               required: []
             status:
               type: object
-              description: ToolboxStatus defines the observed state of Toolbox
+              description: toolboxStatus defines the observed state of toolbox
               properties:
                 conditions:
                   type: array

@@ -4,21 +4,21 @@ export class ApiResource {
     apiGroup = 'eevee.bot';
     resourceType = 'toolbox';
 }
-export class Toolbox extends ApiObject {
+export class toolbox extends ApiObject {
     size;
     containerImage;
     pullPolicy;
     metrics;
     ipcConfig;
     /**
-     * Returns the apiVersion and kind for "Toolbox"
+     * Returns the apiVersion and kind for "toolbox"
      */
     static GVK = {
         apiVersion: 'eevee.bot/v1',
         kind: 'toolbox',
     };
     /**
-     * Renders a Kubernetes manifest for "Toolbox".
+     * Renders a Kubernetes manifest for "toolbox".
      *
      * This can be used to inline resource manifests inside other objects (e.g. as templates).
      *
@@ -26,19 +26,19 @@ export class Toolbox extends ApiObject {
      */
     static manifest(props) {
         return {
-            ...Toolbox.GVK,
-            ...toJson_ToolboxProps(props),
+            ...toolbox.GVK,
+            ...toJson_toolboxProps(props),
         };
     }
     /**
-     * Defines a "Toolbox" API object
+     * Defines a "toolbox" API object
      * @param scope the scope in which to define this object
      * @param id a scope-local name for the object
      * @param props initialization props
      */
     constructor(scope, id, props) {
         super(scope, id, {
-            ...Toolbox.GVK,
+            ...toolbox.GVK,
             ...props,
         });
         this.size = props?.spec?.size || 1;
@@ -53,23 +53,23 @@ export class Toolbox extends ApiObject {
     toJson() {
         const resolved = super.toJson();
         return {
-            ...Toolbox.GVK,
-            ...toJson_ToolboxProps(resolved),
+            ...toolbox.GVK,
+            ...toJson_toolboxProps(resolved),
         };
     }
 }
-export function toJson_ToolboxProps(obj) {
+export function toJson_toolboxProps(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
         'metadata': obj.metadata,
-        'spec': toJson_ToolboxSpec(obj.spec),
+        'spec': toJson_toolboxSpec(obj.spec),
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-export function toJson_ToolboxSpec(obj) {
+export function toJson_toolboxSpec(obj) {
     if (obj === undefined) {
         return undefined;
     }
@@ -83,7 +83,7 @@ export function toJson_ToolboxSpec(obj) {
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-export function toJson_ToolboxStatus(obj) {
+export function toJson_toolboxStatus(obj) {
     if (obj === undefined) {
         return undefined;
     }
@@ -94,8 +94,8 @@ export function toJson_ToolboxStatus(obj) {
     return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 export const details = {
-    name: 'Toolbox',
-    plural: 'Toolboxes',
+    name: 'toolbox',
+    plural: 'toolboxes',
     group: 'eevee.bot',
     version: 'v1',
     scope: 'Namespaced',
