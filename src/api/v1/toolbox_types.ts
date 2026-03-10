@@ -71,7 +71,6 @@ export class Toolbox extends ApiObject implements ToolboxSpec {
     this.size = props?.spec?.size || 1;
     this.containerImage = props?.spec?.containerImage || 'ghcr.io/eeveebot/cli:latest';
     this.pullPolicy = props?.spec?.pullPolicy || 'Always';
-    this.natsAuthSecret = props?.spec?.natsAuthSecret || 'nats-auth';
     this.metrics = props?.spec?.metrics || false;
     this.ipcConfig = props?.spec?.ipcConfig || '';
   }
@@ -110,7 +109,6 @@ export function toJson_ToolboxSpec(obj: ToolboxSpec | undefined): Record<string,
     'size': obj.size,
     'containerImage': obj.containerImage,
     'pullPolicy': obj.pullPolicy,
-    'natsAuthSecret': obj.natsAuthSecret,
     'metrics': obj.metrics,
     'ipcConfig': obj.ipcConfig,
   };
@@ -135,12 +133,6 @@ export interface ToolboxSpec {
    * Default: "Always"
    */
   pullPolicy?: string;
-
-  /**
-   * NatsAuthSecret defines the secret with NATS auth parameters
-   * Default: "nats-auth"
-   */
-  natsAuthSecret?: string;
 
   /**
    * Metrics defines whether to enable metrics or not
