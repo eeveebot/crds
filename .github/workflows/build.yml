@@ -50,6 +50,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          COMMIT="$(git rev-parse --short --verify main)"
           export NODE_ENV=development
           cat <<EOF >> $HOME/.npmrc
           //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
@@ -64,7 +65,7 @@ jobs:
           git add -f dist/**
           git diff
           git diff --staged
-          git diff --quiet && git diff --staged --quiet || git commit -m "${GITHUB_REF_NAME%-*} - Build for ${{ github.sha }}"
+          git diff --quiet && git diff --staged --quiet || git commit -m "${GITHUB_REF_NAME%-*} - Build for ${COMMIT}"
           git tag "${GITHUB_REF_NAME%-*}"
           git push
           git push --tags
