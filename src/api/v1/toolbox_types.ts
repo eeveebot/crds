@@ -31,7 +31,6 @@ export class Toolbox extends ApiObject implements ToolboxSpec {
   public size: number;
   public containerImage: string;
   public pullPolicy: string;
-  public natsAuthSecret: string;
   public metrics: boolean;
   public ipcConfig: string;
 
