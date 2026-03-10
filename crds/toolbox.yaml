@@ -36,11 +36,6 @@ spec:
                   description: |-
                     PullPolicy defines the image pull policy to use
                     Default: "Always"
-                natsAuthSecret:
-                  type: string
-                  description: |-
-                    NatsAuthSecret defines the secret with NATS auth parameters
-                    Default: "nats-auth"
                 metrics:
                   type: boolean
                   description: |-

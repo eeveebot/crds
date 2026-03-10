@@ -8,7 +8,6 @@ export class Toolbox extends ApiObject {
     size;
     containerImage;
     pullPolicy;
-    natsAuthSecret;
     metrics;
     ipcConfig;
     /**
@@ -45,7 +44,6 @@ export class Toolbox extends ApiObject {
         this.size = props?.spec?.size || 1;
         this.containerImage = props?.spec?.containerImage || 'ghcr.io/eeveebot/cli:latest';
         this.pullPolicy = props?.spec?.pullPolicy || 'Always';
-        this.natsAuthSecret = props?.spec?.natsAuthSecret || 'nats-auth';
         this.metrics = props?.spec?.metrics || false;
         this.ipcConfig = props?.spec?.ipcConfig || '';
     }
@@ -79,7 +77,6 @@ export function toJson_ToolboxSpec(obj) {
         'size': obj.size,
         'containerImage': obj.containerImage,
         'pullPolicy': obj.pullPolicy,
-        'natsAuthSecret': obj.natsAuthSecret,
         'metrics': obj.metrics,
         'ipcConfig': obj.ipcConfig,
     };

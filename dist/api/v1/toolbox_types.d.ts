@@ -17,7 +17,6 @@ export declare class Toolbox extends ApiObject implements ToolboxSpec {
     size: number;
     containerImage: string;
     pullPolicy: string;
-    natsAuthSecret: string;
     metrics: boolean;
     ipcConfig: string;
     /**
@@ -65,11 +64,6 @@ export interface ToolboxSpec {
      * Default: "Always"
      */
     pullPolicy?: string;
-    /**
-     * NatsAuthSecret defines the secret with NATS auth parameters
-     * Default: "nats-auth"
-     */
-    natsAuthSecret?: string;
     /**
      * Metrics defines whether to enable metrics or not
      * Default: false
