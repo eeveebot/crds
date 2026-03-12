@@ -98,6 +98,8 @@ export function toJson_chatconnectionircProps(obj: chatconnectionircProps | unde
 export function toJson_chatconnectionircSpec(obj: chatconnectionircSpec | undefined): Record<string, unknown> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
+    'ipcConfig': obj.ipcConfig,
+    'image': obj.image,
     'connections': obj.connections?.map(toJson_IrcConnection),
   };
   // filter undefined values
@@ -109,6 +111,11 @@ export interface chatconnectionircSpec {
    * IPC configuration name
    */
   ipcConfig?: string;
+
+  /**
+   * Image name and tag for the IRC connection instance
+   */
+  image?: string;
 
   /**
    * List of IRC connections
