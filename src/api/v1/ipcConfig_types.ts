@@ -22,7 +22,7 @@ export interface ipcconfigResource extends KubernetesObject {
 
 export class ApiResource implements cdk8splus.IApiResource {
   apiGroup: string = 'eevee.bot';
-  resourceType: string = 'ipcconfig';
+  resourceType: string = 'ipcconfigs';
 
   /**
    * Return the IApiResource this object represents.

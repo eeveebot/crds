@@ -22,7 +22,7 @@ export interface chatconnectionircResource extends KubernetesObject {
 
 export class ApiResource implements cdk8splus.IApiResource {
   apiGroup: string = 'eevee.bot';
-  resourceType: string = 'chatconnectionirc';
+  resourceType: string = 'chatconnectionircs';
 
   /**
    * Return the IApiResource this object represents.

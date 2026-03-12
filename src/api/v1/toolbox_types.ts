@@ -22,7 +22,7 @@ export interface toolboxResource extends KubernetesObject {
 
 export class ApiResource implements cdk8splus.IApiResource {
   apiGroup: string = 'eevee.bot';
-  resourceType: string = 'toolbox';
+  resourceType: string = 'toolboxs';
 
   /**
    * Return the IApiResource this object represents.
