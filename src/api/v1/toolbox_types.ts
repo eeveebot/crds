@@ -12,9 +12,7 @@ import { V1ObjectMeta } from '@kubernetes/client-node';
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
 
-import {
-  StatusReasons,
-} from './enums/index.mjs';
+import { StatusReasons } from './enums/index.mjs';
 
 export interface toolboxResource extends KubernetesObject {
   spec: toolboxSpec;
@@ -29,7 +27,7 @@ export class ApiResource implements cdk8splus.IApiResource {
 
 export class toolbox extends ApiObject implements toolboxSpec {
   public size: number;
-  public containerImage: string;
+  public image: string;
   public pullPolicy: string;
   public metrics: boolean;
   public ipcConfig: string;
@@ -40,7 +38,7 @@ export class toolbox extends ApiObject implements toolboxSpec {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
     kind: 'toolbox',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "toolbox".
@@ -68,7 +66,7 @@ export class toolbox extends ApiObject implements toolboxSpec {
       ...props,
     });
     this.size = props?.spec?.size || 1;
-    this.containerImage = props?.spec?.containerImage || 'ghcr.io/eeveebot/cli:latest';
+    this.image = props?.spec?.image || 'ghcr.io/eeveebot/cli:latest';
     this.pullPolicy = props?.spec?.pullPolicy || 'Always';
     this.metrics = props?.spec?.metrics || false;
     this.ipcConfig = props?.spec?.ipcConfig || '';
@@ -92,27 +90,41 @@ export interface toolboxProps {
   readonly spec?: toolboxSpec;
 }
 
-export function toJson_toolboxProps(obj: toolboxProps | undefined): Record<string, unknown> | undefined {
-  if (obj === undefined) { return undefined; }
+export function toJson_toolboxProps(
+  obj: toolboxProps | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
   const result = {
-    'metadata': obj.metadata,
-    'spec': toJson_toolboxSpec(obj.spec),
+    metadata: obj.metadata,
+    spec: toJson_toolboxSpec(obj.spec),
   };
   // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
 }
 
-export function toJson_toolboxSpec(obj: toolboxSpec | undefined): Record<string, unknown> | undefined {
-  if (obj === undefined) { return undefined; }
+export function toJson_toolboxSpec(
+  obj: toolboxSpec | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
   const result = {
-    'size': obj.size,
-    'containerImage': obj.containerImage,
-    'pullPolicy': obj.pullPolicy,
-    'metrics': obj.metrics,
-    'ipcConfig': obj.ipcConfig,
+    size: obj.size,
+    image: obj.image,
+    pullPolicy: obj.pullPolicy,
+    metrics: obj.metrics,
+    ipcConfig: obj.ipcConfig,
   };
   // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
 }
 
 export interface toolboxSpec {
@@ -122,10 +134,10 @@ export interface toolboxSpec {
   size?: number;
 
   /**
-   * ContainerImage defines the container image to use
+   * Image defines the container image to use
    * Default: "ghcr.io/eeveebot/cli:latest"
    */
-  containerImage?: string;
+  image?: string;
 
   /**
    * PullPolicy defines the image pull policy to use
@@ -183,13 +195,20 @@ export interface toolboxStatus {
   }[];
 }
 
-export function toJson_toolboxStatus(obj: toolboxStatus | undefined): Record<string, unknown> | undefined {
-  if (obj === undefined) { return undefined; }
+export function toJson_toolboxStatus(
+  obj: toolboxStatus | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
   const result = {
-    'conditions': obj.conditions,
+    conditions: obj.conditions,
   };
   // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
 }
 
 export const details = {
