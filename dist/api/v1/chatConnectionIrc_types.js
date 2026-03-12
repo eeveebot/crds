@@ -66,6 +66,8 @@ export function toJson_chatconnectionircSpec(obj) {
         return undefined;
     }
     const result = {
+        'ipcConfig': obj.ipcConfig,
+        'image': obj.image,
         'connections': obj.connections?.map(toJson_IrcConnection),
     };
     // filter undefined values

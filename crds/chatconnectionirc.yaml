@@ -27,6 +27,9 @@ spec:
                 ipcConfig:
                   type: string
                   description: IPC configuration name
+                image:
+                  type: string
+                  description: Image name and tag for the IRC connection instance
                 connections:
                   type: array
                   items:

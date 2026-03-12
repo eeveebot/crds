@@ -51,6 +51,10 @@ export interface chatconnectionircSpec {
      */
     ipcConfig?: string;
     /**
+     * Image name and tag for the IRC connection instance
+     */
+    image?: string;
+    /**
      * List of IRC connections
      */
     connections?: IrcConnection[];
