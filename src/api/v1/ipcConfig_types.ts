@@ -12,9 +12,7 @@ import { V1ObjectMeta } from '@kubernetes/client-node';
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
 
-import {
-  StatusReasons,
-} from './enums/index.mjs';
+import { StatusReasons } from './enums/index.mjs';
 
 export interface ipcconfigResource extends KubernetesObject {
   spec: ipcconfigSpec;
@@ -36,7 +34,7 @@ export class ipcconfig extends ApiObject implements ipcconfigSpec {
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
     kind: 'ipcconfig',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "ipcConfig".
@@ -84,23 +82,37 @@ export interface ipcconfigProps {
   readonly spec?: ipcconfigSpec;
 }
 
-export function toJson_ipcconfigProps(obj: ipcconfigProps | undefined): Record<string, unknown> | undefined {
-  if (obj === undefined) { return undefined; }
+export function toJson_ipcconfigProps(
+  obj: ipcconfigProps | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
   const result = {
-    'metadata': obj.metadata,
-    'spec': toJson_ipcconfigSpec(obj.spec),
+    metadata: obj.metadata,
+    spec: toJson_ipcconfigSpec(obj.spec),
   };
   // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
 }
 
-export function toJson_ipcconfigSpec(obj: ipcconfigSpec | undefined): Record<string, unknown> | undefined {
-  if (obj === undefined) { return undefined; }
+export function toJson_ipcconfigSpec(
+  obj: ipcconfigSpec | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
   const result = {
-    'nats': toJson_NatsConfig(obj.nats),
+    nats: toJson_NatsConfig(obj.nats),
   };
   // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
 }
 
 export interface ipcconfigSpec {
@@ -149,34 +161,55 @@ export interface NatsTokenConfig {
   };
 }
 
-export function toJson_NatsConfig(obj: NatsConfig | undefined): Record<string, unknown> | undefined {
-  if (obj === undefined) { return undefined; }
+export function toJson_NatsConfig(
+  obj: NatsConfig | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
   const result = {
-    'managed': toJson_ManagedNatsConfig(obj.managed),
-    'token': toJson_NatsTokenConfig(obj.token),
+    managed: toJson_ManagedNatsConfig(obj.managed),
+    token: toJson_NatsTokenConfig(obj.token),
   };
   // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
 }
 
-export function toJson_ManagedNatsConfig(obj: ManagedNatsConfig | undefined): Record<string, unknown> | undefined {
-  if (obj === undefined) { return undefined; }
+export function toJson_ManagedNatsConfig(
+  obj: ManagedNatsConfig | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
   const result = {
-    'enabled': obj.enabled,
-    'spec': obj.spec,
+    enabled: obj.enabled,
+    image: obj.image,
   };
   // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
 }
 
-export function toJson_NatsTokenConfig(obj: NatsTokenConfig | undefined): Record<string, unknown> | undefined {
-  if (obj === undefined) { return undefined; }
+export function toJson_NatsTokenConfig(
+  obj: NatsTokenConfig | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
   const result = {
-    'generate': obj.generate,
-    'secretKeyRef': obj.secretKeyRef,
+    generate: obj.generate,
+    secretKeyRef: obj.secretKeyRef,
   };
   // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
 }
 
 export interface ipcconfigStatus {
