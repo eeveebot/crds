@@ -63,13 +63,13 @@ export interface NatsConfig {
 }
 export interface ManagedNatsConfig {
     /**
-     * Should the eevee-operator deploy a NATS cluster for us?
+     * Should the eevee-operator deploy a NATS server for us?
      */
     enabled: boolean;
     /**
-     * NATS deployment config - direct passthrough to NATS Helm chart
+     * NATS container image to use
      */
-    spec?: unknown;
+    image?: string;
 }
 export interface NatsTokenConfig {
     /**

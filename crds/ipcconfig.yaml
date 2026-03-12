@@ -31,10 +31,10 @@ spec:
                       properties:
                         enabled:
                           type: boolean
-                          description: Should the eevee-operator deploy a NATS cluster for us?
-                        spec:
+                          description: Should the eevee-operator deploy a NATS server for us?
+                        image:
                           type: string
-                          description: NATS deployment config - direct passthrough to NATS Helm chart
+                          description: NATS container image to use
                       required:
                         - enabled
                       description: Managed NATS deployment configuration

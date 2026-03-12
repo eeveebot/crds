@@ -55,54 +55,54 @@ export function toJson_ipcconfigProps(obj) {
         return undefined;
     }
     const result = {
-        'metadata': obj.metadata,
-        'spec': toJson_ipcconfigSpec(obj.spec),
+        metadata: obj.metadata,
+        spec: toJson_ipcconfigSpec(obj.spec),
     };
     // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export function toJson_ipcconfigSpec(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
-        'nats': toJson_NatsConfig(obj.nats),
+        nats: toJson_NatsConfig(obj.nats),
     };
     // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export function toJson_NatsConfig(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
-        'managed': toJson_ManagedNatsConfig(obj.managed),
-        'token': toJson_NatsTokenConfig(obj.token),
+        managed: toJson_ManagedNatsConfig(obj.managed),
+        token: toJson_NatsTokenConfig(obj.token),
     };
     // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export function toJson_ManagedNatsConfig(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
-        'enabled': obj.enabled,
-        'spec': obj.spec,
+        enabled: obj.enabled,
+        image: obj.image,
     };
     // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export function toJson_NatsTokenConfig(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
-        'generate': obj.generate,
-        'secretKeyRef': obj.secretKeyRef,
+        generate: obj.generate,
+        secretKeyRef: obj.secretKeyRef,
     };
     // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export const details = {
     name: 'ipcconfig',
