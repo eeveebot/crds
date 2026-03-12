@@ -187,6 +187,16 @@ export interface IrcPostConnectAction {
      */
     action: 'msg' | 'join';
     /**
+     * Message content (as object with channel, msg, and secretKeyRef)
+     */
+    msg?: IrcPostConnectMessage;
+    /**
+     * Channels to join
+     */
+    join?: IrcChannel[];
+}
+export interface IrcPostConnectMessage {
+    /**
      * Channel or user to send message to
      */
     channel?: string;
@@ -195,7 +205,7 @@ export interface IrcPostConnectAction {
      */
     msg?: string;
     /**
-     * Secret key reference for message content or channel join key
+     * Secret key reference for message content
      */
     secretKeyRef?: {
         /**
@@ -207,10 +217,6 @@ export interface IrcPostConnectAction {
          */
         key: string;
     };
-    /**
-     * Channels to join
-     */
-    channels?: IrcChannel[];
 }
 export interface IrcChannel {
     /**
@@ -218,7 +224,7 @@ export interface IrcChannel {
      */
     channel: string;
     /**
-     * Secret key reference for message content or channel join key
+     * Secret key reference for channel join key
      */
     secretKeyRef?: {
         /**
@@ -241,6 +247,7 @@ export declare function toJson_IrcConnection(obj: IrcConnection | undefined): Re
 export declare function toJson_IrcConfig(obj: IrcConfig | undefined): Record<string, unknown> | undefined;
 export declare function toJson_IrcIdent(obj: IrcIdent | undefined): Record<string, unknown> | undefined;
 export declare function toJson_IrcRbac(obj: IrcRbac | undefined): Record<string, unknown> | undefined;
+export declare function toJson_IrcPostConnectMessage(obj: IrcPostConnectMessage | undefined): Record<string, unknown> | undefined;
 export declare function toJson_IrcPostConnectAction(obj: IrcPostConnectAction | undefined): Record<string, unknown> | undefined;
 export declare function toJson_IrcChannel(obj: IrcChannel | undefined): Record<string, unknown> | undefined;
 export declare function toJson_IrcCommands(obj: IrcCommands | undefined): Record<string, unknown> | undefined;

@@ -55,119 +55,129 @@ export function toJson_chatconnectionircProps(obj) {
         return undefined;
     }
     const result = {
-        'metadata': obj.metadata,
-        'spec': toJson_chatconnectionircSpec(obj.spec),
+        metadata: obj.metadata,
+        spec: toJson_chatconnectionircSpec(obj.spec),
     };
     // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export function toJson_chatconnectionircSpec(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
-        'ipcConfig': obj.ipcConfig,
-        'image': obj.image,
-        'connections': obj.connections?.map(toJson_IrcConnection),
+        ipcConfig: obj.ipcConfig,
+        image: obj.image,
+        connections: obj.connections?.map(toJson_IrcConnection),
     };
     // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export function toJson_IrcConnection(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
-        'name': obj.name,
-        'enabled': obj.enabled,
-        'irc': toJson_IrcConfig(obj.irc),
-        'ident': toJson_IrcIdent(obj.ident),
-        'rbac': toJson_IrcRbac(obj.rbac),
-        'postConnect': obj.postConnect?.map(toJson_IrcPostConnectAction),
-        'broadcastMessages': obj.broadcastMessages,
-        'commands': toJson_IrcCommands(obj.commands),
+        name: obj.name,
+        enabled: obj.enabled,
+        irc: toJson_IrcConfig(obj.irc),
+        ident: toJson_IrcIdent(obj.ident),
+        rbac: toJson_IrcRbac(obj.rbac),
+        postConnect: obj.postConnect?.map(toJson_IrcPostConnectAction),
+        broadcastMessages: obj.broadcastMessages,
+        commands: toJson_IrcCommands(obj.commands),
     };
     // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export function toJson_IrcConfig(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
-        'host': obj.host,
-        'port': obj.port,
-        'ssl': obj.ssl,
-        'autoReconnect': obj.autoReconnect,
-        'autoReconnectWait': obj.autoReconnectWait,
-        'autoReconnectMaxRetries': obj.autoReconnectMaxRetries,
-        'autoRejoin': obj.autoRejoin,
-        'autoRejoinWait': obj.autoRejoinWait,
-        'autoRejoinMaxRetries': obj.autoRejoinMaxRetries,
-        'pingInterval': obj.pingInterval,
-        'pingTimeout': obj.pingTimeout,
+        host: obj.host,
+        port: obj.port,
+        ssl: obj.ssl,
+        autoReconnect: obj.autoReconnect,
+        autoReconnectWait: obj.autoReconnectWait,
+        autoReconnectMaxRetries: obj.autoReconnectMaxRetries,
+        autoRejoin: obj.autoRejoin,
+        autoRejoinWait: obj.autoRejoinWait,
+        autoRejoinMaxRetries: obj.autoRejoinMaxRetries,
+        pingInterval: obj.pingInterval,
+        pingTimeout: obj.pingTimeout,
     };
     // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export function toJson_IrcIdent(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
-        'nick': obj.nick,
-        'username': obj.username,
-        'gecos': obj.gecos,
-        'version': obj.version,
-        'quitMsg': obj.quitMsg,
+        nick: obj.nick,
+        username: obj.username,
+        gecos: obj.gecos,
+        version: obj.version,
+        quitMsg: obj.quitMsg,
     };
     // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export function toJson_IrcRbac(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
-        'users': obj.users,
+        users: obj.users,
     };
     // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
+}
+export function toJson_IrcPostConnectMessage(obj) {
+    if (obj === undefined) {
+        return undefined;
+    }
+    const result = {
+        channel: obj.channel,
+        msg: obj.msg,
+        secretKeyRef: obj.secretKeyRef,
+    };
+    // filter undefined values
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export function toJson_IrcPostConnectAction(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
-        'action': obj.action,
-        'channel': obj.channel,
-        'msg': obj.msg,
-        'secretKeyRef': obj.secretKeyRef,
-        'channels': obj.channels?.map(toJson_IrcChannel),
+        action: obj.action,
+        msg: obj.msg ? toJson_IrcPostConnectMessage(obj.msg) : undefined,
+        join: obj.join?.map(toJson_IrcChannel),
     };
     // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export function toJson_IrcChannel(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
-        'channel': obj.channel,
-        'secretKeyRef': obj.secretKeyRef,
+        channel: obj.channel,
+        secretKeyRef: obj.secretKeyRef,
     };
     // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export function toJson_IrcCommands(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
-        'commonPrefixRegex': obj.commonPrefixRegex,
+        commonPrefixRegex: obj.commonPrefixRegex,
     };
     // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export const details = {
     name: 'chatconnectionirc',

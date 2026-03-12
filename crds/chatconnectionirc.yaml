@@ -121,34 +121,38 @@ spec:
                             action:
                               type: string
                               description: Action to perform
-                            channel:
-                              type: string
-                              description: Channel or user to send message to
                             msg:
-                              type: string
-                              description: Message content (as string)
-                            secretKeyRef:
                               type: object
                               properties:
-                                secret:
+                                channel:
+                                  type: string
+                                  description: Channel or user to send message to
+                                msg:
+                                  type: string
+                                  description: Message content (as string)
+                                secretKeyRef:
                                   type: object
                                   properties:
-                                    name:
+                                    secret:
+                                      type: object
+                                      properties:
+                                        name:
+                                          type: string
+                                          description: name is unique within a namespace to reference a secret resource.
+                                        namespace:
+                                          type: string
+                                          description: namespace defines the space within which the secret name must be
+                                            unique.
+                                      description: Reference to k8s secret
+                                    key:
                                       type: string
-                                      description: name is unique within a namespace to reference a secret resource.
-                                    namespace:
-                                      type: string
-                                      description: namespace defines the space within which the secret name must be
-                                        unique.
-                                  description: Reference to k8s secret
-                                key:
-                                  type: string
-                                  description: Key in the secret to use
-                              required:
-                                - secret
-                                - key
-                              description: Secret key reference for message content or channel join key
-                            channels:
+                                      description: Key in the secret to use
+                                  required:
+                                    - secret
+                                    - key
+                                  description: Secret key reference for message content
+                              description: Message content (as object with channel, msg, and secretKeyRef)
+                            join:
                               type: array
                               items:
                                 type: object
@@ -176,7 +180,7 @@ spec:
                                     required:
                                       - secret
                                       - key
-                                    description: Secret key reference for message content or channel join key
+                                    description: Secret key reference for channel join key
                                 required:
                                   - channel
                               description: Channels to join
