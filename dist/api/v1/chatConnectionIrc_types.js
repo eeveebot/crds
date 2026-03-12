@@ -2,7 +2,7 @@
 import { ApiObject } from 'cdk8s';
 export class ApiResource {
     apiGroup = 'eevee.bot';
-    resourceType = 'chatconnectionirc';
+    resourceType = 'chatconnectionircs';
     /**
      * Return the IApiResource this object represents.
      */

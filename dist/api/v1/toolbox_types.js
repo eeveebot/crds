@@ -2,7 +2,7 @@
 import { ApiObject } from 'cdk8s';
 export class ApiResource {
     apiGroup = 'eevee.bot';
-    resourceType = 'toolbox';
+    resourceType = 'toolboxs';
     /**
      * Return the IApiResource this object represents.
      */
