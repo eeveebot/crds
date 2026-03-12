@@ -5,7 +5,6 @@
 // Version: v1
 // Domain: bot
 
-
 import * as cdk8splus from 'cdk8s-plus-33';
 import KubernetesObject from '@thehonker/k8s-operator';
 import { V1ObjectMeta } from '@kubernetes/client-node';
@@ -13,9 +12,7 @@ import { V1ObjectMeta } from '@kubernetes/client-node';
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
 
-import {
-  StatusReasons,
-} from './enums/index.mjs';
+import { StatusReasons } from './enums/index.mjs';
 
 export interface chatconnectionircResource extends KubernetesObject {
   spec: chatconnectionircSpec;
@@ -28,7 +25,10 @@ export class ApiResource implements cdk8splus.IApiResource {
   resourceType: string = 'chatconnectionirc';
 }
 
-export class chatconnectionirc extends ApiObject implements chatconnectionircSpec {
+export class chatconnectionirc
+  extends ApiObject
+  implements chatconnectionircSpec
+{
   public connections: IrcConnection[];
 
   /**
@@ -37,7 +37,7 @@ export class chatconnectionirc extends ApiObject implements chatconnectionircSpe
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
     kind: 'chatconnectionirc',
-  }
+  };
 
   /**
    * Renders a Kubernetes manifest for "chatconnectionirc".
@@ -59,7 +59,11 @@ export class chatconnectionirc extends ApiObject implements chatconnectionircSpe
    * @param id a scope-local name for the object
    * @param props initialization props
    */
-  public constructor(scope: Construct, id: string, props: chatconnectionircProps) {
+  public constructor(
+    scope: Construct,
+    id: string,
+    props: chatconnectionircProps
+  ) {
     super(scope, id, {
       ...chatconnectionirc.GVK,
       ...props,
@@ -85,25 +89,39 @@ export interface chatconnectionircProps {
   readonly spec?: chatconnectionircSpec;
 }
 
-export function toJson_chatconnectionircProps(obj: chatconnectionircProps | undefined): Record<string, unknown> | undefined {
-  if (obj === undefined) { return undefined; }
+export function toJson_chatconnectionircProps(
+  obj: chatconnectionircProps | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
   const result = {
-    'metadata': obj.metadata,
-    'spec': toJson_chatconnectionircSpec(obj.spec),
+    metadata: obj.metadata,
+    spec: toJson_chatconnectionircSpec(obj.spec),
   };
   // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
 }
 
-export function toJson_chatconnectionircSpec(obj: chatconnectionircSpec | undefined): Record<string, unknown> | undefined {
-  if (obj === undefined) { return undefined; }
+export function toJson_chatconnectionircSpec(
+  obj: chatconnectionircSpec | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
   const result = {
-    'ipcConfig': obj.ipcConfig,
-    'image': obj.image,
-    'connections': obj.connections?.map(toJson_IrcConnection),
+    ipcConfig: obj.ipcConfig,
+    image: obj.image,
+    connections: obj.connections?.map(toJson_IrcConnection),
   };
   // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
 }
 
 export interface chatconnectionircSpec {
@@ -280,6 +298,18 @@ export interface IrcPostConnectAction {
   action: 'msg' | 'join';
 
   /**
+   * Message content (as object with channel, msg, and secretKeyRef)
+   */
+  msg?: IrcPostConnectMessage;
+
+  /**
+   * Channels to join
+   */
+  join?: IrcChannel[];
+}
+
+export interface IrcPostConnectMessage {
+  /**
    * Channel or user to send message to
    */
   channel?: string;
@@ -290,7 +320,7 @@ export interface IrcPostConnectAction {
   msg?: string;
 
   /**
-   * Secret key reference for message content or channel join key
+   * Secret key reference for message content
    */
   secretKeyRef?: {
     /**
@@ -303,11 +333,6 @@ export interface IrcPostConnectAction {
      */
     key: string;
   };
-
-  /**
-   * Channels to join
-   */
-  channels?: IrcChannel[];
 }
 
 export interface IrcChannel {
@@ -317,7 +342,7 @@ export interface IrcChannel {
   channel: string;
 
   /**
-   * Secret key reference for message content or channel join key
+   * Secret key reference for channel join key
    */
   secretKeyRef?: {
     /**
@@ -339,93 +364,158 @@ export interface IrcCommands {
   commonPrefixRegex?: string;
 }
 
-export function toJson_IrcConnection(obj: IrcConnection | undefined): Record<string, unknown> | undefined {
-  if (obj === undefined) { return undefined; }
+export function toJson_IrcConnection(
+  obj: IrcConnection | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
   const result = {
-    'name': obj.name,
-    'enabled': obj.enabled,
-    'irc': toJson_IrcConfig(obj.irc),
-    'ident': toJson_IrcIdent(obj.ident),
-    'rbac': toJson_IrcRbac(obj.rbac),
-    'postConnect': obj.postConnect?.map(toJson_IrcPostConnectAction),
-    'broadcastMessages': obj.broadcastMessages,
-    'commands': toJson_IrcCommands(obj.commands),
+    name: obj.name,
+    enabled: obj.enabled,
+    irc: toJson_IrcConfig(obj.irc),
+    ident: toJson_IrcIdent(obj.ident),
+    rbac: toJson_IrcRbac(obj.rbac),
+    postConnect: obj.postConnect?.map(toJson_IrcPostConnectAction),
+    broadcastMessages: obj.broadcastMessages,
+    commands: toJson_IrcCommands(obj.commands),
   };
   // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
 }
 
-export function toJson_IrcConfig(obj: IrcConfig | undefined): Record<string, unknown> | undefined {
-  if (obj === undefined) { return undefined; }
+export function toJson_IrcConfig(
+  obj: IrcConfig | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
   const result = {
-    'host': obj.host,
-    'port': obj.port,
-    'ssl': obj.ssl,
-    'autoReconnect': obj.autoReconnect,
-    'autoReconnectWait': obj.autoReconnectWait,
-    'autoReconnectMaxRetries': obj.autoReconnectMaxRetries,
-    'autoRejoin': obj.autoRejoin,
-    'autoRejoinWait': obj.autoRejoinWait,
-    'autoRejoinMaxRetries': obj.autoRejoinMaxRetries,
-    'pingInterval': obj.pingInterval,
-    'pingTimeout': obj.pingTimeout,
+    host: obj.host,
+    port: obj.port,
+    ssl: obj.ssl,
+    autoReconnect: obj.autoReconnect,
+    autoReconnectWait: obj.autoReconnectWait,
+    autoReconnectMaxRetries: obj.autoReconnectMaxRetries,
+    autoRejoin: obj.autoRejoin,
+    autoRejoinWait: obj.autoRejoinWait,
+    autoRejoinMaxRetries: obj.autoRejoinMaxRetries,
+    pingInterval: obj.pingInterval,
+    pingTimeout: obj.pingTimeout,
   };
   // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
 }
 
-export function toJson_IrcIdent(obj: IrcIdent | undefined): Record<string, unknown> | undefined {
-  if (obj === undefined) { return undefined; }
+export function toJson_IrcIdent(
+  obj: IrcIdent | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
   const result = {
-    'nick': obj.nick,
-    'username': obj.username,
-    'gecos': obj.gecos,
-    'version': obj.version,
-    'quitMsg': obj.quitMsg,
+    nick: obj.nick,
+    username: obj.username,
+    gecos: obj.gecos,
+    version: obj.version,
+    quitMsg: obj.quitMsg,
   };
   // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
 }
 
-export function toJson_IrcRbac(obj: IrcRbac | undefined): Record<string, unknown> | undefined {
-  if (obj === undefined) { return undefined; }
+export function toJson_IrcRbac(
+  obj: IrcRbac | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
   const result = {
-    'users': obj.users,
+    users: obj.users,
   };
   // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
 }
 
-export function toJson_IrcPostConnectAction(obj: IrcPostConnectAction | undefined): Record<string, unknown> | undefined {
-  if (obj === undefined) { return undefined; }
+export function toJson_IrcPostConnectMessage(
+  obj: IrcPostConnectMessage | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
   const result = {
-    'action': obj.action,
-    'channel': obj.channel,
-    'msg': obj.msg,
-    'secretKeyRef': obj.secretKeyRef,
-    'channels': obj.channels?.map(toJson_IrcChannel),
+    channel: obj.channel,
+    msg: obj.msg,
+    secretKeyRef: obj.secretKeyRef,
   };
   // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
 }
 
-export function toJson_IrcChannel(obj: IrcChannel | undefined): Record<string, unknown> | undefined {
-  if (obj === undefined) { return undefined; }
+export function toJson_IrcPostConnectAction(
+  obj: IrcPostConnectAction | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
   const result = {
-    'channel': obj.channel,
-    'secretKeyRef': obj.secretKeyRef,
+    action: obj.action,
+    msg: obj.msg ? toJson_IrcPostConnectMessage(obj.msg) : undefined,
+    join: obj.join?.map(toJson_IrcChannel),
   };
   // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
 }
 
-export function toJson_IrcCommands(obj: IrcCommands | undefined): Record<string, unknown> | undefined {
-  if (obj === undefined) { return undefined; }
+export function toJson_IrcChannel(
+  obj: IrcChannel | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
   const result = {
-    'commonPrefixRegex': obj.commonPrefixRegex,
+    channel: obj.channel,
+    secretKeyRef: obj.secretKeyRef,
   };
   // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
+}
+
+export function toJson_IrcCommands(
+  obj: IrcCommands | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
+  const result = {
+    commonPrefixRegex: obj.commonPrefixRegex,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
 }
 
 export interface chatconnectionircStatus {
@@ -458,6 +548,3 @@ export const details = {
   scope: 'Namespaced',
   shortName: 'chatconnectionirc',
 };
-
-
-
