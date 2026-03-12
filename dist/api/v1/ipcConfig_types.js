@@ -3,6 +3,18 @@ import { ApiObject } from 'cdk8s';
 export class ApiResource {
     apiGroup = 'eevee.bot';
     resourceType = 'ipcconfig';
+    /**
+     * Return the IApiResource this object represents.
+     */
+    asApiResource() {
+        return this;
+    }
+    /**
+     * Return the non resource url this object represents.
+     */
+    asNonApiResource() {
+        return undefined;
+    }
 }
 export class ipcconfig extends ApiObject {
     nats;

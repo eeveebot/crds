@@ -12,6 +12,14 @@ export interface toolboxResource extends KubernetesObject {
 export declare class ApiResource implements cdk8splus.IApiResource {
     apiGroup: string;
     resourceType: string;
+    /**
+     * Return the IApiResource this object represents.
+     */
+    asApiResource(): cdk8splus.IApiResource | undefined;
+    /**
+     * Return the non resource url this object represents.
+     */
+    asNonApiResource(): string | undefined;
 }
 export declare class toolbox extends ApiObject implements toolboxSpec {
     size: number;
