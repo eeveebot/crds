@@ -30,6 +30,8 @@ export class chatconnectionirc
   implements chatconnectionircSpec
 {
   public connections: IrcConnection[];
+  public metrics: boolean;
+  public metricsPort: number;
 
   /**
    * Returns the apiVersion and kind for "chatconnectionirc"
@@ -69,6 +71,8 @@ export class chatconnectionirc
       ...props,
     });
     this.connections = props?.spec?.connections || [];
+    this.metrics = props?.spec?.metrics || false;
+    this.metricsPort = props?.spec?.metricsPort || 8080;
   }
 
   /**
@@ -116,6 +120,8 @@ export function toJson_chatconnectionircSpec(
     ipcConfig: obj.ipcConfig,
     image: obj.image,
     connections: obj.connections?.map(toJson_IrcConnection),
+    metrics: obj.metrics,
+    metricsPort: obj.metricsPort,
   };
   // filter undefined values
   return Object.entries(result).reduce(
@@ -139,6 +145,18 @@ export interface chatconnectionircSpec {
    * List of IRC connections
    */
   connections?: IrcConnection[];
+
+  /**
+   * Metrics defines whether to enable metrics or not
+   * Default: false
+   */
+  metrics?: boolean;
+
+  /**
+   * MetricsPort defines the port to expose metrics on
+   * Default: 8080
+   */
+  metricsPort?: number;
 }
 
 export interface IrcConnection {

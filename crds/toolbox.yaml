@@ -41,6 +41,11 @@ spec:
                   description: |-
                     Metrics defines whether to enable metrics or not
                     Default: false
+                metricsPort:
+                  type: number
+                  description: |-
+                    MetricsPort defines the port to expose metrics on
+                    Default: 8080
                 ipcConfig:
                   type: string
                   description: IPC configuration name

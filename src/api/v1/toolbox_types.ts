@@ -30,6 +30,7 @@ export class toolbox extends ApiObject implements toolboxSpec {
   public image: string;
   public pullPolicy: string;
   public metrics: boolean;
+  public metricsPort: number;
   public ipcConfig: string;
 
   /**
@@ -69,6 +70,7 @@ export class toolbox extends ApiObject implements toolboxSpec {
     this.image = props?.spec?.image || 'ghcr.io/eeveebot/cli:latest';
     this.pullPolicy = props?.spec?.pullPolicy || 'Always';
     this.metrics = props?.spec?.metrics || false;
+    this.metricsPort = props?.spec?.metricsPort || 8080;
     this.ipcConfig = props?.spec?.ipcConfig || '';
   }
 
@@ -118,6 +120,7 @@ export function toJson_toolboxSpec(
     image: obj.image,
     pullPolicy: obj.pullPolicy,
     metrics: obj.metrics,
+    metricsPort: obj.metricsPort,
     ipcConfig: obj.ipcConfig,
   };
   // filter undefined values
@@ -150,6 +153,12 @@ export interface toolboxSpec {
    * Default: false
    */
   metrics?: boolean;
+
+  /**
+   * MetricsPort defines the port to expose metrics on
+   * Default: 8080
+   */
+  metricsPort?: number;
 
   /**
    * IPC configuration name

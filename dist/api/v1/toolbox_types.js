@@ -9,6 +9,7 @@ export class toolbox extends ApiObject {
     image;
     pullPolicy;
     metrics;
+    metricsPort;
     ipcConfig;
     /**
      * Returns the apiVersion and kind for "toolbox"
@@ -45,6 +46,7 @@ export class toolbox extends ApiObject {
         this.image = props?.spec?.image || 'ghcr.io/eeveebot/cli:latest';
         this.pullPolicy = props?.spec?.pullPolicy || 'Always';
         this.metrics = props?.spec?.metrics || false;
+        this.metricsPort = props?.spec?.metricsPort || 8080;
         this.ipcConfig = props?.spec?.ipcConfig || '';
     }
     /**
@@ -78,6 +80,7 @@ export function toJson_toolboxSpec(obj) {
         image: obj.image,
         pullPolicy: obj.pullPolicy,
         metrics: obj.metrics,
+        metricsPort: obj.metricsPort,
         ipcConfig: obj.ipcConfig,
     };
     // filter undefined values

@@ -15,6 +15,8 @@ export declare class ApiResource implements cdk8splus.IApiResource {
 }
 export declare class chatconnectionirc extends ApiObject implements chatconnectionircSpec {
     connections: IrcConnection[];
+    metrics: boolean;
+    metricsPort: number;
     /**
      * Returns the apiVersion and kind for "chatconnectionirc"
      */
@@ -58,6 +60,16 @@ export interface chatconnectionircSpec {
      * List of IRC connections
      */
     connections?: IrcConnection[];
+    /**
+     * Metrics defines whether to enable metrics or not
+     * Default: false
+     */
+    metrics?: boolean;
+    /**
+     * MetricsPort defines the port to expose metrics on
+     * Default: 8080
+     */
+    metricsPort?: number;
 }
 export interface IrcConnection {
     /**

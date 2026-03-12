@@ -18,6 +18,7 @@ export declare class toolbox extends ApiObject implements toolboxSpec {
     image: string;
     pullPolicy: string;
     metrics: boolean;
+    metricsPort: number;
     ipcConfig: string;
     /**
      * Returns the apiVersion and kind for "toolbox"
@@ -69,6 +70,11 @@ export interface toolboxSpec {
      * Default: false
      */
     metrics?: boolean;
+    /**
+     * MetricsPort defines the port to expose metrics on
+     * Default: 8080
+     */
+    metricsPort?: number;
     /**
      * IPC configuration name
      */

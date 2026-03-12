@@ -6,6 +6,8 @@ export class ApiResource {
 }
 export class chatconnectionirc extends ApiObject {
     connections;
+    metrics;
+    metricsPort;
     /**
      * Returns the apiVersion and kind for "chatconnectionirc"
      */
@@ -38,6 +40,8 @@ export class chatconnectionirc extends ApiObject {
             ...props,
         });
         this.connections = props?.spec?.connections || [];
+        this.metrics = props?.spec?.metrics || false;
+        this.metricsPort = props?.spec?.metricsPort || 8080;
     }
     /**
      * Renders the object to Kubernetes JSON.
@@ -69,6 +73,8 @@ export function toJson_chatconnectionircSpec(obj) {
         ipcConfig: obj.ipcConfig,
         image: obj.image,
         connections: obj.connections?.map(toJson_IrcConnection),
+        metrics: obj.metrics,
+        metricsPort: obj.metricsPort,
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
