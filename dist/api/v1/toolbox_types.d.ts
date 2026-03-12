@@ -15,7 +15,7 @@ export declare class ApiResource implements cdk8splus.IApiResource {
 }
 export declare class toolbox extends ApiObject implements toolboxSpec {
     size: number;
-    containerImage: string;
+    image: string;
     pullPolicy: string;
     metrics: boolean;
     ipcConfig: string;
@@ -55,10 +55,10 @@ export interface toolboxSpec {
      */
     size?: number;
     /**
-     * ContainerImage defines the container image to use
+     * Image defines the container image to use
      * Default: "ghcr.io/eeveebot/cli:latest"
      */
-    containerImage?: string;
+    image?: string;
     /**
      * PullPolicy defines the image pull policy to use
      * Default: "Always"

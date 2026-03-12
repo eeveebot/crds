@@ -6,7 +6,7 @@ export class ApiResource {
 }
 export class toolbox extends ApiObject {
     size;
-    containerImage;
+    image;
     pullPolicy;
     metrics;
     ipcConfig;
@@ -42,7 +42,7 @@ export class toolbox extends ApiObject {
             ...props,
         });
         this.size = props?.spec?.size || 1;
-        this.containerImage = props?.spec?.containerImage || 'ghcr.io/eeveebot/cli:latest';
+        this.image = props?.spec?.image || 'ghcr.io/eeveebot/cli:latest';
         this.pullPolicy = props?.spec?.pullPolicy || 'Always';
         this.metrics = props?.spec?.metrics || false;
         this.ipcConfig = props?.spec?.ipcConfig || '';
@@ -63,35 +63,35 @@ export function toJson_toolboxProps(obj) {
         return undefined;
     }
     const result = {
-        'metadata': obj.metadata,
-        'spec': toJson_toolboxSpec(obj.spec),
+        metadata: obj.metadata,
+        spec: toJson_toolboxSpec(obj.spec),
     };
     // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export function toJson_toolboxSpec(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
-        'size': obj.size,
-        'containerImage': obj.containerImage,
-        'pullPolicy': obj.pullPolicy,
-        'metrics': obj.metrics,
-        'ipcConfig': obj.ipcConfig,
+        size: obj.size,
+        image: obj.image,
+        pullPolicy: obj.pullPolicy,
+        metrics: obj.metrics,
+        ipcConfig: obj.ipcConfig,
     };
     // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export function toJson_toolboxStatus(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
-        'conditions': obj.conditions,
+        conditions: obj.conditions,
     };
     // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export const details = {
     name: 'toolbox',

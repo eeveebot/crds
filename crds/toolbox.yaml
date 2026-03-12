@@ -26,10 +26,10 @@ spec:
                 size:
                   type: number
                   description: Size defines the number of toolbox instances
-                containerImage:
+                image:
                   type: string
                   description: |-
-                    ContainerImage defines the container image to use
+                    Image defines the container image to use
                     Default: "ghcr.io/eeveebot/cli:latest"
                 pullPolicy:
                   type: string
