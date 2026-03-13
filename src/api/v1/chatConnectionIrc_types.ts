@@ -52,7 +52,7 @@ export class chatconnectionirc
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
-    kind: 'chatconnectionirc',
+    kind: 'chatconnectionircs',
   };
 
   /**

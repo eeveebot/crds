@@ -47,7 +47,7 @@ export class ipcconfig extends ApiObject implements ipcconfigSpec {
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
-    kind: 'ipcconfig',
+    kind: 'ipcconfigs',
   };
 
   /**

@@ -52,7 +52,7 @@ export class toolbox extends ApiObject implements toolboxSpec {
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
-    kind: 'toolbox',
+    kind: 'toolboxs',
   };
 
   /**
