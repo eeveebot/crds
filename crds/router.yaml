@@ -48,6 +48,9 @@ spec:
                   description: |-
                     MetricsPort defines the port to expose metrics on
                     Default: 8080
+                ipcConfig:
+                  type: string
+                  description: IPC configuration name
                 moduleConfig:
                   type: object
                   properties: {}

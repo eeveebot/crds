@@ -27,6 +27,7 @@ export declare class router extends ApiObject implements routerSpec {
     pullPolicy: string;
     metrics: boolean;
     metricsPort: number;
+    ipcConfig: string;
     moduleConfig?: Record<string, unknown>;
     /**
      * Returns the apiVersion and kind for "router"
@@ -84,6 +85,10 @@ export interface routerSpec {
      * Default: 8080
      */
     metricsPort?: number;
+    /**
+     * IPC configuration name
+     */
+    ipcConfig?: string;
     /**
      * ModuleConfig is a passthrough field for arbitrary YAML configuration
      * that will be passed directly to the router

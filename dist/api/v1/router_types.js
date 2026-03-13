@@ -22,6 +22,7 @@ export class router extends ApiObject {
     pullPolicy;
     metrics;
     metricsPort;
+    ipcConfig;
     moduleConfig;
     /**
      * Returns the apiVersion and kind for "router"
@@ -59,6 +60,7 @@ export class router extends ApiObject {
         this.pullPolicy = props?.spec?.pullPolicy || 'Always';
         this.metrics = props?.spec?.metrics || false;
         this.metricsPort = props?.spec?.metricsPort || 8080;
+        this.ipcConfig = props?.spec?.ipcConfig || '';
         this.moduleConfig = props?.spec?.moduleConfig;
     }
     /**
@@ -93,6 +95,7 @@ export function toJson_routerSpec(obj) {
         pullPolicy: obj.pullPolicy,
         metrics: obj.metrics,
         metricsPort: obj.metricsPort,
+        ipcConfig: obj.ipcConfig,
         moduleConfig: obj.moduleConfig,
     };
     // filter undefined values
