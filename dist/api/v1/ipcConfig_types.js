@@ -23,7 +23,7 @@ export class ipcconfig extends ApiObject {
      */
     static GVK = {
         apiVersion: 'eevee.bot/v1',
-        kind: 'ipcconfig',
+        kind: 'ipcconfigs',
     };
     /**
      * Renders a Kubernetes manifest for "ipcConfig".

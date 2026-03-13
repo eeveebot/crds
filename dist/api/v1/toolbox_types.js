@@ -2,7 +2,7 @@
 import { ApiObject } from 'cdk8s';
 export class ApiResource {
     apiGroup = 'eevee.bot';
-    resourceType = 'toolboxs';
+    resourceType = 'toolboxes';
     /**
      * Return the IApiResource this object represents.
      */
@@ -28,7 +28,7 @@ export class toolbox extends ApiObject {
      */
     static GVK = {
         apiVersion: 'eevee.bot/v1',
-        kind: 'toolbox',
+        kind: 'toolboxes',
     };
     /**
      * Renders a Kubernetes manifest for "toolbox".

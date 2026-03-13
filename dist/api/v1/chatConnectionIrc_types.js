@@ -25,7 +25,7 @@ export class chatconnectionirc extends ApiObject {
      */
     static GVK = {
         apiVersion: 'eevee.bot/v1',
-        kind: 'chatconnectionirc',
+        kind: 'chatconnectionircs',
     };
     /**
      * Renders a Kubernetes manifest for "chatconnectionirc".
