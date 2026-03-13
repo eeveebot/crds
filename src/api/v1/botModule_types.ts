@@ -52,6 +52,7 @@ export class botmodule extends ApiObject implements botmoduleSpec {
   public moduleName: string;
   public persistentVolumeClaim?: V1PersistentVolumeClaimSpec;
   public volumeMountPath: string;
+  public moduleConfig?: Record<string, unknown>;
 
   /**
    * Returns the apiVersion and kind for "botmodule"
@@ -95,6 +96,7 @@ export class botmodule extends ApiObject implements botmoduleSpec {
     this.moduleName = props?.spec?.moduleName || '';
     this.persistentVolumeClaim = props?.spec?.persistentVolumeClaim;
     this.volumeMountPath = props?.spec?.volumeMountPath || '/data';
+    this.moduleConfig = props?.spec?.moduleConfig;
   }
 
   /**
@@ -148,6 +150,7 @@ export function toJson_botmoduleSpec(
     moduleName: obj.moduleName,
     persistentVolumeClaim: obj.persistentVolumeClaim,
     volumeMountPath: obj.volumeMountPath,
+    moduleConfig: obj.moduleConfig,
   };
   // filter undefined values
   return Object.entries(result).reduce(
@@ -207,6 +210,12 @@ export interface botmoduleSpec {
    * Default: "/data"
    */
   volumeMountPath?: string;
+
+  /**
+   * ModuleConfig is a passthrough field for arbitrary YAML configuration
+   * that will be passed directly to the module
+   */
+  moduleConfig?: Record<string, unknown>;
 }
 
 export interface botmoduleStatus {
