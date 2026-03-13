@@ -45,6 +45,7 @@ export class router extends ApiObject implements routerSpec {
   public pullPolicy: string;
   public metrics: boolean;
   public metricsPort: number;
+  public ipcConfig: string;
   public moduleConfig?: Record<string, unknown>;
 
   /**
@@ -85,6 +86,7 @@ export class router extends ApiObject implements routerSpec {
     this.pullPolicy = props?.spec?.pullPolicy || 'Always';
     this.metrics = props?.spec?.metrics || false;
     this.metricsPort = props?.spec?.metricsPort || 8080;
+    this.ipcConfig = props?.spec?.ipcConfig || '';
     this.moduleConfig = props?.spec?.moduleConfig;
   }
 
@@ -135,6 +137,7 @@ export function toJson_routerSpec(
     pullPolicy: obj.pullPolicy,
     metrics: obj.metrics,
     metricsPort: obj.metricsPort,
+    ipcConfig: obj.ipcConfig,
     moduleConfig: obj.moduleConfig,
   };
   // filter undefined values
@@ -174,6 +177,11 @@ export interface routerSpec {
    * Default: 8080
    */
   metricsPort?: number;
+
+  /**
+   * IPC configuration name
+   */
+  ipcConfig?: string;
 
   /**
    * ModuleConfig is a passthrough field for arbitrary YAML configuration
