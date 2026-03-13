@@ -5,3 +5,4 @@ export * as ChatConnectionIrc from './chatConnectionIrc_types.js';
 export * as IpcConfig from './ipcConfig_types.js';
 export * as Toolbox from './toolbox_types.js';
 export * as BotModule from './botModule_types.js';
+export * as Router from './router_types.js';
