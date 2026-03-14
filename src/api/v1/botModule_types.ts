@@ -54,6 +54,7 @@ export class botmodule extends ApiObject implements botmoduleSpec {
   public volumeMountPath: string;
   public moduleConfig?: string;
   public mountOperatorApiToken: boolean;
+  public enabled: boolean;
 
   /**
    * Returns the apiVersion and kind for "botmodule"
@@ -99,6 +100,8 @@ export class botmodule extends ApiObject implements botmoduleSpec {
     this.volumeMountPath = props?.spec?.volumeMountPath || '/data';
     this.moduleConfig = props?.spec?.moduleConfig;
     this.mountOperatorApiToken = props?.spec?.mountOperatorApiToken || false;
+    this.enabled =
+      props?.spec?.enabled !== undefined ? props?.spec?.enabled : true;
   }
 
   /**
@@ -154,6 +157,7 @@ export function toJson_botmoduleSpec(
     volumeMountPath: obj.volumeMountPath,
     moduleConfig: obj.moduleConfig,
     mountOperatorApiToken: obj.mountOperatorApiToken,
+    enabled: obj.enabled,
   };
   // filter undefined values
   return Object.entries(result).reduce(
@@ -225,6 +229,12 @@ export interface botmoduleSpec {
    * Default: false
    */
   mountOperatorApiToken?: boolean;
+
+  /**
+   * Enabled defines whether the botmodule is enabled or disabled
+   * Default: true
+   */
+  enabled?: boolean;
 }
 
 export interface botmoduleStatus {
