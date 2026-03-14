@@ -243,12 +243,9 @@ export interface botmoduleSpec {
   enabled?: boolean;
 
   /**
-   * SecretKeyReference defines optional secrets to be injected as environment variables
+   * EnvSecret defines optional secrets to be injected as environment variables
    */
-  secretKeyReference?: {
-    secret: cdk8splus.k8s.SecretReference;
-    key: string;
-  }[];
+  envSecret: cdk8splus.k8s.SecretReference;
 }
 
 export interface botmoduleStatus {
