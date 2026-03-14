@@ -213,13 +213,13 @@ spec:
 
                     Default: "/data"
                 moduleConfig:
-                  type: object
-                  properties: {}
+                  type: string
                   description: >-
                     ModuleConfig is a passthrough field for arbitrary YAML
                     configuration
 
-                    that will be passed directly to the module
+                    that will be passed directly to the module as a multi-line
+                    string
               required: []
             status:
               type: object
