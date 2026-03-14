@@ -33,6 +33,7 @@ export declare class botmodule extends ApiObject implements botmoduleSpec {
     volumeMountPath: string;
     moduleConfig?: string;
     mountOperatorApiToken: boolean;
+    enabled: boolean;
     /**
      * Returns the apiVersion and kind for "botmodule"
      */
@@ -116,6 +117,11 @@ export interface botmoduleSpec {
      * Default: false
      */
     mountOperatorApiToken?: boolean;
+    /**
+     * Enabled defines whether the botmodule is enabled or disabled
+     * Default: true
+     */
+    enabled?: boolean;
 }
 export interface botmoduleStatus {
     /**

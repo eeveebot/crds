@@ -227,6 +227,11 @@ spec:
                     API token
 
                     Default: false
+                enabled:
+                  type: boolean
+                  description: |-
+                    Enabled defines whether the botmodule is enabled or disabled
+                    Default: true
               required: []
             status:
               type: object
