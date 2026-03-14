@@ -26,6 +26,7 @@ export class botmodule extends ApiObject {
     moduleName;
     persistentVolumeClaim;
     volumeMountPath;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     moduleConfig;
     /**
      * Returns the apiVersion and kind for "botmodule"

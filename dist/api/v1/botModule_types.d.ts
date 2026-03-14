@@ -31,7 +31,7 @@ export declare class botmodule extends ApiObject implements botmoduleSpec {
     moduleName: string;
     persistentVolumeClaim?: V1PersistentVolumeClaimSpec;
     volumeMountPath: string;
-    moduleConfig?: Record<string, unknown>;
+    moduleConfig?: any;
     /**
      * Returns the apiVersion and kind for "botmodule"
      */
@@ -109,7 +109,7 @@ export interface botmoduleSpec {
      * ModuleConfig is a passthrough field for arbitrary YAML configuration
      * that will be passed directly to the module
      */
-    moduleConfig?: Record<string, unknown>;
+    moduleConfig?: any;
 }
 export interface botmoduleStatus {
     /**
