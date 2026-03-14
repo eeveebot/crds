@@ -53,7 +53,7 @@ export class botmodule extends ApiObject implements botmoduleSpec {
   public persistentVolumeClaim?: V1PersistentVolumeClaimSpec;
   public volumeMountPath: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public moduleConfig?: any;
+  public moduleConfig?: Record<string, unknown> ;
 
   /**
    * Returns the apiVersion and kind for "botmodule"
@@ -217,7 +217,7 @@ export interface botmoduleSpec {
    * that will be passed directly to the module
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  moduleConfig?: any;
+  moduleConfig?: Record<string, unknown> ;
 }
 
 export interface botmoduleStatus {
