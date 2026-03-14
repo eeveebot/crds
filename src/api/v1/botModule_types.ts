@@ -55,10 +55,7 @@ export class botmodule extends ApiObject implements botmoduleSpec {
   public moduleConfig?: string;
   public mountOperatorApiToken: boolean;
   public enabled: boolean;
-  public secretKeyReference?: {
-    secret: cdk8splus.k8s.SecretReference;
-    key: string;
-  }[];
+  public envSecret?: cdk8splus.k8s.SecretReference;
 
   /**
    * Returns the apiVersion and kind for "botmodule"
@@ -106,7 +103,7 @@ export class botmodule extends ApiObject implements botmoduleSpec {
     this.mountOperatorApiToken = props?.spec?.mountOperatorApiToken || false;
     this.enabled =
       props?.spec?.enabled !== undefined ? props?.spec?.enabled : true;
-    this.secretKeyReference = props?.spec?.secretKeyReference;
+    this.envSecret = props?.spec?.envSecret;
   }
 
   /**
@@ -163,7 +160,7 @@ export function toJson_botmoduleSpec(
     moduleConfig: obj.moduleConfig,
     mountOperatorApiToken: obj.mountOperatorApiToken,
     enabled: obj.enabled,
-    secretKeyReference: obj.secretKeyReference,
+    envSecret: obj.envSecret,
   };
   // filter undefined values
   return Object.entries(result).reduce(
@@ -245,7 +242,7 @@ export interface botmoduleSpec {
   /**
    * EnvSecret defines optional secrets to be injected as environment variables
    */
-  envSecret: cdk8splus.k8s.SecretReference;
+  envSecret?: cdk8splus.k8s.SecretReference;
 }
 
 export interface botmoduleStatus {
