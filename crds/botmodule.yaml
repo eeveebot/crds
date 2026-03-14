@@ -232,6 +232,18 @@ spec:
                   description: |-
                     Enabled defines whether the botmodule is enabled or disabled
                     Default: true
+                envSecret:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: name is unique within a namespace to reference a secret resource.
+                    namespace:
+                      type: string
+                      description: namespace defines the space within which the secret name must be
+                        unique.
+                  description: EnvSecret defines optional secrets to be injected as environment
+                    variables
               required: []
             status:
               type: object

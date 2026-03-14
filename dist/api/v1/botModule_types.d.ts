@@ -34,6 +34,7 @@ export declare class botmodule extends ApiObject implements botmoduleSpec {
     moduleConfig?: string;
     mountOperatorApiToken: boolean;
     enabled: boolean;
+    envSecret?: cdk8splus.k8s.SecretReference;
     /**
      * Returns the apiVersion and kind for "botmodule"
      */
@@ -122,6 +123,10 @@ export interface botmoduleSpec {
      * Default: true
      */
     enabled?: boolean;
+    /**
+     * EnvSecret defines optional secrets to be injected as environment variables
+     */
+    envSecret?: cdk8splus.k8s.SecretReference;
 }
 export interface botmoduleStatus {
     /**
