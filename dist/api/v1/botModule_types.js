@@ -27,6 +27,7 @@ export class botmodule extends ApiObject {
     persistentVolumeClaim;
     volumeMountPath;
     moduleConfig;
+    mountOperatorApiToken;
     /**
      * Returns the apiVersion and kind for "botmodule"
      */
@@ -68,6 +69,7 @@ export class botmodule extends ApiObject {
         this.persistentVolumeClaim = props?.spec?.persistentVolumeClaim;
         this.volumeMountPath = props?.spec?.volumeMountPath || '/data';
         this.moduleConfig = props?.spec?.moduleConfig;
+        this.mountOperatorApiToken = props?.spec?.mountOperatorApiToken || false;
     }
     /**
      * Renders the object to Kubernetes JSON.
@@ -106,6 +108,7 @@ export function toJson_botmoduleSpec(obj) {
         persistentVolumeClaim: obj.persistentVolumeClaim,
         volumeMountPath: obj.volumeMountPath,
         moduleConfig: obj.moduleConfig,
+        mountOperatorApiToken: obj.mountOperatorApiToken,
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});

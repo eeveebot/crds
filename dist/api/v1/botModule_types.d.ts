@@ -32,6 +32,7 @@ export declare class botmodule extends ApiObject implements botmoduleSpec {
     persistentVolumeClaim?: V1PersistentVolumeClaimSpec;
     volumeMountPath: string;
     moduleConfig?: string;
+    mountOperatorApiToken: boolean;
     /**
      * Returns the apiVersion and kind for "botmodule"
      */
@@ -110,6 +111,11 @@ export interface botmoduleSpec {
      * that will be passed directly to the module as a multi-line string
      */
     moduleConfig?: string;
+    /**
+     * MountOperatorApiToken defines whether to mount the operator API token
+     * Default: false
+     */
+    mountOperatorApiToken?: boolean;
 }
 export interface botmoduleStatus {
     /**

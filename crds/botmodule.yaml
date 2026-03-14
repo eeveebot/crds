@@ -220,6 +220,13 @@ spec:
 
                     that will be passed directly to the module as a multi-line
                     string
+                mountOperatorApiToken:
+                  type: boolean
+                  description: >-
+                    MountOperatorApiToken defines whether to mount the operator
+                    API token
+
+                    Default: false
               required: []
             status:
               type: object
