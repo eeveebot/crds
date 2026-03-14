@@ -53,6 +53,7 @@ export class botmodule extends ApiObject implements botmoduleSpec {
   public persistentVolumeClaim?: V1PersistentVolumeClaimSpec;
   public volumeMountPath: string;
   public moduleConfig?: string;
+  public mountOperatorApiToken: boolean;
 
   /**
    * Returns the apiVersion and kind for "botmodule"
@@ -97,6 +98,7 @@ export class botmodule extends ApiObject implements botmoduleSpec {
     this.persistentVolumeClaim = props?.spec?.persistentVolumeClaim;
     this.volumeMountPath = props?.spec?.volumeMountPath || '/data';
     this.moduleConfig = props?.spec?.moduleConfig;
+    this.mountOperatorApiToken = props?.spec?.mountOperatorApiToken || false;
   }
 
   /**
@@ -151,6 +153,7 @@ export function toJson_botmoduleSpec(
     persistentVolumeClaim: obj.persistentVolumeClaim,
     volumeMountPath: obj.volumeMountPath,
     moduleConfig: obj.moduleConfig,
+    mountOperatorApiToken: obj.mountOperatorApiToken,
   };
   // filter undefined values
   return Object.entries(result).reduce(
@@ -216,6 +219,12 @@ export interface botmoduleSpec {
    * that will be passed directly to the module as a multi-line string
    */
   moduleConfig?: string;
+
+  /**
+   * MountOperatorApiToken defines whether to mount the operator API token
+   * Default: false
+   */
+  mountOperatorApiToken?: boolean;
 }
 
 export interface botmoduleStatus {
