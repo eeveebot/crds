@@ -1,6 +1,6 @@
 import * as cdk8splus from 'cdk8s-plus-33';
 import KubernetesObject from '@thehonker/k8s-operator';
-import { V1ObjectMeta, V1PersistentVolumeClaimSpec } from '@kubernetes/client-node';
+import { V1ObjectMeta, V1PersistentVolumeClaimSpec, V1Probe } from '@kubernetes/client-node';
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
 import { StatusReasons } from './enums/index.mjs';
@@ -35,6 +35,9 @@ export declare class botmodule extends ApiObject implements botmoduleSpec {
     mountOperatorApiToken: boolean;
     enabled: boolean;
     envSecret?: cdk8splus.k8s.SecretReference;
+    livenessProbe?: V1Probe;
+    readinessProbe?: V1Probe;
+    startupProbe?: V1Probe;
     /**
      * Returns the apiVersion and kind for "botmodule"
      */
@@ -127,6 +130,21 @@ export interface botmoduleSpec {
      * EnvSecret defines optional secrets to be injected as environment variables
      */
     envSecret?: cdk8splus.k8s.SecretReference;
+    /**
+     * LivenessProbe defines the liveness probe configuration for the module container.
+     * If not set, the operator will apply default probes.
+     */
+    livenessProbe?: V1Probe;
+    /**
+     * ReadinessProbe defines the readiness probe configuration for the module container.
+     * If not set, the operator will apply default probes.
+     */
+    readinessProbe?: V1Probe;
+    /**
+     * StartupProbe defines the startup probe configuration for the module container.
+     * If not set, no startup probe is configured.
+     */
+    startupProbe?: V1Probe;
 }
 export interface botmoduleStatus {
     /**

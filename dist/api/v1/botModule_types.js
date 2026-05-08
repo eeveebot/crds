@@ -30,6 +30,9 @@ export class botmodule extends ApiObject {
     mountOperatorApiToken;
     enabled;
     envSecret;
+    livenessProbe;
+    readinessProbe;
+    startupProbe;
     /**
      * Returns the apiVersion and kind for "botmodule"
      */
@@ -75,6 +78,9 @@ export class botmodule extends ApiObject {
         this.enabled =
             props?.spec?.enabled !== undefined ? props?.spec?.enabled : true;
         this.envSecret = props?.spec?.envSecret;
+        this.livenessProbe = props?.spec?.livenessProbe;
+        this.readinessProbe = props?.spec?.readinessProbe;
+        this.startupProbe = props?.spec?.startupProbe;
     }
     /**
      * Renders the object to Kubernetes JSON.
@@ -116,6 +122,9 @@ export function toJson_botmoduleSpec(obj) {
         mountOperatorApiToken: obj.mountOperatorApiToken,
         enabled: obj.enabled,
         envSecret: obj.envSecret,
+        livenessProbe: obj.livenessProbe,
+        readinessProbe: obj.readinessProbe,
+        startupProbe: obj.startupProbe,
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
