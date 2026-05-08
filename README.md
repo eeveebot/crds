@@ -74,6 +74,9 @@ npm install @eeveebot/crds
 | `spec.mountOperatorApiToken` | boolean | `false` | Mount the operator API token into the pod |
 | `spec.enabled` | boolean | `true` | Whether the module is active |
 | `spec.envSecret` | object | — | Kubernetes Secret reference (`name` + `namespace`) injected as env vars |
+| `spec.livenessProbe` | object | — | Custom liveness probe (standard Kubernetes `V1Probe`). Default: HTTP GET `/health` on `metricsPort` |
+| `spec.readinessProbe` | object | — | Custom readiness probe (standard Kubernetes `V1Probe`). Default: HTTP GET `/health` on `metricsPort` |
+| `spec.startupProbe` | object | — | Custom startup probe (standard Kubernetes `V1Probe`). Default: none |
 
 **Status fields** (`status` subresource):
 
