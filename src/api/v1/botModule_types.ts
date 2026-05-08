@@ -10,6 +10,7 @@ import KubernetesObject from '@thehonker/k8s-operator';
 import {
   V1ObjectMeta,
   V1PersistentVolumeClaimSpec,
+  V1Probe,
 } from '@kubernetes/client-node';
 
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
@@ -56,6 +57,9 @@ export class botmodule extends ApiObject implements botmoduleSpec {
   public mountOperatorApiToken: boolean;
   public enabled: boolean;
   public envSecret?: cdk8splus.k8s.SecretReference;
+  public livenessProbe?: V1Probe;
+  public readinessProbe?: V1Probe;
+  public startupProbe?: V1Probe;
 
   /**
    * Returns the apiVersion and kind for "botmodule"
@@ -104,6 +108,9 @@ export class botmodule extends ApiObject implements botmoduleSpec {
     this.enabled =
       props?.spec?.enabled !== undefined ? props?.spec?.enabled : true;
     this.envSecret = props?.spec?.envSecret;
+    this.livenessProbe = props?.spec?.livenessProbe;
+    this.readinessProbe = props?.spec?.readinessProbe;
+    this.startupProbe = props?.spec?.startupProbe;
   }
 
   /**
@@ -161,6 +168,9 @@ export function toJson_botmoduleSpec(
     mountOperatorApiToken: obj.mountOperatorApiToken,
     enabled: obj.enabled,
     envSecret: obj.envSecret,
+    livenessProbe: obj.livenessProbe,
+    readinessProbe: obj.readinessProbe,
+    startupProbe: obj.startupProbe,
   };
   // filter undefined values
   return Object.entries(result).reduce(
@@ -243,6 +253,24 @@ export interface botmoduleSpec {
    * EnvSecret defines optional secrets to be injected as environment variables
    */
   envSecret?: cdk8splus.k8s.SecretReference;
+
+  /**
+   * LivenessProbe defines the liveness probe configuration for the module container.
+   * If not set, the operator will apply default probes.
+   */
+  livenessProbe?: V1Probe;
+
+  /**
+   * ReadinessProbe defines the readiness probe configuration for the module container.
+   * If not set, the operator will apply default probes.
+   */
+  readinessProbe?: V1Probe;
+
+  /**
+   * StartupProbe defines the startup probe configuration for the module container.
+   * If not set, no startup probe is configured.
+   */
+  startupProbe?: V1Probe;
 }
 
 export interface botmoduleStatus {
