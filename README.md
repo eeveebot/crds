@@ -65,7 +65,7 @@ npm install @eeveebot/crds
 | `spec.image` | string | `ghcr.io/eeveebot/echo:latest` | Container image to deploy |
 | `spec.pullPolicy` | string | `"Always"` | Kubernetes image pull policy |
 | `spec.metrics` | boolean | `false` | Enable Prometheus-style metrics endpoint |
-| `spec.metricsPort` | number | `8080` | Port for the metrics server |
+| `spec.metricsPort` | number |  `9000` | Port for the metrics server |
 | `spec.ipcConfig` | string | — | Name of an `ipcconfig` resource for IPC setup |
 | `spec.moduleName` | string | — | Logical name of the module (e.g. `echo`, `dice`) |
 | `spec.persistentVolumeClaim` | object | — | Full PVC spec (access modes, storage class, resources, selector, etc.) |
@@ -99,7 +99,7 @@ spec:
   enabled: true
   ipcConfig: default-ipc
   metrics: true
-  metricsPort: 8080
+  metricsPort: 9000
   persistentVolumeClaim:
     accessModes:
       - ReadWriteOnce
