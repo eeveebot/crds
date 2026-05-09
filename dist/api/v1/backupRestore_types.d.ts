@@ -76,6 +76,13 @@ export interface backuprestoreSpec {
      * (determined by listing objects and selecting the most recent by S3 LastModified).
      */
     backupId?: string;
+    /**
+     * If true, the restore script will delete all existing data in the PVC
+     * before extracting the backup archive. This ensures a clean restore
+     * with no leftover files from a previous state.
+     * Default: false
+     */
+    cleanRestore?: boolean;
 }
 export type backuprestoreStatusCondition = {
     /**

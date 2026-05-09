@@ -89,6 +89,7 @@ export function toJson_backuprestoreSpec(obj) {
         s3Store: toJson_S3StoreReference(obj.s3Store),
         image: obj.image,
         backupId: obj.backupId,
+        cleanRestore: obj.cleanRestore,
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});

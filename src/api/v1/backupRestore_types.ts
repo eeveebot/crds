@@ -130,6 +130,7 @@ export function toJson_backuprestoreSpec(
     s3Store: toJson_S3StoreReference(obj.s3Store),
     image: obj.image,
     backupId: obj.backupId,
+    cleanRestore: obj.cleanRestore,
   };
   // filter undefined values
   return Object.entries(result).reduce(
@@ -163,6 +164,14 @@ export interface backuprestoreSpec {
    * (determined by listing objects and selecting the most recent by S3 LastModified).
    */
   backupId?: string;
+
+  /**
+   * If true, the restore script will delete all existing data in the PVC
+   * before extracting the backup archive. This ensures a clean restore
+   * with no leftover files from a previous state.
+   * Default: false
+   */
+  cleanRestore?: boolean;
 }
 
 export type backuprestoreStatusCondition = {
