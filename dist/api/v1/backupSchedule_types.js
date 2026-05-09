@@ -104,12 +104,7 @@ export function toJson_backupscheduleStatus(obj) {
         return undefined;
     }
     const result = {
-        lastTransitionTime: obj.lastTransitionTime,
-        message: obj.message,
-        reason: obj.reason,
-        observedGeneration: obj.observedGeneration,
-        lastBackup: obj.lastBackup,
-        cronJobName: obj.cronJobName,
+        conditions: obj.conditions,
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});

@@ -117,13 +117,7 @@ export function toJson_backuprestoreStatus(obj) {
         return undefined;
     }
     const result = {
-        lastTransitionTime: obj.lastTransitionTime,
-        message: obj.message,
-        reason: obj.reason,
-        observedGeneration: obj.observedGeneration,
-        jobName: obj.jobName,
-        restoredBackupId: obj.restoredBackupId,
-        phase: obj.phase,
+        conditions: obj.conditions,
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});

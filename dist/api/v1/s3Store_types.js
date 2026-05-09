@@ -113,11 +113,7 @@ export function toJson_s3storeStatus(obj) {
         return undefined;
     }
     const result = {
-        lastTransitionTime: obj.lastTransitionTime,
-        message: obj.message,
-        reason: obj.reason,
-        observedGeneration: obj.observedGeneration,
-        lastConnectionTest: obj.lastConnectionTest,
+        conditions: obj.conditions,
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});

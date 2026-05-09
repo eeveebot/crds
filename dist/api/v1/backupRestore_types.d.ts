@@ -3,7 +3,6 @@ import KubernetesObject from '@thehonker/k8s-operator';
 import { V1ObjectMeta } from '@kubernetes/client-node';
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
-import { StatusReasons } from './enums/index.mjs';
 export interface backuprestoreResource extends KubernetesObject {
     spec: backuprestoreSpec;
     status: backuprestoreStatus;
@@ -91,36 +90,34 @@ export interface backuprestoreSpec {
      */
     backupId?: string;
 }
-export interface backuprestoreStatus {
+export type backuprestoreStatusCondition = {
     /**
-     * lastTransitionTime is the last time the condition transitioned from one status to another. This is not guaranteed to be set in happensBefore order across different conditions for a given object. It may be unset in some circumstances.
+     * type of condition in CamelCase or in foo.example.com/CamelCase.
      */
-    lastTransitionTime: Date;
+    type: string;
     /**
-     * message is a human readable message indicating details about the transition. This may be an empty string.
+     * status of the condition, one of True, False, Unknown.
      */
-    message: string;
+    status: string;
     /**
      * reason contains a programmatic identifier indicating the reason for the condition's last transition.
      */
-    reason: StatusReasons;
+    reason: string;
     /**
-     * observedGeneration
+     * message is a human readable message indicating details about the transition.
+     */
+    message: string;
+    /**
+     * lastTransitionTime is the last time the condition transitioned from one status to another.
+     */
+    lastTransitionTime: string;
+    /**
+     * observedGeneration represents the .metadata.generation that the condition was set based upon.
      */
     observedGeneration?: number;
-    /**
-     * Name of the managed K8s Job
-     */
-    jobName?: string;
-    /**
-     * UUID of the backup that was restored
-     */
-    restoredBackupId?: string;
-    /**
-     * Phase of the restore operation
-     * (Pending, Running, Succeeded, Failed)
-     */
-    phase?: string;
+};
+export interface backuprestoreStatus {
+    conditions: backuprestoreStatusCondition[];
 }
 export declare function toJson_backuprestoreStatus(obj: backuprestoreStatus | undefined): Record<string, unknown> | undefined;
 export declare const details: {

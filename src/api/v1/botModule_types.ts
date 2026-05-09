@@ -16,8 +16,6 @@ import {
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
 
-import { StatusReasons } from './enums/index.mjs';
-
 export interface botmoduleResource extends KubernetesObject {
   spec: botmoduleSpec;
   status: botmoduleStatus;
@@ -370,26 +368,35 @@ export function toJson_S3StoreReference(
   );
 }
 
-export interface botmoduleStatus {
+export type botmoduleStatusCondition = {
   /**
-   * lastTransitionTime is the last time the condition transitioned from one status to another. This is not guaranteed to be set in happensBefore order across different conditions for a given object. It may be unset in some circumstances.
+   * type of condition in CamelCase or in foo.example.com/CamelCase.
    */
-  lastTransitionTime: Date;
-
+  type: string;
   /**
-   * message is a human readable message indicating details about the transition. This may be an empty string.
+   * status of the condition, one of True, False, Unknown.
    */
-  message: string;
-
+  status: string;
   /**
    * reason contains a programmatic identifier indicating the reason for the condition's last transition.
    */
-  reason: StatusReasons;
-
+  reason: string;
   /**
-   * observedGeneration
+   * message is a human readable message indicating details about the transition.
+   */
+  message: string;
+  /**
+   * lastTransitionTime is the last time the condition transitioned from one status to another.
+   */
+  lastTransitionTime: string;
+  /**
+   * observedGeneration represents the .metadata.generation that the condition was set based upon.
    */
   observedGeneration?: number;
+};
+
+export interface botmoduleStatus {
+  conditions: botmoduleStatusCondition[];
 }
 
 export function toJson_botmoduleStatus(
@@ -399,10 +406,7 @@ export function toJson_botmoduleStatus(
     return undefined;
   }
   const result = {
-    lastTransitionTime: obj.lastTransitionTime,
-    message: obj.message,
-    reason: obj.reason,
-    observedGeneration: obj.observedGeneration,
+    conditions: obj.conditions,
   };
   // filter undefined values
   return Object.entries(result).reduce(

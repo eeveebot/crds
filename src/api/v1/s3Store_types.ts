@@ -12,8 +12,6 @@ import { V1ObjectMeta } from '@kubernetes/client-node';
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
 
-import { StatusReasons } from './enums/index.mjs';
-
 export interface s3storeResource extends KubernetesObject {
   spec: s3storeSpec;
   status: s3storeStatus;
@@ -211,31 +209,35 @@ export interface s3storeSpec {
   pathStyle?: boolean;
 }
 
-export interface s3storeStatus {
+export type s3storeStatusCondition = {
   /**
-   * lastTransitionTime is the last time the condition transitioned from one status to another. This is not guaranteed to be set in happensBefore order across different conditions for a given object. It may be unset in some circumstances.
+   * type of condition in CamelCase or in foo.example.com/CamelCase.
    */
-  lastTransitionTime: Date;
-
+  type: string;
   /**
-   * message is a human readable message indicating details about the transition. This may be an empty string.
+   * status of the condition, one of True, False, Unknown.
    */
-  message: string;
-
+  status: string;
   /**
    * reason contains a programmatic identifier indicating the reason for the condition's last transition.
    */
-  reason: StatusReasons;
-
+  reason: string;
   /**
-   * observedGeneration
+   * message is a human readable message indicating details about the transition.
+   */
+  message: string;
+  /**
+   * lastTransitionTime is the last time the condition transitioned from one status to another.
+   */
+  lastTransitionTime: string;
+  /**
+   * observedGeneration represents the .metadata.generation that the condition was set based upon.
    */
   observedGeneration?: number;
+};
 
-  /**
-   * Timestamp of the last successful connection test to the S3 endpoint
-   */
-  lastConnectionTest?: string;
+export interface s3storeStatus {
+  conditions: s3storeStatusCondition[];
 }
 
 export function toJson_s3storeStatus(
@@ -245,11 +247,7 @@ export function toJson_s3storeStatus(
     return undefined;
   }
   const result = {
-    lastTransitionTime: obj.lastTransitionTime,
-    message: obj.message,
-    reason: obj.reason,
-    observedGeneration: obj.observedGeneration,
-    lastConnectionTest: obj.lastConnectionTest,
+    conditions: obj.conditions,
   };
   // filter undefined values
   return Object.entries(result).reduce(
