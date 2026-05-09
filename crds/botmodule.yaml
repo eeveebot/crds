@@ -652,6 +652,48 @@ spec:
                     module container.
 
                     If not set, no startup probe is configured.
+                backupSchedule:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: Name of the backupschedule resource in the same namespace
+                  required:
+                    - name
+                  description: >-
+                    Optional reference to a backupschedule. When set, the
+                    operator will
+
+                    configure the backup CronJob to target this module's PVC.
+                bootstrapFromBackup:
+                  type: object
+                  properties:
+                    s3Store:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: Name of the s3store resource in the same namespace
+                      required:
+                        - name
+                      description: Reference to the s3store CR instance containing the backup
+                    image:
+                      type: string
+                      description: |-
+                        Container image to use for the restore job
+                        (e.g. "ghcr.io/eevee/backup:latest")
+                  required:
+                    - s3Store
+                    - image
+                  description: >-
+                    When set, the operator will restore the latest backup from
+                    S3 into
+
+                    this module's PVC before starting the deployment for the
+                    first time.
+
+                    Subsequent reconciliations ignore this field (no
+                    re-restore).
               required: []
             status:
               type: object

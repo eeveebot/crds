@@ -60,6 +60,8 @@ export class botmodule extends ApiObject implements botmoduleSpec {
   public livenessProbe?: V1Probe;
   public readinessProbe?: V1Probe;
   public startupProbe?: V1Probe;
+  public backupSchedule?: BackupScheduleReference;
+  public bootstrapFromBackup?: BootstrapFromBackup;
 
   /**
    * Returns the apiVersion and kind for "botmodule"
@@ -111,6 +113,8 @@ export class botmodule extends ApiObject implements botmoduleSpec {
     this.livenessProbe = props?.spec?.livenessProbe;
     this.readinessProbe = props?.spec?.readinessProbe;
     this.startupProbe = props?.spec?.startupProbe;
+    this.backupSchedule = props?.spec?.backupSchedule;
+    this.bootstrapFromBackup = props?.spec?.bootstrapFromBackup;
   }
 
   /**
@@ -171,6 +175,8 @@ export function toJson_botmoduleSpec(
     livenessProbe: obj.livenessProbe,
     readinessProbe: obj.readinessProbe,
     startupProbe: obj.startupProbe,
+    backupSchedule: toJson_BackupScheduleReference(obj.backupSchedule),
+    bootstrapFromBackup: toJson_BootstrapFromBackup(obj.bootstrapFromBackup),
   };
   // filter undefined values
   return Object.entries(result).reduce(
@@ -271,6 +277,97 @@ export interface botmoduleSpec {
    * If not set, no startup probe is configured.
    */
   startupProbe?: V1Probe;
+
+  /**
+   * Optional reference to a backupschedule. When set, the operator will
+   * configure the backup CronJob to target this module's PVC.
+   */
+  backupSchedule?: BackupScheduleReference;
+
+  /**
+   * When set, the operator will restore the latest backup from S3 into
+   * this module's PVC before starting the deployment for the first time.
+   * Subsequent reconciliations ignore this field (no re-restore).
+   */
+  bootstrapFromBackup?: BootstrapFromBackup;
+}
+
+// --- Nested types for backup fields ---
+
+export interface BackupScheduleReference {
+  /**
+   * Name of the backupschedule resource in the same namespace
+   */
+  name: string;
+}
+
+export function toJson_BackupScheduleReference(
+  obj: BackupScheduleReference | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
+  const result = {
+    name: obj.name,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
+}
+
+export interface BootstrapFromBackup {
+  /**
+   * Reference to the s3store CR instance containing the backup
+   */
+  s3Store: S3StoreReference;
+
+  /**
+   * Container image to use for the restore job
+   * (e.g. "ghcr.io/eevee/backup:latest")
+   */
+  image: string;
+}
+
+export function toJson_BootstrapFromBackup(
+  obj: BootstrapFromBackup | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
+  const result = {
+    s3Store: toJson_S3StoreReference(obj.s3Store),
+    image: obj.image,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
+}
+
+export interface S3StoreReference {
+  /**
+   * Name of the s3store resource in the same namespace
+   */
+  name: string;
+}
+
+export function toJson_S3StoreReference(
+  obj: S3StoreReference | undefined
+): Record<string, unknown> | undefined {
+  if (obj === undefined) {
+    return undefined;
+  }
+  const result = {
+    name: obj.name,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce(
+    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
+    {}
+  );
 }
 
 export interface botmoduleStatus {

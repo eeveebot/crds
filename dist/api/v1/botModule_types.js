@@ -33,6 +33,8 @@ export class botmodule extends ApiObject {
     livenessProbe;
     readinessProbe;
     startupProbe;
+    backupSchedule;
+    bootstrapFromBackup;
     /**
      * Returns the apiVersion and kind for "botmodule"
      */
@@ -81,6 +83,8 @@ export class botmodule extends ApiObject {
         this.livenessProbe = props?.spec?.livenessProbe;
         this.readinessProbe = props?.spec?.readinessProbe;
         this.startupProbe = props?.spec?.startupProbe;
+        this.backupSchedule = props?.spec?.backupSchedule;
+        this.bootstrapFromBackup = props?.spec?.bootstrapFromBackup;
     }
     /**
      * Renders the object to Kubernetes JSON.
@@ -125,6 +129,39 @@ export function toJson_botmoduleSpec(obj) {
         livenessProbe: obj.livenessProbe,
         readinessProbe: obj.readinessProbe,
         startupProbe: obj.startupProbe,
+        backupSchedule: toJson_BackupScheduleReference(obj.backupSchedule),
+        bootstrapFromBackup: toJson_BootstrapFromBackup(obj.bootstrapFromBackup),
+    };
+    // filter undefined values
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
+}
+export function toJson_BackupScheduleReference(obj) {
+    if (obj === undefined) {
+        return undefined;
+    }
+    const result = {
+        name: obj.name,
+    };
+    // filter undefined values
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
+}
+export function toJson_BootstrapFromBackup(obj) {
+    if (obj === undefined) {
+        return undefined;
+    }
+    const result = {
+        s3Store: toJson_S3StoreReference(obj.s3Store),
+        image: obj.image,
+    };
+    // filter undefined values
+    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
+}
+export function toJson_S3StoreReference(obj) {
+    if (obj === undefined) {
+        return undefined;
+    }
+    const result = {
+        name: obj.name,
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});

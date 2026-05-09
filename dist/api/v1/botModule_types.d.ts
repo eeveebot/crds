@@ -38,6 +38,8 @@ export declare class botmodule extends ApiObject implements botmoduleSpec {
     livenessProbe?: V1Probe;
     readinessProbe?: V1Probe;
     startupProbe?: V1Probe;
+    backupSchedule?: BackupScheduleReference;
+    bootstrapFromBackup?: BootstrapFromBackup;
     /**
      * Returns the apiVersion and kind for "botmodule"
      */
@@ -145,7 +147,44 @@ export interface botmoduleSpec {
      * If not set, no startup probe is configured.
      */
     startupProbe?: V1Probe;
+    /**
+     * Optional reference to a backupschedule. When set, the operator will
+     * configure the backup CronJob to target this module's PVC.
+     */
+    backupSchedule?: BackupScheduleReference;
+    /**
+     * When set, the operator will restore the latest backup from S3 into
+     * this module's PVC before starting the deployment for the first time.
+     * Subsequent reconciliations ignore this field (no re-restore).
+     */
+    bootstrapFromBackup?: BootstrapFromBackup;
 }
+export interface BackupScheduleReference {
+    /**
+     * Name of the backupschedule resource in the same namespace
+     */
+    name: string;
+}
+export declare function toJson_BackupScheduleReference(obj: BackupScheduleReference | undefined): Record<string, unknown> | undefined;
+export interface BootstrapFromBackup {
+    /**
+     * Reference to the s3store CR instance containing the backup
+     */
+    s3Store: S3StoreReference;
+    /**
+     * Container image to use for the restore job
+     * (e.g. "ghcr.io/eevee/backup:latest")
+     */
+    image: string;
+}
+export declare function toJson_BootstrapFromBackup(obj: BootstrapFromBackup | undefined): Record<string, unknown> | undefined;
+export interface S3StoreReference {
+    /**
+     * Name of the s3store resource in the same namespace
+     */
+    name: string;
+}
+export declare function toJson_S3StoreReference(obj: S3StoreReference | undefined): Record<string, unknown> | undefined;
 export interface botmoduleStatus {
     /**
      * lastTransitionTime is the last time the condition transitioned from one status to another. This is not guaranteed to be set in happensBefore order across different conditions for a given object. It may be unset in some circumstances.
