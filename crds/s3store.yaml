@@ -1,0 +1,117 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: s3stores.eevee.bot
+spec:
+  group: eevee.bot
+  names:
+    kind: s3store
+    plural: s3stores
+    singular: s3store
+    shortNames:
+      - s3store
+  scope: Namespaced
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              description: s3storeSpec defines the desired state of s3store
+              properties:
+                endpoint:
+                  type: string
+                  description: >-
+                    S3-compatible endpoint URL
+
+                    (e.g. "https://s3.amazonaws.com" or
+                    "https://minio.example.com")
+                accessId:
+                  type: object
+                  properties:
+                    secretKeyRef:
+                      type: object
+                      properties:
+                        secret:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              description: name is unique within a namespace to reference a secret resource.
+                            namespace:
+                              type: string
+                              description: namespace defines the space within which the secret name must be
+                                unique.
+                        key:
+                          type: string
+                      required:
+                        - secret
+                        - key
+                      description: Reference to a K8s Secret containing the credential value
+                  required:
+                    - secretKeyRef
+                  description: Reference to a Secret containing the S3 access key ID
+                accessKey:
+                  type: object
+                  properties:
+                    secretKeyRef:
+                      type: object
+                      properties:
+                        secret:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              description: name is unique within a namespace to reference a secret resource.
+                            namespace:
+                              type: string
+                              description: namespace defines the space within which the secret name must be
+                                unique.
+                        key:
+                          type: string
+                      required:
+                        - secret
+                        - key
+                      description: Reference to a K8s Secret containing the credential value
+                  required:
+                    - secretKeyRef
+                  description: Reference to a Secret containing the S3 secret access key
+                bucket:
+                  type: string
+                  description: S3 bucket name
+                prefix:
+                  type: string
+                  description: |-
+                    Common file prefix within the bucket for all objects
+                    managed by this store (e.g. "eevee/backups/")
+                pathStyle:
+                  type: boolean
+                  description: |-
+                    Use path-style addressing (host_base/bucket) instead of
+                    virtual-hosted-style (bucket.host_base). Required for MinIO
+                    and many S3-compatible stores.
+                    Default: false
+              required:
+                - endpoint
+                - accessId
+                - accessKey
+                - bucket
+            status:
+              type: object
+              description: s3storeStatus defines the observed state of s3store
+              properties:
+                conditions:
+                  type: array
+                  description: Conditions describing the current state
+                  items:
+                    type: object
+                    description: Condition contains details for one aspect of the current state of
+                      this API Resource.
+                    properties: {}
+                    required: []
+      subresources:
+        status: {}

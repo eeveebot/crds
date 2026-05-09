@@ -1,0 +1,65 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: backupschedules.eevee.bot
+spec:
+  group: eevee.bot
+  names:
+    kind: backupschedule
+    plural: backupschedules
+    singular: backupschedule
+    shortNames:
+      - backupschedule
+  scope: Namespaced
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              description: backupscheduleSpec defines the desired state of backupschedule
+              properties:
+                schedule:
+                  type: string
+                  description: >-
+                    Crontab-style schedule expression (e.g. "0 2 * * *" for
+                    daily at 2am).
+
+                    Translated directly to the CronJob schedule.
+                s3Store:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: Name of the s3store resource in the same namespace
+                  required:
+                    - name
+                  description: Reference to the s3store CR instance
+                image:
+                  type: string
+                  description: |-
+                    Container image to use for the backup job
+                    (e.g. "ghcr.io/eevee/backup:latest")
+              required:
+                - schedule
+                - s3Store
+                - image
+            status:
+              type: object
+              description: backupscheduleStatus defines the observed state of backupschedule
+              properties:
+                conditions:
+                  type: array
+                  description: Conditions describing the current state
+                  items:
+                    type: object
+                    description: Condition contains details for one aspect of the current state of
+                      this API Resource.
+                    properties: {}
+                    required: []
+      subresources:
+        status: {}
