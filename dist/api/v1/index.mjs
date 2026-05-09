@@ -4,3 +4,4 @@ export * as IpcConfig from './ipcConfig_types.js';
 export * as BotModule from './botModule_types.js';
 export * as S3Store from './s3Store_types.js';
 export * as BackupSchedule from './backupSchedule_types.js';
+export * as BackupRestore from './backupRestore_types.js';
