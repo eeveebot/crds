@@ -1,6 +1,6 @@
 'use strict';
 
-// Kind: s3store
+// Kind: S3Store
 // Group: eevee
 // Version: v1
 // Domain: bot
@@ -12,9 +12,9 @@ import { V1ObjectMeta } from '@kubernetes/client-node';
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
 
-export interface s3storeResource extends KubernetesObject {
-  spec: s3storeSpec;
-  status: s3storeStatus;
+export interface S3StoreResource extends KubernetesObject {
+  spec: S3StoreSpec;
+  status: S3StoreStatus;
   metadata?: V1ObjectMeta | undefined;
 }
 
@@ -37,12 +37,13 @@ export class ApiResource implements cdk8splus.IApiResource {
   }
 }
 
-export class s3store extends ApiObject implements s3storeSpec {
+export class S3Store extends ApiObject implements S3StoreSpec {
   public endpoint: string;
   public accessId: S3SecretKeyRef;
   public accessKey: S3SecretKeyRef;
   public bucket: string;
   public prefix?: string;
+  public region?: string;
   public pathStyle?: boolean;
 
   /**
@@ -50,32 +51,32 @@ export class s3store extends ApiObject implements s3storeSpec {
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
-    kind: 's3stores',
+    kind: 'S3Store',
   };
 
   /**
-   * Renders a Kubernetes manifest for "s3store".
+   * Renders a Kubernetes manifest for "S3Store".
    *
    * This can be used to inline resource manifests inside other objects (e.g. as templates).
    *
    * @param props initialization props
    */
-  public static manifest(props: s3storeProps): unknown {
+  public static manifest(props: S3StoreProps): unknown {
     return {
-      ...s3store.GVK,
-      ...toJson_s3storeProps(props),
+      ...S3Store.GVK,
+      ...toJson_S3StoreProps(props),
     };
   }
 
   /**
-   * Defines a "s3store" API object
+   * Defines a "S3Store" API object
    * @param scope the scope in which to define this object
    * @param id a scope-local name for the object
    * @param props initialization props
    */
-  public constructor(scope: Construct, id: string, props: s3storeProps) {
+  public constructor(scope: Construct, id: string, props: S3StoreProps) {
     super(scope, id, {
-      ...s3store.GVK,
+      ...S3Store.GVK,
       ...props,
     });
     this.endpoint = props?.spec?.endpoint || '';
@@ -83,6 +84,7 @@ export class s3store extends ApiObject implements s3storeSpec {
     this.accessKey = props?.spec?.accessKey!;
     this.bucket = props?.spec?.bucket || '';
     this.prefix = props?.spec?.prefix;
+    this.region = props?.spec?.region;
     this.pathStyle = props?.spec?.pathStyle || false;
   }
 
@@ -93,26 +95,26 @@ export class s3store extends ApiObject implements s3storeSpec {
     const resolved = super.toJson();
 
     return {
-      ...s3store.GVK,
-      ...toJson_s3storeProps(resolved),
+      ...S3Store.GVK,
+      ...toJson_S3StoreProps(resolved),
     };
   }
 }
 
-export interface s3storeProps {
+export interface S3StoreProps {
   readonly metadata?: ApiObjectMetadata;
-  readonly spec?: s3storeSpec;
+  readonly spec?: S3StoreSpec;
 }
 
-export function toJson_s3storeProps(
-  obj: s3storeProps | undefined
+export function toJson_S3StoreProps(
+  obj: S3StoreProps | undefined
 ): Record<string, unknown> | undefined {
   if (obj === undefined) {
     return undefined;
   }
   const result = {
     metadata: obj.metadata,
-    spec: toJson_s3storeSpec(obj.spec),
+    spec: toJson_S3StoreSpec(obj.spec),
   };
   // filter undefined values
   return Object.entries(result).reduce(
@@ -121,8 +123,8 @@ export function toJson_s3storeProps(
   );
 }
 
-export function toJson_s3storeSpec(
-  obj: s3storeSpec | undefined
+export function toJson_S3StoreSpec(
+  obj: S3StoreSpec | undefined
 ): Record<string, unknown> | undefined {
   if (obj === undefined) {
     return undefined;
@@ -133,6 +135,7 @@ export function toJson_s3storeSpec(
     accessKey: toJson_S3SecretKeyRef(obj.accessKey),
     bucket: obj.bucket,
     prefix: obj.prefix,
+    region: obj.region,
     pathStyle: obj.pathStyle,
   };
   // filter undefined values
@@ -172,7 +175,7 @@ export function toJson_S3SecretKeyRef(
 
 // --- Spec & Status interfaces ---
 
-export interface s3storeSpec {
+export interface S3StoreSpec {
   /**
    * S3-compatible endpoint URL
    * (e.g. "https://s3.amazonaws.com" or "https://minio.example.com")
@@ -201,6 +204,14 @@ export interface s3storeSpec {
   prefix?: string;
 
   /**
+   * S3 region. For AWS, this should match the bucket region.
+   * For S3-compatible stores (MinIO, Garage, etc.) the region
+   * may not matter — `us-east-1` is used as a default.
+   * Default: "us-east-1"
+   */
+  region?: string;
+
+  /**
    * Use path-style addressing (host_base/bucket) instead of
    * virtual-hosted-style (bucket.host_base). Required for MinIO
    * and many S3-compatible stores.
@@ -209,7 +220,7 @@ export interface s3storeSpec {
   pathStyle?: boolean;
 }
 
-export type s3storeStatusCondition = {
+export type S3StoreStatusCondition = {
   /**
    * type of condition in CamelCase or in foo.example.com/CamelCase.
    */
@@ -236,12 +247,12 @@ export type s3storeStatusCondition = {
   observedGeneration?: number;
 };
 
-export interface s3storeStatus {
-  conditions: s3storeStatusCondition[];
+export interface S3StoreStatus {
+  conditions: S3StoreStatusCondition[];
 }
 
-export function toJson_s3storeStatus(
-  obj: s3storeStatus | undefined
+export function toJson_S3StoreStatus(
+  obj: S3StoreStatus | undefined
 ): Record<string, unknown> | undefined {
   if (obj === undefined) {
     return undefined;
@@ -257,10 +268,10 @@ export function toJson_s3storeStatus(
 }
 
 export const details = {
-  name: 's3store',
+  name: 'S3Store',
   plural: 's3stores',
   group: 'eevee.bot',
   version: 'v1',
   scope: 'Namespaced',
-  shortName: 's3store',
+  shortName: 'S3Store',
 };

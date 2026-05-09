@@ -5,11 +5,11 @@ metadata:
 spec:
   group: eevee.bot
   names:
-    kind: ipcconfig
+    kind: IpcConfig
     plural: ipcconfigs
     singular: ipcconfig
     shortNames:
-      - ipcconfig
+      - IpcConfig
   scope: Namespaced
   versions:
     - name: v1
@@ -21,7 +21,7 @@ spec:
           properties:
             spec:
               type: object
-              description: ipcconfigSpec defines the desired state of ipcconfig
+              description: IpcConfigSpec defines the desired state of IpcConfig
               properties:
                 nats:
                   type: object
@@ -70,7 +70,7 @@ spec:
               required: []
             status:
               type: object
-              description: ipcconfigStatus defines the observed state of ipcconfig
+              description: IpcConfigStatus defines the observed state of IpcConfig
               properties:
                 conditions:
                   type: array

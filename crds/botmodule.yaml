@@ -5,23 +5,35 @@ metadata:
 spec:
   group: eevee.bot
   names:
-    kind: botmodule
+    kind: BotModule
     plural: botmodules
     singular: botmodule
     shortNames:
-      - botmodule
+      - BotModule
   scope: Namespaced
   versions:
     - name: v1
       served: true
       storage: true
+      additionalPrinterColumns:
+        - name: Image
+          type: string
+          jsonPath: .spec.image
+        - name: Ready
+          type: string
+          jsonPath: .status.conditions[?(@.type=="Ready")].status
+          description: Whether the BotModule is ready
+        - name: Size
+          type: integer
+          jsonPath: .spec.size
+          description: Number of instances
       schema:
         openAPIV3Schema:
           type: object
           properties:
             spec:
               type: object
-              description: botmoduleSpec defines the desired state of botmodule
+              description: BotModuleSpec defines the desired state of BotModule
               properties:
                 size:
                   type: number
@@ -697,7 +709,7 @@ spec:
               required: []
             status:
               type: object
-              description: botmoduleStatus defines the observed state of botmodule
+              description: BotModuleStatus defines the observed state of BotModule
               properties:
                 conditions:
                   type: array

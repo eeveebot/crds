@@ -16,22 +16,23 @@ export class ApiResource {
         return undefined;
     }
 }
-export class s3store extends ApiObject {
+export class S3Store extends ApiObject {
     endpoint;
     accessId;
     accessKey;
     bucket;
     prefix;
+    region;
     pathStyle;
     /**
      * Returns the apiVersion and kind for "s3store"
      */
     static GVK = {
         apiVersion: 'eevee.bot/v1',
-        kind: 's3stores',
+        kind: 'S3Store',
     };
     /**
-     * Renders a Kubernetes manifest for "s3store".
+     * Renders a Kubernetes manifest for "S3Store".
      *
      * This can be used to inline resource manifests inside other objects (e.g. as templates).
      *
@@ -39,19 +40,19 @@ export class s3store extends ApiObject {
      */
     static manifest(props) {
         return {
-            ...s3store.GVK,
-            ...toJson_s3storeProps(props),
+            ...S3Store.GVK,
+            ...toJson_S3StoreProps(props),
         };
     }
     /**
-     * Defines a "s3store" API object
+     * Defines a "S3Store" API object
      * @param scope the scope in which to define this object
      * @param id a scope-local name for the object
      * @param props initialization props
      */
     constructor(scope, id, props) {
         super(scope, id, {
-            ...s3store.GVK,
+            ...S3Store.GVK,
             ...props,
         });
         this.endpoint = props?.spec?.endpoint || '';
@@ -59,6 +60,7 @@ export class s3store extends ApiObject {
         this.accessKey = props?.spec?.accessKey;
         this.bucket = props?.spec?.bucket || '';
         this.prefix = props?.spec?.prefix;
+        this.region = props?.spec?.region;
         this.pathStyle = props?.spec?.pathStyle || false;
     }
     /**
@@ -67,23 +69,23 @@ export class s3store extends ApiObject {
     toJson() {
         const resolved = super.toJson();
         return {
-            ...s3store.GVK,
-            ...toJson_s3storeProps(resolved),
+            ...S3Store.GVK,
+            ...toJson_S3StoreProps(resolved),
         };
     }
 }
-export function toJson_s3storeProps(obj) {
+export function toJson_S3StoreProps(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
         metadata: obj.metadata,
-        spec: toJson_s3storeSpec(obj.spec),
+        spec: toJson_S3StoreSpec(obj.spec),
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
-export function toJson_s3storeSpec(obj) {
+export function toJson_S3StoreSpec(obj) {
     if (obj === undefined) {
         return undefined;
     }
@@ -93,6 +95,7 @@ export function toJson_s3storeSpec(obj) {
         accessKey: toJson_S3SecretKeyRef(obj.accessKey),
         bucket: obj.bucket,
         prefix: obj.prefix,
+        region: obj.region,
         pathStyle: obj.pathStyle,
     };
     // filter undefined values
@@ -108,7 +111,7 @@ export function toJson_S3SecretKeyRef(obj) {
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
-export function toJson_s3storeStatus(obj) {
+export function toJson_S3StoreStatus(obj) {
     if (obj === undefined) {
         return undefined;
     }
@@ -119,10 +122,10 @@ export function toJson_s3storeStatus(obj) {
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export const details = {
-    name: 's3store',
+    name: 'S3Store',
     plural: 's3stores',
     group: 'eevee.bot',
     version: 'v1',
     scope: 'Namespaced',
-    shortName: 's3store',
+    shortName: 'S3Store',
 };

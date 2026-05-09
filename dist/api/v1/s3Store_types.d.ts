@@ -3,9 +3,9 @@ import KubernetesObject from '@thehonker/k8s-operator';
 import { V1ObjectMeta } from '@kubernetes/client-node';
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
-export interface s3storeResource extends KubernetesObject {
-    spec: s3storeSpec;
-    status: s3storeStatus;
+export interface S3StoreResource extends KubernetesObject {
+    spec: S3StoreSpec;
+    status: S3StoreStatus;
     metadata?: V1ObjectMeta | undefined;
 }
 export declare class ApiResource implements cdk8splus.IApiResource {
@@ -20,43 +20,44 @@ export declare class ApiResource implements cdk8splus.IApiResource {
      */
     asNonApiResource(): string | undefined;
 }
-export declare class s3store extends ApiObject implements s3storeSpec {
+export declare class S3Store extends ApiObject implements S3StoreSpec {
     endpoint: string;
     accessId: S3SecretKeyRef;
     accessKey: S3SecretKeyRef;
     bucket: string;
     prefix?: string;
+    region?: string;
     pathStyle?: boolean;
     /**
      * Returns the apiVersion and kind for "s3store"
      */
     static readonly GVK: GroupVersionKind;
     /**
-     * Renders a Kubernetes manifest for "s3store".
+     * Renders a Kubernetes manifest for "S3Store".
      *
      * This can be used to inline resource manifests inside other objects (e.g. as templates).
      *
      * @param props initialization props
      */
-    static manifest(props: s3storeProps): unknown;
+    static manifest(props: S3StoreProps): unknown;
     /**
-     * Defines a "s3store" API object
+     * Defines a "S3Store" API object
      * @param scope the scope in which to define this object
      * @param id a scope-local name for the object
      * @param props initialization props
      */
-    constructor(scope: Construct, id: string, props: s3storeProps);
+    constructor(scope: Construct, id: string, props: S3StoreProps);
     /**
      * Renders the object to Kubernetes JSON.
      */
     toJson(): unknown;
 }
-export interface s3storeProps {
+export interface S3StoreProps {
     readonly metadata?: ApiObjectMetadata;
-    readonly spec?: s3storeSpec;
+    readonly spec?: S3StoreSpec;
 }
-export declare function toJson_s3storeProps(obj: s3storeProps | undefined): Record<string, unknown> | undefined;
-export declare function toJson_s3storeSpec(obj: s3storeSpec | undefined): Record<string, unknown> | undefined;
+export declare function toJson_S3StoreProps(obj: S3StoreProps | undefined): Record<string, unknown> | undefined;
+export declare function toJson_S3StoreSpec(obj: S3StoreSpec | undefined): Record<string, unknown> | undefined;
 export interface S3SecretKeyRef {
     /**
      * Reference to a K8s Secret containing the credential value
@@ -67,7 +68,7 @@ export interface S3SecretKeyRef {
     };
 }
 export declare function toJson_S3SecretKeyRef(obj: S3SecretKeyRef | undefined): Record<string, unknown> | undefined;
-export interface s3storeSpec {
+export interface S3StoreSpec {
     /**
      * S3-compatible endpoint URL
      * (e.g. "https://s3.amazonaws.com" or "https://minio.example.com")
@@ -91,6 +92,13 @@ export interface s3storeSpec {
      */
     prefix?: string;
     /**
+     * S3 region. For AWS, this should match the bucket region.
+     * For S3-compatible stores (MinIO, Garage, etc.) the region
+     * may not matter — `us-east-1` is used as a default.
+     * Default: "us-east-1"
+     */
+    region?: string;
+    /**
      * Use path-style addressing (host_base/bucket) instead of
      * virtual-hosted-style (bucket.host_base). Required for MinIO
      * and many S3-compatible stores.
@@ -98,7 +106,7 @@ export interface s3storeSpec {
      */
     pathStyle?: boolean;
 }
-export type s3storeStatusCondition = {
+export type S3StoreStatusCondition = {
     /**
      * type of condition in CamelCase or in foo.example.com/CamelCase.
      */
@@ -124,10 +132,10 @@ export type s3storeStatusCondition = {
      */
     observedGeneration?: number;
 };
-export interface s3storeStatus {
-    conditions: s3storeStatusCondition[];
+export interface S3StoreStatus {
+    conditions: S3StoreStatusCondition[];
 }
-export declare function toJson_s3storeStatus(obj: s3storeStatus | undefined): Record<string, unknown> | undefined;
+export declare function toJson_S3StoreStatus(obj: S3StoreStatus | undefined): Record<string, unknown> | undefined;
 export declare const details: {
     name: string;
     plural: string;

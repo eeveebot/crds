@@ -5,23 +5,34 @@ metadata:
 spec:
   group: eevee.bot
   names:
-    kind: backupschedule
+    kind: BackupSchedule
     plural: backupschedules
     singular: backupschedule
     shortNames:
-      - backupschedule
+      - BackupSchedule
   scope: Namespaced
   versions:
     - name: v1
       served: true
       storage: true
+      additionalPrinterColumns:
+        - name: Schedule
+          type: string
+          jsonPath: .spec.schedule
+        - name: S3Store
+          type: string
+          jsonPath: .spec.s3Store.name
+        - name: Ready
+          type: string
+          jsonPath: .status.conditions[?(@.type=="Ready")].status
+          description: Whether the BackupSchedule is ready
       schema:
         openAPIV3Schema:
           type: object
           properties:
             spec:
               type: object
-              description: backupscheduleSpec defines the desired state of backupschedule
+              description: BackupScheduleSpec defines the desired state of BackupSchedule
               properties:
                 schedule:
                   type: string
@@ -50,7 +61,7 @@ spec:
                 - image
             status:
               type: object
-              description: backupscheduleStatus defines the observed state of backupschedule
+              description: BackupScheduleStatus defines the observed state of BackupSchedule
               properties:
                 conditions:
                   type: array

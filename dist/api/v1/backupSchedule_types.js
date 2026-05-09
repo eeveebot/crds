@@ -17,7 +17,7 @@ export class ApiResource {
         return undefined;
     }
 }
-export class backupschedule extends ApiObject {
+export class BackupSchedule extends ApiObject {
     schedule;
     s3Store;
     image;
@@ -26,10 +26,10 @@ export class backupschedule extends ApiObject {
      */
     static GVK = {
         apiVersion: 'eevee.bot/v1',
-        kind: 'backupschedules',
+        kind: 'BackupSchedule',
     };
     /**
-     * Renders a Kubernetes manifest for "backupschedule".
+     * Renders a Kubernetes manifest for "BackupSchedule".
      *
      * This can be used to inline resource manifests inside other objects (e.g. as templates).
      *
@@ -37,19 +37,19 @@ export class backupschedule extends ApiObject {
      */
     static manifest(props) {
         return {
-            ...backupschedule.GVK,
-            ...toJson_backupscheduleProps(props),
+            ...BackupSchedule.GVK,
+            ...toJson_BackupScheduleProps(props),
         };
     }
     /**
-     * Defines a "backupschedule" API object
+     * Defines a "BackupSchedule" API object
      * @param scope the scope in which to define this object
      * @param id a scope-local name for the object
      * @param props initialization props
      */
     constructor(scope, id, props) {
         super(scope, id, {
-            ...backupschedule.GVK,
+            ...BackupSchedule.GVK,
             ...props,
         });
         this.schedule = props?.spec?.schedule || '';
@@ -62,23 +62,23 @@ export class backupschedule extends ApiObject {
     toJson() {
         const resolved = super.toJson();
         return {
-            ...backupschedule.GVK,
-            ...toJson_backupscheduleProps(resolved),
+            ...BackupSchedule.GVK,
+            ...toJson_BackupScheduleProps(resolved),
         };
     }
 }
-export function toJson_backupscheduleProps(obj) {
+export function toJson_BackupScheduleProps(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
         metadata: obj.metadata,
-        spec: toJson_backupscheduleSpec(obj.spec),
+        spec: toJson_BackupScheduleSpec(obj.spec),
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
-export function toJson_backupscheduleSpec(obj) {
+export function toJson_BackupScheduleSpec(obj) {
     if (obj === undefined) {
         return undefined;
     }
@@ -90,7 +90,7 @@ export function toJson_backupscheduleSpec(obj) {
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
-export function toJson_backupscheduleStatus(obj) {
+export function toJson_BackupScheduleStatus(obj) {
     if (obj === undefined) {
         return undefined;
     }
@@ -101,10 +101,10 @@ export function toJson_backupscheduleStatus(obj) {
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export const details = {
-    name: 'backupschedule',
+    name: 'BackupSchedule',
     plural: 'backupschedules',
     group: 'eevee.bot',
     version: 'v1',
     scope: 'Namespaced',
-    shortName: 'backupschedule',
+    shortName: 'BackupSchedule',
 };

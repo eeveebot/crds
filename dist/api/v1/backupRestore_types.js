@@ -17,7 +17,7 @@ export class ApiResource {
         return undefined;
     }
 }
-export class backuprestore extends ApiObject {
+export class BackupRestore extends ApiObject {
     botModule;
     s3Store;
     image;
@@ -27,10 +27,10 @@ export class backuprestore extends ApiObject {
      */
     static GVK = {
         apiVersion: 'eevee.bot/v1',
-        kind: 'backuprestores',
+        kind: 'BackupRestore',
     };
     /**
-     * Renders a Kubernetes manifest for "backuprestore".
+     * Renders a Kubernetes manifest for "BackupRestore".
      *
      * This can be used to inline resource manifests inside other objects (e.g. as templates).
      *
@@ -38,19 +38,19 @@ export class backuprestore extends ApiObject {
      */
     static manifest(props) {
         return {
-            ...backuprestore.GVK,
-            ...toJson_backuprestoreProps(props),
+            ...BackupRestore.GVK,
+            ...toJson_BackupRestoreProps(props),
         };
     }
     /**
-     * Defines a "backuprestore" API object
+     * Defines a "BackupRestore" API object
      * @param scope the scope in which to define this object
      * @param id a scope-local name for the object
      * @param props initialization props
      */
     constructor(scope, id, props) {
         super(scope, id, {
-            ...backuprestore.GVK,
+            ...BackupRestore.GVK,
             ...props,
         });
         this.botModule = props?.spec?.botModule;
@@ -64,23 +64,23 @@ export class backuprestore extends ApiObject {
     toJson() {
         const resolved = super.toJson();
         return {
-            ...backuprestore.GVK,
-            ...toJson_backuprestoreProps(resolved),
+            ...BackupRestore.GVK,
+            ...toJson_BackupRestoreProps(resolved),
         };
     }
 }
-export function toJson_backuprestoreProps(obj) {
+export function toJson_BackupRestoreProps(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
         metadata: obj.metadata,
-        spec: toJson_backuprestoreSpec(obj.spec),
+        spec: toJson_BackupRestoreSpec(obj.spec),
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
-export function toJson_backuprestoreSpec(obj) {
+export function toJson_BackupRestoreSpec(obj) {
     if (obj === undefined) {
         return undefined;
     }
@@ -94,7 +94,7 @@ export function toJson_backuprestoreSpec(obj) {
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
-export function toJson_backuprestoreStatus(obj) {
+export function toJson_BackupRestoreStatus(obj) {
     if (obj === undefined) {
         return undefined;
     }
@@ -105,10 +105,10 @@ export function toJson_backuprestoreStatus(obj) {
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export const details = {
-    name: 'backuprestore',
+    name: 'BackupRestore',
     plural: 'backuprestores',
     group: 'eevee.bot',
     version: 'v1',
     scope: 'Namespaced',
-    shortName: 'backuprestore',
+    shortName: 'BackupRestore',
 };

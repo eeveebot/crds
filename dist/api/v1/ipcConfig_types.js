@@ -16,17 +16,17 @@ export class ApiResource {
         return undefined;
     }
 }
-export class ipcconfig extends ApiObject {
+export class IpcConfig extends ApiObject {
     nats;
     /**
      * Returns the apiVersion and kind for "ipcConfig"
      */
     static GVK = {
         apiVersion: 'eevee.bot/v1',
-        kind: 'ipcconfigs',
+        kind: 'IpcConfig',
     };
     /**
-     * Renders a Kubernetes manifest for "ipcConfig".
+     * Renders a Kubernetes manifest for "IpcConfig".
      *
      * This can be used to inline resource manifests inside other objects (e.g. as templates).
      *
@@ -34,19 +34,19 @@ export class ipcconfig extends ApiObject {
      */
     static manifest(props) {
         return {
-            ...ipcconfig.GVK,
-            ...toJson_ipcconfigProps(props),
+            ...IpcConfig.GVK,
+            ...toJson_IpcConfigProps(props),
         };
     }
     /**
-     * Defines a "ipcConfig" API object
+     * Defines a "IpcConfig" API object
      * @param scope the scope in which to define this object
      * @param id a scope-local name for the object
      * @param props initialization props
      */
     constructor(scope, id, props) {
         super(scope, id, {
-            ...ipcconfig.GVK,
+            ...IpcConfig.GVK,
             ...props,
         });
         this.nats = props?.spec?.nats;
@@ -57,23 +57,23 @@ export class ipcconfig extends ApiObject {
     toJson() {
         const resolved = super.toJson();
         return {
-            ...ipcconfig.GVK,
-            ...toJson_ipcconfigProps(resolved),
+            ...IpcConfig.GVK,
+            ...toJson_IpcConfigProps(resolved),
         };
     }
 }
-export function toJson_ipcconfigProps(obj) {
+export function toJson_IpcConfigProps(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
         metadata: obj.metadata,
-        spec: toJson_ipcconfigSpec(obj.spec),
+        spec: toJson_IpcConfigSpec(obj.spec),
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
-export function toJson_ipcconfigSpec(obj) {
+export function toJson_IpcConfigSpec(obj) {
     if (obj === undefined) {
         return undefined;
     }
@@ -117,10 +117,10 @@ export function toJson_NatsTokenConfig(obj) {
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export const details = {
-    name: 'ipcconfig',
+    name: 'IpcConfig',
     plural: 'ipcconfigs',
     group: 'eevee.bot',
     version: 'v1',
     scope: 'Namespaced',
-    shortName: 'ipcconfig',
+    shortName: 'IpcConfig',
 };

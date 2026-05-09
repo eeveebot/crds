@@ -1,6 +1,6 @@
 'use strict';
 
-// Kind: ipcconfig
+// Kind: IpcConfig
 // Group: eevee
 // Version: v1
 // Domain: bot
@@ -12,9 +12,9 @@ import { V1ObjectMeta } from '@kubernetes/client-node';
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
 
-export interface ipcconfigResource extends KubernetesObject {
-  spec: ipcconfigSpec;
-  status: ipcconfigStatus;
+export interface IpcConfigResource extends KubernetesObject {
+  spec: IpcConfigSpec;
+  status: IpcConfigStatus;
   metadata?: V1ObjectMeta | undefined;
 }
 
@@ -37,7 +37,7 @@ export class ApiResource implements cdk8splus.IApiResource {
   }
 }
 
-export class ipcconfig extends ApiObject implements ipcconfigSpec {
+export class IpcConfig extends ApiObject implements IpcConfigSpec {
   public nats?: NatsConfig;
 
   /**
@@ -45,32 +45,32 @@ export class ipcconfig extends ApiObject implements ipcconfigSpec {
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
-    kind: 'ipcconfigs',
+    kind: 'IpcConfig',
   };
 
   /**
-   * Renders a Kubernetes manifest for "ipcConfig".
+   * Renders a Kubernetes manifest for "IpcConfig".
    *
    * This can be used to inline resource manifests inside other objects (e.g. as templates).
    *
    * @param props initialization props
    */
-  public static manifest(props: ipcconfigProps): unknown {
+  public static manifest(props: IpcConfigProps): unknown {
     return {
-      ...ipcconfig.GVK,
-      ...toJson_ipcconfigProps(props),
+      ...IpcConfig.GVK,
+      ...toJson_IpcConfigProps(props),
     };
   }
 
   /**
-   * Defines a "ipcConfig" API object
+   * Defines a "IpcConfig" API object
    * @param scope the scope in which to define this object
    * @param id a scope-local name for the object
    * @param props initialization props
    */
-  public constructor(scope: Construct, id: string, props: ipcconfigProps) {
+  public constructor(scope: Construct, id: string, props: IpcConfigProps) {
     super(scope, id, {
-      ...ipcconfig.GVK,
+      ...IpcConfig.GVK,
       ...props,
     });
     this.nats = props?.spec?.nats;
@@ -83,26 +83,26 @@ export class ipcconfig extends ApiObject implements ipcconfigSpec {
     const resolved = super.toJson();
 
     return {
-      ...ipcconfig.GVK,
-      ...toJson_ipcconfigProps(resolved),
+      ...IpcConfig.GVK,
+      ...toJson_IpcConfigProps(resolved),
     };
   }
 }
 
-export interface ipcconfigProps {
+export interface IpcConfigProps {
   readonly metadata?: ApiObjectMetadata;
-  readonly spec?: ipcconfigSpec;
+  readonly spec?: IpcConfigSpec;
 }
 
-export function toJson_ipcconfigProps(
-  obj: ipcconfigProps | undefined
+export function toJson_IpcConfigProps(
+  obj: IpcConfigProps | undefined
 ): Record<string, unknown> | undefined {
   if (obj === undefined) {
     return undefined;
   }
   const result = {
     metadata: obj.metadata,
-    spec: toJson_ipcconfigSpec(obj.spec),
+    spec: toJson_IpcConfigSpec(obj.spec),
   };
   // filter undefined values
   return Object.entries(result).reduce(
@@ -111,8 +111,8 @@ export function toJson_ipcconfigProps(
   );
 }
 
-export function toJson_ipcconfigSpec(
-  obj: ipcconfigSpec | undefined
+export function toJson_IpcConfigSpec(
+  obj: IpcConfigSpec | undefined
 ): Record<string, unknown> | undefined {
   if (obj === undefined) {
     return undefined;
@@ -127,7 +127,7 @@ export function toJson_ipcconfigSpec(
   );
 }
 
-export interface ipcconfigSpec {
+export interface IpcConfigSpec {
   /**
    * NATS configuration
    */
@@ -224,7 +224,7 @@ export function toJson_NatsTokenConfig(
   );
 }
 
-export type ipcconfigStatusCondition = {
+export type IpcConfigStatusCondition = {
   /**
    * type of condition in CamelCase or in foo.example.com/CamelCase.
    */
@@ -251,15 +251,15 @@ export type ipcconfigStatusCondition = {
   observedGeneration?: number;
 };
 
-export interface ipcconfigStatus {
-  conditions: ipcconfigStatusCondition[];
+export interface IpcConfigStatus {
+  conditions: IpcConfigStatusCondition[];
 }
 
 export const details = {
-  name: 'ipcconfig',
+  name: 'IpcConfig',
   plural: 'ipcconfigs',
   group: 'eevee.bot',
   version: 'v1',
   scope: 'Namespaced',
-  shortName: 'ipcconfig',
+  shortName: 'IpcConfig',
 };

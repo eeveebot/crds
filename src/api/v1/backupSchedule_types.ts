@@ -1,6 +1,6 @@
 'use strict';
 
-// Kind: backupschedule
+// Kind: BackupSchedule
 // Group: eevee
 // Version: v1
 // Domain: bot
@@ -14,9 +14,9 @@ import { Construct } from 'constructs';
 
 import { S3StoreReference, toJson_S3StoreReference } from './enums/index.mjs';
 
-export interface backupscheduleResource extends KubernetesObject {
-  spec: backupscheduleSpec;
-  status: backupscheduleStatus;
+export interface BackupScheduleResource extends KubernetesObject {
+  spec: BackupScheduleSpec;
+  status: BackupScheduleStatus;
   metadata?: V1ObjectMeta | undefined;
 }
 
@@ -39,7 +39,7 @@ export class ApiResource implements cdk8splus.IApiResource {
   }
 }
 
-export class backupschedule extends ApiObject implements backupscheduleSpec {
+export class BackupSchedule extends ApiObject implements BackupScheduleSpec {
   public schedule: string;
   public s3Store: S3StoreReference;
   public image: string;
@@ -49,32 +49,32 @@ export class backupschedule extends ApiObject implements backupscheduleSpec {
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
-    kind: 'backupschedules',
+    kind: 'BackupSchedule',
   };
 
   /**
-   * Renders a Kubernetes manifest for "backupschedule".
+   * Renders a Kubernetes manifest for "BackupSchedule".
    *
    * This can be used to inline resource manifests inside other objects (e.g. as templates).
    *
    * @param props initialization props
    */
-  public static manifest(props: backupscheduleProps): unknown {
+  public static manifest(props: BackupScheduleProps): unknown {
     return {
-      ...backupschedule.GVK,
-      ...toJson_backupscheduleProps(props),
+      ...BackupSchedule.GVK,
+      ...toJson_BackupScheduleProps(props),
     };
   }
 
   /**
-   * Defines a "backupschedule" API object
+   * Defines a "BackupSchedule" API object
    * @param scope the scope in which to define this object
    * @param id a scope-local name for the object
    * @param props initialization props
    */
-  public constructor(scope: Construct, id: string, props: backupscheduleProps) {
+  public constructor(scope: Construct, id: string, props: BackupScheduleProps) {
     super(scope, id, {
-      ...backupschedule.GVK,
+      ...BackupSchedule.GVK,
       ...props,
     });
     this.schedule = props?.spec?.schedule || '';
@@ -89,26 +89,26 @@ export class backupschedule extends ApiObject implements backupscheduleSpec {
     const resolved = super.toJson();
 
     return {
-      ...backupschedule.GVK,
-      ...toJson_backupscheduleProps(resolved),
+      ...BackupSchedule.GVK,
+      ...toJson_BackupScheduleProps(resolved),
     };
   }
 }
 
-export interface backupscheduleProps {
+export interface BackupScheduleProps {
   readonly metadata?: ApiObjectMetadata;
-  readonly spec?: backupscheduleSpec;
+  readonly spec?: BackupScheduleSpec;
 }
 
-export function toJson_backupscheduleProps(
-  obj: backupscheduleProps | undefined
+export function toJson_BackupScheduleProps(
+  obj: BackupScheduleProps | undefined
 ): Record<string, unknown> | undefined {
   if (obj === undefined) {
     return undefined;
   }
   const result = {
     metadata: obj.metadata,
-    spec: toJson_backupscheduleSpec(obj.spec),
+    spec: toJson_BackupScheduleSpec(obj.spec),
   };
   // filter undefined values
   return Object.entries(result).reduce(
@@ -117,8 +117,8 @@ export function toJson_backupscheduleProps(
   );
 }
 
-export function toJson_backupscheduleSpec(
-  obj: backupscheduleSpec | undefined
+export function toJson_BackupScheduleSpec(
+  obj: BackupScheduleSpec | undefined
 ): Record<string, unknown> | undefined {
   if (obj === undefined) {
     return undefined;
@@ -137,7 +137,7 @@ export function toJson_backupscheduleSpec(
 
 // --- Spec & Status interfaces ---
 
-export interface backupscheduleSpec {
+export interface BackupScheduleSpec {
   /**
    * Crontab-style schedule expression (e.g. "0 2 * * *" for daily at 2am).
    * Translated directly to the CronJob schedule.
@@ -156,7 +156,7 @@ export interface backupscheduleSpec {
   image: string;
 }
 
-export type backupscheduleStatusCondition = {
+export type BackupScheduleStatusCondition = {
   /**
    * type of condition in CamelCase or in foo.example.com/CamelCase.
    */
@@ -183,12 +183,12 @@ export type backupscheduleStatusCondition = {
   observedGeneration?: number;
 };
 
-export interface backupscheduleStatus {
-  conditions: backupscheduleStatusCondition[];
+export interface BackupScheduleStatus {
+  conditions: BackupScheduleStatusCondition[];
 }
 
-export function toJson_backupscheduleStatus(
-  obj: backupscheduleStatus | undefined
+export function toJson_BackupScheduleStatus(
+  obj: BackupScheduleStatus | undefined
 ): Record<string, unknown> | undefined {
   if (obj === undefined) {
     return undefined;
@@ -204,10 +204,10 @@ export function toJson_backupscheduleStatus(
 }
 
 export const details = {
-  name: 'backupschedule',
+  name: 'BackupSchedule',
   plural: 'backupschedules',
   group: 'eevee.bot',
   version: 'v1',
   scope: 'Namespaced',
-  shortName: 'backupschedule',
+  shortName: 'BackupSchedule',
 };

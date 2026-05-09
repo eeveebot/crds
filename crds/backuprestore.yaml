@@ -5,23 +5,31 @@ metadata:
 spec:
   group: eevee.bot
   names:
-    kind: backuprestore
+    kind: BackupRestore
     plural: backuprestores
     singular: backuprestore
     shortNames:
-      - backuprestore
+      - BackupRestore
   scope: Namespaced
   versions:
     - name: v1
       served: true
       storage: true
+      additionalPrinterColumns:
+        - name: Module
+          type: string
+          jsonPath: .spec.botModule.name
+        - name: Ready
+          type: string
+          jsonPath: .status.conditions[?(@.type=="Ready")].status
+          description: Whether the BackupRestore is ready
       schema:
         openAPIV3Schema:
           type: object
           properties:
             spec:
               type: object
-              description: backuprestoreSpec defines the desired state of backuprestore
+              description: BackupRestoreSpec defines the desired state of BackupRestore
               properties:
                 botModule:
                   type: object
@@ -74,7 +82,7 @@ spec:
                 - image
             status:
               type: object
-              description: backuprestoreStatus defines the observed state of backuprestore
+              description: BackupRestoreStatus defines the observed state of BackupRestore
               properties:
                 conditions:
                   type: array

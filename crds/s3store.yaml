@@ -5,23 +5,34 @@ metadata:
 spec:
   group: eevee.bot
   names:
-    kind: s3store
+    kind: S3Store
     plural: s3stores
     singular: s3store
     shortNames:
-      - s3store
+      - S3Store
   scope: Namespaced
   versions:
     - name: v1
       served: true
       storage: true
+      additionalPrinterColumns:
+        - name: Endpoint
+          type: string
+          jsonPath: .spec.endpoint
+        - name: Bucket
+          type: string
+          jsonPath: .spec.bucket
+        - name: Ready
+          type: string
+          jsonPath: .status.conditions[?(@.type=="Ready")].status
+          description: Whether the S3Store is ready
       schema:
         openAPIV3Schema:
           type: object
           properties:
             spec:
               type: object
-              description: s3storeSpec defines the desired state of s3store
+              description: S3StoreSpec defines the desired state of S3Store
               properties:
                 endpoint:
                   type: string
@@ -88,6 +99,13 @@ spec:
                   description: |-
                     Common file prefix within the bucket for all objects
                     managed by this store (e.g. "eevee/backups/")
+                region:
+                  type: string
+                  description: |-
+                    S3 region. For AWS, this should match the bucket region.
+                    For S3-compatible stores (MinIO, Garage, etc.) the region
+                    may not matter — `us-east-1` is used as a default.
+                    Default: "us-east-1"
                 pathStyle:
                   type: boolean
                   description: |-
@@ -102,7 +120,7 @@ spec:
                 - bucket
             status:
               type: object
-              description: s3storeStatus defines the observed state of s3store
+              description: S3StoreStatus defines the observed state of S3Store
               properties:
                 conditions:
                   type: array

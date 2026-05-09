@@ -4,9 +4,9 @@ import { V1ObjectMeta, V1PersistentVolumeClaimSpec, V1Probe } from '@kubernetes/
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
 import { S3StoreReference } from './enums/index.mjs';
-export interface botmoduleResource extends KubernetesObject {
-    spec: botmoduleSpec;
-    status: botmoduleStatus;
+export interface BotModuleResource extends KubernetesObject {
+    spec: BotModuleSpec;
+    status: BotModuleStatus;
     metadata?: V1ObjectMeta | undefined;
 }
 export declare class ApiResource implements cdk8splus.IApiResource {
@@ -21,7 +21,7 @@ export declare class ApiResource implements cdk8splus.IApiResource {
      */
     asNonApiResource(): string | undefined;
 }
-export declare class botmodule extends ApiObject implements botmoduleSpec {
+export declare class BotModule extends ApiObject implements BotModuleSpec {
     size: number;
     image: string;
     pullPolicy: string;
@@ -45,32 +45,32 @@ export declare class botmodule extends ApiObject implements botmoduleSpec {
      */
     static readonly GVK: GroupVersionKind;
     /**
-     * Renders a Kubernetes manifest for "botmodule".
+     * Renders a Kubernetes manifest for "BotModule".
      *
      * This can be used to inline resource manifests inside other objects (e.g. as templates).
      *
      * @param props initialization props
      */
-    static manifest(props: botmoduleProps): unknown;
+    static manifest(props: BotModuleProps): unknown;
     /**
-     * Defines a "botmodule" API object
+     * Defines a "BotModule" API object
      * @param scope the scope in which to define this object
      * @param id a scope-local name for the object
      * @param props initialization props
      */
-    constructor(scope: Construct, id: string, props: botmoduleProps);
+    constructor(scope: Construct, id: string, props: BotModuleProps);
     /**
      * Renders the object to Kubernetes JSON.
      */
     toJson(): unknown;
 }
-export interface botmoduleProps {
+export interface BotModuleProps {
     readonly metadata?: ApiObjectMetadata;
-    readonly spec?: botmoduleSpec;
+    readonly spec?: BotModuleSpec;
 }
-export declare function toJson_botmoduleProps(obj: botmoduleProps | undefined): Record<string, unknown> | undefined;
-export declare function toJson_botmoduleSpec(obj: botmoduleSpec | undefined): Record<string, unknown> | undefined;
-export interface botmoduleSpec {
+export declare function toJson_BotModuleProps(obj: BotModuleProps | undefined): Record<string, unknown> | undefined;
+export declare function toJson_BotModuleSpec(obj: BotModuleSpec | undefined): Record<string, unknown> | undefined;
+export interface BotModuleSpec {
     /**
      * Size defines the number of botmodule instances
      * Default: 1
@@ -178,7 +178,7 @@ export interface BootstrapFromBackup {
     image: string;
 }
 export declare function toJson_BootstrapFromBackup(obj: BootstrapFromBackup | undefined): Record<string, unknown> | undefined;
-export type botmoduleStatusCondition = {
+export type BotModuleStatusCondition = {
     /**
      * type of condition in CamelCase or in foo.example.com/CamelCase.
      */
@@ -204,10 +204,10 @@ export type botmoduleStatusCondition = {
      */
     observedGeneration?: number;
 };
-export interface botmoduleStatus {
-    conditions: botmoduleStatusCondition[];
+export interface BotModuleStatus {
+    conditions: BotModuleStatusCondition[];
 }
-export declare function toJson_botmoduleStatus(obj: botmoduleStatus | undefined): Record<string, unknown> | undefined;
+export declare function toJson_BotModuleStatus(obj: BotModuleStatus | undefined): Record<string, unknown> | undefined;
 export declare const details: {
     name: string;
     plural: string;

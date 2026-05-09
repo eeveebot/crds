@@ -1,6 +1,6 @@
 'use strict';
 
-// Kind: botmodule
+// Kind: BotModule
 // Group: eevee
 // Version: v1
 // Domain: bot
@@ -18,9 +18,9 @@ import { Construct } from 'constructs';
 
 import { S3StoreReference, toJson_S3StoreReference } from './enums/index.mjs';
 
-export interface botmoduleResource extends KubernetesObject {
-  spec: botmoduleSpec;
-  status: botmoduleStatus;
+export interface BotModuleResource extends KubernetesObject {
+  spec: BotModuleSpec;
+  status: BotModuleStatus;
   metadata?: V1ObjectMeta | undefined;
 }
 
@@ -43,7 +43,7 @@ export class ApiResource implements cdk8splus.IApiResource {
   }
 }
 
-export class botmodule extends ApiObject implements botmoduleSpec {
+export class BotModule extends ApiObject implements BotModuleSpec {
   public size: number;
   public image: string;
   public pullPolicy: string;
@@ -68,32 +68,32 @@ export class botmodule extends ApiObject implements botmoduleSpec {
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
-    kind: 'botmodules',
+    kind: 'BotModule',
   };
 
   /**
-   * Renders a Kubernetes manifest for "botmodule".
+   * Renders a Kubernetes manifest for "BotModule".
    *
    * This can be used to inline resource manifests inside other objects (e.g. as templates).
    *
    * @param props initialization props
    */
-  public static manifest(props: botmoduleProps): unknown {
+  public static manifest(props: BotModuleProps): unknown {
     return {
-      ...botmodule.GVK,
-      ...toJson_botmoduleProps(props),
+      ...BotModule.GVK,
+      ...toJson_BotModuleProps(props),
     };
   }
 
   /**
-   * Defines a "botmodule" API object
+   * Defines a "BotModule" API object
    * @param scope the scope in which to define this object
    * @param id a scope-local name for the object
    * @param props initialization props
    */
-  public constructor(scope: Construct, id: string, props: botmoduleProps) {
+  public constructor(scope: Construct, id: string, props: BotModuleProps) {
     super(scope, id, {
-      ...botmodule.GVK,
+      ...BotModule.GVK,
       ...props,
     });
     this.size = props?.spec?.size || 1;
@@ -124,26 +124,26 @@ export class botmodule extends ApiObject implements botmoduleSpec {
     const resolved = super.toJson();
 
     return {
-      ...botmodule.GVK,
-      ...toJson_botmoduleProps(resolved),
+      ...BotModule.GVK,
+      ...toJson_BotModuleProps(resolved),
     };
   }
 }
 
-export interface botmoduleProps {
+export interface BotModuleProps {
   readonly metadata?: ApiObjectMetadata;
-  readonly spec?: botmoduleSpec;
+  readonly spec?: BotModuleSpec;
 }
 
-export function toJson_botmoduleProps(
-  obj: botmoduleProps | undefined
+export function toJson_BotModuleProps(
+  obj: BotModuleProps | undefined
 ): Record<string, unknown> | undefined {
   if (obj === undefined) {
     return undefined;
   }
   const result = {
     metadata: obj.metadata,
-    spec: toJson_botmoduleSpec(obj.spec),
+    spec: toJson_BotModuleSpec(obj.spec),
   };
   // filter undefined values
   return Object.entries(result).reduce(
@@ -152,8 +152,8 @@ export function toJson_botmoduleProps(
   );
 }
 
-export function toJson_botmoduleSpec(
-  obj: botmoduleSpec | undefined
+export function toJson_BotModuleSpec(
+  obj: BotModuleSpec | undefined
 ): Record<string, unknown> | undefined {
   if (obj === undefined) {
     return undefined;
@@ -185,7 +185,7 @@ export function toJson_botmoduleSpec(
   );
 }
 
-export interface botmoduleSpec {
+export interface BotModuleSpec {
   /**
    * Size defines the number of botmodule instances
    * Default: 1
@@ -347,7 +347,7 @@ export function toJson_BootstrapFromBackup(
   );
 }
 
-export type botmoduleStatusCondition = {
+export type BotModuleStatusCondition = {
   /**
    * type of condition in CamelCase or in foo.example.com/CamelCase.
    */
@@ -374,12 +374,12 @@ export type botmoduleStatusCondition = {
   observedGeneration?: number;
 };
 
-export interface botmoduleStatus {
-  conditions: botmoduleStatusCondition[];
+export interface BotModuleStatus {
+  conditions: BotModuleStatusCondition[];
 }
 
-export function toJson_botmoduleStatus(
-  obj: botmoduleStatus | undefined
+export function toJson_BotModuleStatus(
+  obj: BotModuleStatus | undefined
 ): Record<string, unknown> | undefined {
   if (obj === undefined) {
     return undefined;
@@ -395,10 +395,10 @@ export function toJson_botmoduleStatus(
 }
 
 export const details = {
-  name: 'botmodule',
+  name: 'BotModule',
   plural: 'botmodules',
   group: 'eevee.bot',
   version: 'v1',
   scope: 'Namespaced',
-  shortName: 'botmodule',
+  shortName: 'BotModule',
 };

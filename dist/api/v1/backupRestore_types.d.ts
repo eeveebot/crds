@@ -4,9 +4,9 @@ import { V1ObjectMeta } from '@kubernetes/client-node';
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
 import { S3StoreReference, BotModuleReference } from './enums/index.mjs';
-export interface backuprestoreResource extends KubernetesObject {
-    spec: backuprestoreSpec;
-    status: backuprestoreStatus;
+export interface BackupRestoreResource extends KubernetesObject {
+    spec: BackupRestoreSpec;
+    status: BackupRestoreStatus;
     metadata?: V1ObjectMeta | undefined;
 }
 export declare class ApiResource implements cdk8splus.IApiResource {
@@ -21,7 +21,7 @@ export declare class ApiResource implements cdk8splus.IApiResource {
      */
     asNonApiResource(): string | undefined;
 }
-export declare class backuprestore extends ApiObject implements backuprestoreSpec {
+export declare class BackupRestore extends ApiObject implements BackupRestoreSpec {
     botModule: BotModuleReference;
     s3Store: S3StoreReference;
     image: string;
@@ -31,32 +31,32 @@ export declare class backuprestore extends ApiObject implements backuprestoreSpe
      */
     static readonly GVK: GroupVersionKind;
     /**
-     * Renders a Kubernetes manifest for "backuprestore".
+     * Renders a Kubernetes manifest for "BackupRestore".
      *
      * This can be used to inline resource manifests inside other objects (e.g. as templates).
      *
      * @param props initialization props
      */
-    static manifest(props: backuprestoreProps): unknown;
+    static manifest(props: BackupRestoreProps): unknown;
     /**
-     * Defines a "backuprestore" API object
+     * Defines a "BackupRestore" API object
      * @param scope the scope in which to define this object
      * @param id a scope-local name for the object
      * @param props initialization props
      */
-    constructor(scope: Construct, id: string, props: backuprestoreProps);
+    constructor(scope: Construct, id: string, props: BackupRestoreProps);
     /**
      * Renders the object to Kubernetes JSON.
      */
     toJson(): unknown;
 }
-export interface backuprestoreProps {
+export interface BackupRestoreProps {
     readonly metadata?: ApiObjectMetadata;
-    readonly spec?: backuprestoreSpec;
+    readonly spec?: BackupRestoreSpec;
 }
-export declare function toJson_backuprestoreProps(obj: backuprestoreProps | undefined): Record<string, unknown> | undefined;
-export declare function toJson_backuprestoreSpec(obj: backuprestoreSpec | undefined): Record<string, unknown> | undefined;
-export interface backuprestoreSpec {
+export declare function toJson_BackupRestoreProps(obj: BackupRestoreProps | undefined): Record<string, unknown> | undefined;
+export declare function toJson_BackupRestoreSpec(obj: BackupRestoreSpec | undefined): Record<string, unknown> | undefined;
+export interface BackupRestoreSpec {
     /**
      * Reference to the botmodule whose PVC will be restored
      */
@@ -84,7 +84,7 @@ export interface backuprestoreSpec {
      */
     cleanRestore?: boolean;
 }
-export type backuprestoreStatusCondition = {
+export type BackupRestoreStatusCondition = {
     /**
      * type of condition in CamelCase or in foo.example.com/CamelCase.
      */
@@ -110,10 +110,10 @@ export type backuprestoreStatusCondition = {
      */
     observedGeneration?: number;
 };
-export interface backuprestoreStatus {
-    conditions: backuprestoreStatusCondition[];
+export interface BackupRestoreStatus {
+    conditions: BackupRestoreStatusCondition[];
 }
-export declare function toJson_backuprestoreStatus(obj: backuprestoreStatus | undefined): Record<string, unknown> | undefined;
+export declare function toJson_BackupRestoreStatus(obj: BackupRestoreStatus | undefined): Record<string, unknown> | undefined;
 export declare const details: {
     name: string;
     plural: string;

@@ -1,6 +1,6 @@
 'use strict';
 
-// Kind: backuprestore
+// Kind: BackupRestore
 // Group: eevee
 // Version: v1
 // Domain: bot
@@ -14,9 +14,9 @@ import { Construct } from 'constructs';
 
 import { S3StoreReference, toJson_S3StoreReference, BotModuleReference, toJson_BotModuleReference } from './enums/index.mjs';
 
-export interface backuprestoreResource extends KubernetesObject {
-  spec: backuprestoreSpec;
-  status: backuprestoreStatus;
+export interface BackupRestoreResource extends KubernetesObject {
+  spec: BackupRestoreSpec;
+  status: BackupRestoreStatus;
   metadata?: V1ObjectMeta | undefined;
 }
 
@@ -39,7 +39,7 @@ export class ApiResource implements cdk8splus.IApiResource {
   }
 }
 
-export class backuprestore extends ApiObject implements backuprestoreSpec {
+export class BackupRestore extends ApiObject implements BackupRestoreSpec {
   public botModule: BotModuleReference;
   public s3Store: S3StoreReference;
   public image: string;
@@ -50,32 +50,32 @@ export class backuprestore extends ApiObject implements backuprestoreSpec {
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
-    kind: 'backuprestores',
+    kind: 'BackupRestore',
   };
 
   /**
-   * Renders a Kubernetes manifest for "backuprestore".
+   * Renders a Kubernetes manifest for "BackupRestore".
    *
    * This can be used to inline resource manifests inside other objects (e.g. as templates).
    *
    * @param props initialization props
    */
-  public static manifest(props: backuprestoreProps): unknown {
+  public static manifest(props: BackupRestoreProps): unknown {
     return {
-      ...backuprestore.GVK,
-      ...toJson_backuprestoreProps(props),
+      ...BackupRestore.GVK,
+      ...toJson_BackupRestoreProps(props),
     };
   }
 
   /**
-   * Defines a "backuprestore" API object
+   * Defines a "BackupRestore" API object
    * @param scope the scope in which to define this object
    * @param id a scope-local name for the object
    * @param props initialization props
    */
-  public constructor(scope: Construct, id: string, props: backuprestoreProps) {
+  public constructor(scope: Construct, id: string, props: BackupRestoreProps) {
     super(scope, id, {
-      ...backuprestore.GVK,
+      ...BackupRestore.GVK,
       ...props,
     });
     this.botModule = props?.spec?.botModule!;
@@ -91,26 +91,26 @@ export class backuprestore extends ApiObject implements backuprestoreSpec {
     const resolved = super.toJson();
 
     return {
-      ...backuprestore.GVK,
-      ...toJson_backuprestoreProps(resolved),
+      ...BackupRestore.GVK,
+      ...toJson_BackupRestoreProps(resolved),
     };
   }
 }
 
-export interface backuprestoreProps {
+export interface BackupRestoreProps {
   readonly metadata?: ApiObjectMetadata;
-  readonly spec?: backuprestoreSpec;
+  readonly spec?: BackupRestoreSpec;
 }
 
-export function toJson_backuprestoreProps(
-  obj: backuprestoreProps | undefined
+export function toJson_BackupRestoreProps(
+  obj: BackupRestoreProps | undefined
 ): Record<string, unknown> | undefined {
   if (obj === undefined) {
     return undefined;
   }
   const result = {
     metadata: obj.metadata,
-    spec: toJson_backuprestoreSpec(obj.spec),
+    spec: toJson_BackupRestoreSpec(obj.spec),
   };
   // filter undefined values
   return Object.entries(result).reduce(
@@ -119,8 +119,8 @@ export function toJson_backuprestoreProps(
   );
 }
 
-export function toJson_backuprestoreSpec(
-  obj: backuprestoreSpec | undefined
+export function toJson_BackupRestoreSpec(
+  obj: BackupRestoreSpec | undefined
 ): Record<string, unknown> | undefined {
   if (obj === undefined) {
     return undefined;
@@ -141,7 +141,7 @@ export function toJson_backuprestoreSpec(
 
 // --- Spec & Status interfaces ---
 
-export interface backuprestoreSpec {
+export interface BackupRestoreSpec {
   /**
    * Reference to the botmodule whose PVC will be restored
    */
@@ -174,7 +174,7 @@ export interface backuprestoreSpec {
   cleanRestore?: boolean;
 }
 
-export type backuprestoreStatusCondition = {
+export type BackupRestoreStatusCondition = {
   /**
    * type of condition in CamelCase or in foo.example.com/CamelCase.
    */
@@ -201,12 +201,12 @@ export type backuprestoreStatusCondition = {
   observedGeneration?: number;
 };
 
-export interface backuprestoreStatus {
-  conditions: backuprestoreStatusCondition[];
+export interface BackupRestoreStatus {
+  conditions: BackupRestoreStatusCondition[];
 }
 
-export function toJson_backuprestoreStatus(
-  obj: backuprestoreStatus | undefined
+export function toJson_BackupRestoreStatus(
+  obj: BackupRestoreStatus | undefined
 ): Record<string, unknown> | undefined {
   if (obj === undefined) {
     return undefined;
@@ -222,10 +222,10 @@ export function toJson_backuprestoreStatus(
 }
 
 export const details = {
-  name: 'backuprestore',
+  name: 'BackupRestore',
   plural: 'backuprestores',
   group: 'eevee.bot',
   version: 'v1',
   scope: 'Namespaced',
-  shortName: 'backuprestore',
+  shortName: 'BackupRestore',
 };

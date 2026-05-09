@@ -17,7 +17,7 @@ export class ApiResource {
         return undefined;
     }
 }
-export class botmodule extends ApiObject {
+export class BotModule extends ApiObject {
     size;
     image;
     pullPolicy;
@@ -41,10 +41,10 @@ export class botmodule extends ApiObject {
      */
     static GVK = {
         apiVersion: 'eevee.bot/v1',
-        kind: 'botmodules',
+        kind: 'BotModule',
     };
     /**
-     * Renders a Kubernetes manifest for "botmodule".
+     * Renders a Kubernetes manifest for "BotModule".
      *
      * This can be used to inline resource manifests inside other objects (e.g. as templates).
      *
@@ -52,19 +52,19 @@ export class botmodule extends ApiObject {
      */
     static manifest(props) {
         return {
-            ...botmodule.GVK,
-            ...toJson_botmoduleProps(props),
+            ...BotModule.GVK,
+            ...toJson_BotModuleProps(props),
         };
     }
     /**
-     * Defines a "botmodule" API object
+     * Defines a "BotModule" API object
      * @param scope the scope in which to define this object
      * @param id a scope-local name for the object
      * @param props initialization props
      */
     constructor(scope, id, props) {
         super(scope, id, {
-            ...botmodule.GVK,
+            ...BotModule.GVK,
             ...props,
         });
         this.size = props?.spec?.size || 1;
@@ -93,23 +93,23 @@ export class botmodule extends ApiObject {
     toJson() {
         const resolved = super.toJson();
         return {
-            ...botmodule.GVK,
-            ...toJson_botmoduleProps(resolved),
+            ...BotModule.GVK,
+            ...toJson_BotModuleProps(resolved),
         };
     }
 }
-export function toJson_botmoduleProps(obj) {
+export function toJson_BotModuleProps(obj) {
     if (obj === undefined) {
         return undefined;
     }
     const result = {
         metadata: obj.metadata,
-        spec: toJson_botmoduleSpec(obj.spec),
+        spec: toJson_BotModuleSpec(obj.spec),
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
-export function toJson_botmoduleSpec(obj) {
+export function toJson_BotModuleSpec(obj) {
     if (obj === undefined) {
         return undefined;
     }
@@ -157,7 +157,7 @@ export function toJson_BootstrapFromBackup(obj) {
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
-export function toJson_botmoduleStatus(obj) {
+export function toJson_BotModuleStatus(obj) {
     if (obj === undefined) {
         return undefined;
     }
@@ -168,10 +168,10 @@ export function toJson_botmoduleStatus(obj) {
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
 }
 export const details = {
-    name: 'botmodule',
+    name: 'BotModule',
     plural: 'botmodules',
     group: 'eevee.bot',
     version: 'v1',
     scope: 'Namespaced',
-    shortName: 'botmodule',
+    shortName: 'BotModule',
 };

@@ -3,9 +3,9 @@ import KubernetesObject from '@thehonker/k8s-operator';
 import { V1ObjectMeta } from '@kubernetes/client-node';
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
-export interface ipcconfigResource extends KubernetesObject {
-    spec: ipcconfigSpec;
-    status: ipcconfigStatus;
+export interface IpcConfigResource extends KubernetesObject {
+    spec: IpcConfigSpec;
+    status: IpcConfigStatus;
     metadata?: V1ObjectMeta | undefined;
 }
 export declare class ApiResource implements cdk8splus.IApiResource {
@@ -20,39 +20,39 @@ export declare class ApiResource implements cdk8splus.IApiResource {
      */
     asNonApiResource(): string | undefined;
 }
-export declare class ipcconfig extends ApiObject implements ipcconfigSpec {
+export declare class IpcConfig extends ApiObject implements IpcConfigSpec {
     nats?: NatsConfig;
     /**
      * Returns the apiVersion and kind for "ipcConfig"
      */
     static readonly GVK: GroupVersionKind;
     /**
-     * Renders a Kubernetes manifest for "ipcConfig".
+     * Renders a Kubernetes manifest for "IpcConfig".
      *
      * This can be used to inline resource manifests inside other objects (e.g. as templates).
      *
      * @param props initialization props
      */
-    static manifest(props: ipcconfigProps): unknown;
+    static manifest(props: IpcConfigProps): unknown;
     /**
-     * Defines a "ipcConfig" API object
+     * Defines a "IpcConfig" API object
      * @param scope the scope in which to define this object
      * @param id a scope-local name for the object
      * @param props initialization props
      */
-    constructor(scope: Construct, id: string, props: ipcconfigProps);
+    constructor(scope: Construct, id: string, props: IpcConfigProps);
     /**
      * Renders the object to Kubernetes JSON.
      */
     toJson(): unknown;
 }
-export interface ipcconfigProps {
+export interface IpcConfigProps {
     readonly metadata?: ApiObjectMetadata;
-    readonly spec?: ipcconfigSpec;
+    readonly spec?: IpcConfigSpec;
 }
-export declare function toJson_ipcconfigProps(obj: ipcconfigProps | undefined): Record<string, unknown> | undefined;
-export declare function toJson_ipcconfigSpec(obj: ipcconfigSpec | undefined): Record<string, unknown> | undefined;
-export interface ipcconfigSpec {
+export declare function toJson_IpcConfigProps(obj: IpcConfigProps | undefined): Record<string, unknown> | undefined;
+export declare function toJson_IpcConfigSpec(obj: IpcConfigSpec | undefined): Record<string, unknown> | undefined;
+export interface IpcConfigSpec {
     /**
      * NATS configuration
      */
@@ -94,7 +94,7 @@ export interface NatsTokenConfig {
 export declare function toJson_NatsConfig(obj: NatsConfig | undefined): Record<string, unknown> | undefined;
 export declare function toJson_ManagedNatsConfig(obj: ManagedNatsConfig | undefined): Record<string, unknown> | undefined;
 export declare function toJson_NatsTokenConfig(obj: NatsTokenConfig | undefined): Record<string, unknown> | undefined;
-export type ipcconfigStatusCondition = {
+export type IpcConfigStatusCondition = {
     /**
      * type of condition in CamelCase or in foo.example.com/CamelCase.
      */
@@ -120,8 +120,8 @@ export type ipcconfigStatusCondition = {
      */
     observedGeneration?: number;
 };
-export interface ipcconfigStatus {
-    conditions: ipcconfigStatusCondition[];
+export interface IpcConfigStatus {
+    conditions: IpcConfigStatusCondition[];
 }
 export declare const details: {
     name: string;
