@@ -3,6 +3,7 @@ import KubernetesObject from '@thehonker/k8s-operator';
 import { V1ObjectMeta, V1PersistentVolumeClaimSpec, V1Probe } from '@kubernetes/client-node';
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
+import { S3StoreReference } from './enums/index.mjs';
 export interface botmoduleResource extends KubernetesObject {
     spec: botmoduleSpec;
     status: botmoduleStatus;
@@ -177,13 +178,6 @@ export interface BootstrapFromBackup {
     image: string;
 }
 export declare function toJson_BootstrapFromBackup(obj: BootstrapFromBackup | undefined): Record<string, unknown> | undefined;
-export interface S3StoreReference {
-    /**
-     * Name of the s3store resource in the same namespace
-     */
-    name: string;
-}
-export declare function toJson_S3StoreReference(obj: S3StoreReference | undefined): Record<string, unknown> | undefined;
 export type botmoduleStatusCondition = {
     /**
      * type of condition in CamelCase or in foo.example.com/CamelCase.

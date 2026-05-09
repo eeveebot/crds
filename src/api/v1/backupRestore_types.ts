@@ -12,6 +12,8 @@ import { V1ObjectMeta } from '@kubernetes/client-node';
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
 
+import { S3StoreReference, toJson_S3StoreReference, BotModuleReference, toJson_BotModuleReference } from './enums/index.mjs';
+
 export interface backuprestoreResource extends KubernetesObject {
   spec: backuprestoreSpec;
   status: backuprestoreStatus;
@@ -128,54 +130,6 @@ export function toJson_backuprestoreSpec(
     s3Store: toJson_S3StoreReference(obj.s3Store),
     image: obj.image,
     backupId: obj.backupId,
-  };
-  // filter undefined values
-  return Object.entries(result).reduce(
-    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
-    {}
-  );
-}
-
-// --- Nested types ---
-
-export interface BotModuleReference {
-  /**
-   * Name of the botmodule resource in the same namespace
-   */
-  name: string;
-}
-
-export function toJson_BotModuleReference(
-  obj: BotModuleReference | undefined
-): Record<string, unknown> | undefined {
-  if (obj === undefined) {
-    return undefined;
-  }
-  const result = {
-    name: obj.name,
-  };
-  // filter undefined values
-  return Object.entries(result).reduce(
-    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
-    {}
-  );
-}
-
-export interface S3StoreReference {
-  /**
-   * Name of the s3store resource in the same namespace
-   */
-  name: string;
-}
-
-export function toJson_S3StoreReference(
-  obj: S3StoreReference | undefined
-): Record<string, unknown> | undefined {
-  if (obj === undefined) {
-    return undefined;
-  }
-  const result = {
-    name: obj.name,
   };
   // filter undefined values
   return Object.entries(result).reduce(

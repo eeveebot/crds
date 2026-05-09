@@ -3,6 +3,7 @@ import KubernetesObject from '@thehonker/k8s-operator';
 import { V1ObjectMeta } from '@kubernetes/client-node';
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
+import { S3StoreReference } from './enums/index.mjs';
 export interface backupscheduleResource extends KubernetesObject {
     spec: backupscheduleSpec;
     status: backupscheduleStatus;
@@ -54,13 +55,6 @@ export interface backupscheduleProps {
 }
 export declare function toJson_backupscheduleProps(obj: backupscheduleProps | undefined): Record<string, unknown> | undefined;
 export declare function toJson_backupscheduleSpec(obj: backupscheduleSpec | undefined): Record<string, unknown> | undefined;
-export interface S3StoreReference {
-    /**
-     * Name of the s3store resource in the same namespace
-     */
-    name: string;
-}
-export declare function toJson_S3StoreReference(obj: S3StoreReference | undefined): Record<string, unknown> | undefined;
 export interface backupscheduleSpec {
     /**
      * Crontab-style schedule expression (e.g. "0 2 * * *" for daily at 2am).

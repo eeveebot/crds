@@ -1,5 +1,6 @@
 'use strict';
 import { ApiObject } from 'cdk8s';
+import { toJson_S3StoreReference, toJson_BotModuleReference } from './enums/index.mjs';
 export class ApiResource {
     apiGroup = 'eevee.bot';
     resourceType = 'backuprestores';
@@ -88,26 +89,6 @@ export function toJson_backuprestoreSpec(obj) {
         s3Store: toJson_S3StoreReference(obj.s3Store),
         image: obj.image,
         backupId: obj.backupId,
-    };
-    // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
-}
-export function toJson_BotModuleReference(obj) {
-    if (obj === undefined) {
-        return undefined;
-    }
-    const result = {
-        name: obj.name,
-    };
-    // filter undefined values
-    return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
-}
-export function toJson_S3StoreReference(obj) {
-    if (obj === undefined) {
-        return undefined;
-    }
-    const result = {
-        name: obj.name,
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});

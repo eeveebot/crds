@@ -3,6 +3,7 @@ import KubernetesObject from '@thehonker/k8s-operator';
 import { V1ObjectMeta } from '@kubernetes/client-node';
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
+import { S3StoreReference, BotModuleReference } from './enums/index.mjs';
 export interface backuprestoreResource extends KubernetesObject {
     spec: backuprestoreSpec;
     status: backuprestoreStatus;
@@ -55,20 +56,6 @@ export interface backuprestoreProps {
 }
 export declare function toJson_backuprestoreProps(obj: backuprestoreProps | undefined): Record<string, unknown> | undefined;
 export declare function toJson_backuprestoreSpec(obj: backuprestoreSpec | undefined): Record<string, unknown> | undefined;
-export interface BotModuleReference {
-    /**
-     * Name of the botmodule resource in the same namespace
-     */
-    name: string;
-}
-export declare function toJson_BotModuleReference(obj: BotModuleReference | undefined): Record<string, unknown> | undefined;
-export interface S3StoreReference {
-    /**
-     * Name of the s3store resource in the same namespace
-     */
-    name: string;
-}
-export declare function toJson_S3StoreReference(obj: S3StoreReference | undefined): Record<string, unknown> | undefined;
 export interface backuprestoreSpec {
     /**
      * Reference to the botmodule whose PVC will be restored

@@ -5,3 +5,17 @@ export declare enum StatusReasons {
     modified = "modified",
     unknown = "unknown"
 }
+export interface S3StoreReference {
+    /**
+     * Name of the s3store resource in the same namespace
+     */
+    name: string;
+}
+export declare function toJson_S3StoreReference(obj: S3StoreReference | undefined): Record<string, unknown> | undefined;
+export interface BotModuleReference {
+    /**
+     * Name of the botmodule resource in the same namespace
+     */
+    name: string;
+}
+export declare function toJson_BotModuleReference(obj: BotModuleReference | undefined): Record<string, unknown> | undefined;

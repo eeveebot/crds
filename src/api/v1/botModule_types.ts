@@ -16,6 +16,8 @@ import {
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
 
+import { S3StoreReference, toJson_S3StoreReference } from './enums/index.mjs';
+
 export interface botmoduleResource extends KubernetesObject {
   spec: botmoduleSpec;
   status: botmoduleStatus;
@@ -337,29 +339,6 @@ export function toJson_BootstrapFromBackup(
   const result = {
     s3Store: toJson_S3StoreReference(obj.s3Store),
     image: obj.image,
-  };
-  // filter undefined values
-  return Object.entries(result).reduce(
-    (r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }),
-    {}
-  );
-}
-
-export interface S3StoreReference {
-  /**
-   * Name of the s3store resource in the same namespace
-   */
-  name: string;
-}
-
-export function toJson_S3StoreReference(
-  obj: S3StoreReference | undefined
-): Record<string, unknown> | undefined {
-  if (obj === undefined) {
-    return undefined;
-  }
-  const result = {
-    name: obj.name,
   };
   // filter undefined values
   return Object.entries(result).reduce(
