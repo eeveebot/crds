@@ -21,9 +21,11 @@ export class BackupRestore extends ApiObject {
     botModule;
     s3Store;
     image;
+    imagePullPolicy;
     backupId;
+    cleanRestore;
     /**
-     * Returns the apiVersion and kind for "backuprestore"
+     * Returns the apiVersion and kind for "BackupRestore"
      */
     static GVK = {
         apiVersion: 'eevee.bot/v1',
@@ -55,8 +57,10 @@ export class BackupRestore extends ApiObject {
         });
         this.botModule = props?.spec?.botModule;
         this.s3Store = props?.spec?.s3Store;
-        this.image = props?.spec?.image || '';
+        this.image = props?.spec?.image || 'ghcr.io/eeveebot/backupJob:latest';
+        this.imagePullPolicy = props?.spec?.imagePullPolicy;
         this.backupId = props?.spec?.backupId;
+        this.cleanRestore = props?.spec?.cleanRestore;
     }
     /**
      * Renders the object to Kubernetes JSON.
@@ -88,6 +92,7 @@ export function toJson_BackupRestoreSpec(obj) {
         botModule: toJson_BotModuleReference(obj.botModule),
         s3Store: toJson_S3StoreReference(obj.s3Store),
         image: obj.image,
+        imagePullPolicy: obj.imagePullPolicy,
         backupId: obj.backupId,
         cleanRestore: obj.cleanRestore,
     };
@@ -110,5 +115,5 @@ export const details = {
     group: 'eevee.bot',
     version: 'v1',
     scope: 'Namespaced',
-    shortName: 'BackupRestore',
+    shortName: 'backuprestore',
 };

@@ -21,8 +21,9 @@ export class BackupSchedule extends ApiObject {
     schedule;
     s3Store;
     image;
+    imagePullPolicy;
     /**
-     * Returns the apiVersion and kind for "backupschedule"
+     * Returns the apiVersion and kind for "BackupSchedule"
      */
     static GVK = {
         apiVersion: 'eevee.bot/v1',
@@ -54,7 +55,8 @@ export class BackupSchedule extends ApiObject {
         });
         this.schedule = props?.spec?.schedule || '';
         this.s3Store = props?.spec?.s3Store;
-        this.image = props?.spec?.image || '';
+        this.image = props?.spec?.image || 'ghcr.io/eeveebot/backupJob:latest';
+        this.imagePullPolicy = props?.spec?.imagePullPolicy;
     }
     /**
      * Renders the object to Kubernetes JSON.
@@ -86,6 +88,7 @@ export function toJson_BackupScheduleSpec(obj) {
         schedule: obj.schedule,
         s3Store: toJson_S3StoreReference(obj.s3Store),
         image: obj.image,
+        imagePullPolicy: obj.imagePullPolicy,
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
@@ -106,5 +109,5 @@ export const details = {
     group: 'eevee.bot',
     version: 'v1',
     scope: 'Namespaced',
-    shortName: 'BackupSchedule',
+    shortName: 'backupschedule',
 };

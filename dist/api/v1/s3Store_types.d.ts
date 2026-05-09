@@ -27,9 +27,10 @@ export declare class S3Store extends ApiObject implements S3StoreSpec {
     bucket: string;
     prefix?: string;
     region?: string;
+    signatureV2?: boolean;
     pathStyle?: boolean;
     /**
-     * Returns the apiVersion and kind for "s3store"
+     * Returns the apiVersion and kind for "S3Store"
      */
     static readonly GVK: GroupVersionKind;
     /**
@@ -98,6 +99,13 @@ export interface S3StoreSpec {
      * Default: "us-east-1"
      */
     region?: string;
+    /**
+     * Use S3 v2 signature instead of v4. Set to true for Ceph RADOSGW
+     * and older S3-compatible stores that require v2 signatures.
+     * Modern stores (AWS S3, MinIO, Garage) support v4 — leave false.
+     * Default: false
+     */
+    signatureV2?: boolean;
     /**
      * Use path-style addressing (host_base/bucket) instead of
      * virtual-hosted-style (bucket.host_base). Required for MinIO

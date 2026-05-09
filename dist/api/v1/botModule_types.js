@@ -20,6 +20,7 @@ export class ApiResource {
 export class BotModule extends ApiObject {
     size;
     image;
+    imagePullPolicy;
     pullPolicy;
     metrics;
     metricsPort;
@@ -36,8 +37,9 @@ export class BotModule extends ApiObject {
     startupProbe;
     backupSchedule;
     bootstrapFromBackup;
+    resources;
     /**
-     * Returns the apiVersion and kind for "botmodule"
+     * Returns the apiVersion and kind for "BotModule"
      */
     static GVK = {
         apiVersion: 'eevee.bot/v1',
@@ -68,10 +70,11 @@ export class BotModule extends ApiObject {
             ...props,
         });
         this.size = props?.spec?.size || 1;
-        this.image = props?.spec?.image || 'ghcr.io/eeveebot/echo:latest';
+        this.image = props?.spec?.image;
+        this.imagePullPolicy = props?.spec?.imagePullPolicy;
         this.pullPolicy = props?.spec?.pullPolicy || 'Always';
         this.metrics = props?.spec?.metrics || false;
-        this.metricsPort = props?.spec?.metricsPort || 8080;
+        this.metricsPort = props?.spec?.metricsPort || 9000;
         this.ipcConfig = props?.spec?.ipcConfig || '';
         this.moduleName = props?.spec?.moduleName || '';
         this.persistentVolumeClaim = props?.spec?.persistentVolumeClaim;
@@ -86,6 +89,7 @@ export class BotModule extends ApiObject {
         this.startupProbe = props?.spec?.startupProbe;
         this.backupSchedule = props?.spec?.backupSchedule;
         this.bootstrapFromBackup = props?.spec?.bootstrapFromBackup;
+        this.resources = props?.spec?.resources;
     }
     /**
      * Renders the object to Kubernetes JSON.
@@ -116,6 +120,7 @@ export function toJson_BotModuleSpec(obj) {
     const result = {
         size: obj.size,
         image: obj.image,
+        imagePullPolicy: obj.imagePullPolicy,
         pullPolicy: obj.pullPolicy,
         metrics: obj.metrics,
         metricsPort: obj.metricsPort,
@@ -132,6 +137,7 @@ export function toJson_BotModuleSpec(obj) {
         startupProbe: obj.startupProbe,
         backupSchedule: toJson_BackupScheduleReference(obj.backupSchedule),
         bootstrapFromBackup: toJson_BootstrapFromBackup(obj.bootstrapFromBackup),
+        resources: obj.resources,
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
@@ -153,6 +159,7 @@ export function toJson_BootstrapFromBackup(obj) {
     const result = {
         s3Store: toJson_S3StoreReference(obj.s3Store),
         image: obj.image,
+        imagePullPolicy: obj.imagePullPolicy,
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
@@ -173,5 +180,5 @@ export const details = {
     group: 'eevee.bot',
     version: 'v1',
     scope: 'Namespaced',
-    shortName: 'BotModule',
+    shortName: 'botmodule',
 };

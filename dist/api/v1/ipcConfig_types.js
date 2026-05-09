@@ -19,7 +19,7 @@ export class ApiResource {
 export class IpcConfig extends ApiObject {
     nats;
     /**
-     * Returns the apiVersion and kind for "ipcConfig"
+     * Returns the apiVersion and kind for "IpcConfig"
      */
     static GVK = {
         apiVersion: 'eevee.bot/v1',
@@ -101,6 +101,8 @@ export function toJson_ManagedNatsConfig(obj) {
     const result = {
         enabled: obj.enabled,
         image: obj.image,
+        imagePullPolicy: obj.imagePullPolicy,
+        resources: obj.resources,
     };
     // filter undefined values
     return Object.entries(result).reduce((r, i) => (i[1] === undefined ? r : { ...r, [i[0]]: i[1] }), {});
@@ -122,5 +124,5 @@ export const details = {
     group: 'eevee.bot',
     version: 'v1',
     scope: 'Namespaced',
-    shortName: 'IpcConfig',
+    shortName: 'ipcconfig',
 };

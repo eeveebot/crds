@@ -11,6 +11,7 @@ import {
   V1ObjectMeta,
   V1PersistentVolumeClaimSpec,
   V1Probe,
+  V1ResourceRequirements,
 } from '@kubernetes/client-node';
 
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
@@ -45,8 +46,9 @@ export class ApiResource implements cdk8splus.IApiResource {
 
 export class BotModule extends ApiObject implements BotModuleSpec {
   public size: number;
-  public image: string;
-  public pullPolicy: string;
+  public image?: string;
+  public imagePullPolicy?: string;
+  public pullPolicy?: string;
   public metrics: boolean;
   public metricsPort: number;
   public ipcConfig: string;
@@ -62,9 +64,10 @@ export class BotModule extends ApiObject implements BotModuleSpec {
   public startupProbe?: V1Probe;
   public backupSchedule?: BackupScheduleReference;
   public bootstrapFromBackup?: BootstrapFromBackup;
+  public resources?: V1ResourceRequirements;
 
   /**
-   * Returns the apiVersion and kind for "botmodule"
+   * Returns the apiVersion and kind for "BotModule"
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
@@ -97,10 +100,11 @@ export class BotModule extends ApiObject implements BotModuleSpec {
       ...props,
     });
     this.size = props?.spec?.size || 1;
-    this.image = props?.spec?.image || 'ghcr.io/eeveebot/echo:latest';
+    this.image = props?.spec?.image;
+    this.imagePullPolicy = props?.spec?.imagePullPolicy;
     this.pullPolicy = props?.spec?.pullPolicy || 'Always';
     this.metrics = props?.spec?.metrics || false;
-    this.metricsPort = props?.spec?.metricsPort || 8080;
+    this.metricsPort = props?.spec?.metricsPort || 9000;
     this.ipcConfig = props?.spec?.ipcConfig || '';
     this.moduleName = props?.spec?.moduleName || '';
     this.persistentVolumeClaim = props?.spec?.persistentVolumeClaim;
@@ -115,6 +119,7 @@ export class BotModule extends ApiObject implements BotModuleSpec {
     this.startupProbe = props?.spec?.startupProbe;
     this.backupSchedule = props?.spec?.backupSchedule;
     this.bootstrapFromBackup = props?.spec?.bootstrapFromBackup;
+    this.resources = props?.spec?.resources;
   }
 
   /**
@@ -161,6 +166,7 @@ export function toJson_BotModuleSpec(
   const result = {
     size: obj.size,
     image: obj.image,
+    imagePullPolicy: obj.imagePullPolicy,
     pullPolicy: obj.pullPolicy,
     metrics: obj.metrics,
     metricsPort: obj.metricsPort,
@@ -177,6 +183,7 @@ export function toJson_BotModuleSpec(
     startupProbe: obj.startupProbe,
     backupSchedule: toJson_BackupScheduleReference(obj.backupSchedule),
     bootstrapFromBackup: toJson_BootstrapFromBackup(obj.bootstrapFromBackup),
+    resources: obj.resources,
   };
   // filter undefined values
   return Object.entries(result).reduce(
@@ -193,13 +200,20 @@ export interface BotModuleSpec {
   size?: number;
 
   /**
-   * Image defines the container image to use
-   * Default: "ghcr.io/eeveebot/module:latest"
+   * Image defines the container image to use (required)
    */
   image?: string;
 
   /**
+   * ImagePullPolicy defines the image pull policy to use
+   * One of "Always", "IfNotPresent", "Never".
+   * Default: "IfNotPresent"
+   */
+  imagePullPolicy?: string;
+
+  /**
    * PullPolicy defines the image pull policy to use
+   * @deprecated Use imagePullPolicy instead
    * Default: "Always"
    */
   pullPolicy?: string;
@@ -212,7 +226,7 @@ export interface BotModuleSpec {
 
   /**
    * MetricsPort defines the port to expose metrics on
-   * Default: 8080
+   * Default: 9000
    */
   metricsPort?: number;
 
@@ -290,13 +304,19 @@ export interface BotModuleSpec {
    * Subsequent reconciliations ignore this field (no re-restore).
    */
   bootstrapFromBackup?: BootstrapFromBackup;
+
+  /**
+   * Resource requirements for the module container.
+   * If not set, no resource requests or limits are applied.
+   */
+  resources?: V1ResourceRequirements;
 }
 
 // --- Nested types for backup fields ---
 
 export interface BackupScheduleReference {
   /**
-   * Name of the backupschedule resource in the same namespace
+   * Name of the BackupSchedule resource in the same namespace
    */
   name: string;
 }
@@ -319,15 +339,22 @@ export function toJson_BackupScheduleReference(
 
 export interface BootstrapFromBackup {
   /**
-   * Reference to the s3store CR instance containing the backup
+   * Reference to the S3Store CR instance containing the backup
    */
   s3Store: S3StoreReference;
 
   /**
    * Container image to use for the restore job
-   * (e.g. "ghcr.io/eevee/backup:latest")
+   * Default: "ghcr.io/eeveebot/backupJob:latest"
    */
-  image: string;
+  image?: string;
+
+  /**
+   * Image pull policy for the restore job container.
+   * One of "Always", "IfNotPresent", "Never".
+   * Default: "IfNotPresent"
+   */
+  imagePullPolicy?: string;
 }
 
 export function toJson_BootstrapFromBackup(
@@ -339,6 +366,7 @@ export function toJson_BootstrapFromBackup(
   const result = {
     s3Store: toJson_S3StoreReference(obj.s3Store),
     image: obj.image,
+    imagePullPolicy: obj.imagePullPolicy,
   };
   // filter undefined values
   return Object.entries(result).reduce(
@@ -400,5 +428,5 @@ export const details = {
   group: 'eevee.bot',
   version: 'v1',
   scope: 'Namespaced',
-  shortName: 'BotModule',
+  shortName: 'botmodule',
 };

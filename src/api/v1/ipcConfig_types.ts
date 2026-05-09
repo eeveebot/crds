@@ -7,7 +7,7 @@
 
 import * as cdk8splus from 'cdk8s-plus-33';
 import KubernetesObject from '@thehonker/k8s-operator';
-import { V1ObjectMeta } from '@kubernetes/client-node';
+import { V1ObjectMeta, V1ResourceRequirements } from '@kubernetes/client-node';
 
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
@@ -41,7 +41,7 @@ export class IpcConfig extends ApiObject implements IpcConfigSpec {
   public nats?: NatsConfig;
 
   /**
-   * Returns the apiVersion and kind for "ipcConfig"
+   * Returns the apiVersion and kind for "IpcConfig"
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
@@ -156,6 +156,19 @@ export interface ManagedNatsConfig {
    * NATS container image to use
    */
   image?: string;
+
+  /**
+   * Image pull policy for the NATS container.
+   * One of "Always", "IfNotPresent", "Never".
+   * Default: "IfNotPresent"
+   */
+  imagePullPolicy?: string;
+
+  /**
+   * Resource requirements for the NATS container.
+   * If not set, no resource requests or limits are applied.
+   */
+  resources?: V1ResourceRequirements;
 }
 
 export interface NatsTokenConfig {
@@ -199,6 +212,8 @@ export function toJson_ManagedNatsConfig(
   const result = {
     enabled: obj.enabled,
     image: obj.image,
+    imagePullPolicy: obj.imagePullPolicy,
+    resources: obj.resources,
   };
   // filter undefined values
   return Object.entries(result).reduce(
@@ -261,5 +276,5 @@ export const details = {
   group: 'eevee.bot',
   version: 'v1',
   scope: 'Namespaced',
-  shortName: 'IpcConfig',
+  shortName: 'ipcconfig',
 };

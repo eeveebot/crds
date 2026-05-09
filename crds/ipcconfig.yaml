@@ -9,7 +9,7 @@ spec:
     plural: ipcconfigs
     singular: ipcconfig
     shortNames:
-      - IpcConfig
+      - ipcconfig
   scope: Namespaced
   versions:
     - name: v1
@@ -35,6 +35,63 @@ spec:
                         image:
                           type: string
                           description: NATS container image to use
+                        imagePullPolicy:
+                          type: string
+                          description: |-
+                            Image pull policy for the NATS container.
+                            One of "Always", "IfNotPresent", "Never".
+                            Default: "IfNotPresent"
+                        resources:
+                          type: object
+                          properties:
+                            claims:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  name:
+                                    type: string
+                                    description: Name must match the name of one entry in pod.spec.resourceClaims of
+                                      the Pod where this field is used. It makes
+                                      that resource available inside a
+                                      container.
+                                  request:
+                                    type: string
+                                    description: Request is the name chosen for a request in the referenced claim.
+                                      If empty, everything from the claim is
+                                      made available, otherwise only the result
+                                      of this request.
+                                required:
+                                  - name
+                              description: Claims lists the names of resources, defined in
+                                spec.resourceClaims, that are used by this
+                                container.  This field depends on the
+                                DynamicResourceAllocation feature gate.  This
+                                field is immutable. It can only be set for
+                                containers.
+                            limits:
+                              type: object
+                              properties: {}
+                              description: "Limits describes the maximum amount of compute resources allowed.
+                                More info:
+                                https://kubernetes.io/docs/concepts/configurati\
+                                on/manage-resources-containers/"
+                            requests:
+                              type: object
+                              properties: {}
+                              description: "Requests describes the minimum amount of compute resources
+                                required. If Requests is omitted for a
+                                container, it defaults to Limits if that is
+                                explicitly specified, otherwise to an
+                                implementation-defined value. Requests cannot
+                                exceed Limits. More info:
+                                https://kubernetes.io/docs/concepts/configurati\
+                                on/manage-resources-containers/"
+                          description: >-
+                            Resource requirements for the NATS container.
+
+                            If not set, no resource requests or limits are
+                            applied.
                       required:
                         - enabled
                       description: Managed NATS deployment configuration

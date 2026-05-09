@@ -43,10 +43,12 @@ export class BackupRestore extends ApiObject implements BackupRestoreSpec {
   public botModule: BotModuleReference;
   public s3Store: S3StoreReference;
   public image: string;
+  public imagePullPolicy?: string;
   public backupId?: string;
+  public cleanRestore?: boolean;
 
   /**
-   * Returns the apiVersion and kind for "backuprestore"
+   * Returns the apiVersion and kind for "BackupRestore"
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
@@ -80,8 +82,10 @@ export class BackupRestore extends ApiObject implements BackupRestoreSpec {
     });
     this.botModule = props?.spec?.botModule!;
     this.s3Store = props?.spec?.s3Store!;
-    this.image = props?.spec?.image || '';
+    this.image = props?.spec?.image || 'ghcr.io/eeveebot/backupJob:latest';
+    this.imagePullPolicy = props?.spec?.imagePullPolicy;
     this.backupId = props?.spec?.backupId;
+    this.cleanRestore = props?.spec?.cleanRestore;
   }
 
   /**
@@ -129,6 +133,7 @@ export function toJson_BackupRestoreSpec(
     botModule: toJson_BotModuleReference(obj.botModule),
     s3Store: toJson_S3StoreReference(obj.s3Store),
     image: obj.image,
+    imagePullPolicy: obj.imagePullPolicy,
     backupId: obj.backupId,
     cleanRestore: obj.cleanRestore,
   };
@@ -143,12 +148,12 @@ export function toJson_BackupRestoreSpec(
 
 export interface BackupRestoreSpec {
   /**
-   * Reference to the botmodule whose PVC will be restored
+   * Reference to the BotModule whose PVC will be restored
    */
   botModule: BotModuleReference;
 
   /**
-   * Reference to the s3store CR instance containing the backup
+   * Reference to the S3Store CR instance containing the backup
    */
   s3Store: S3StoreReference;
 
@@ -157,6 +162,13 @@ export interface BackupRestoreSpec {
    * (e.g. "ghcr.io/eevee/backup:latest")
    */
   image: string;
+
+  /**
+   * Image pull policy for the restore job container.
+   * One of "Always", "IfNotPresent", "Never".
+   * Default: "IfNotPresent"
+   */
+  imagePullPolicy?: string;
 
   /**
    * UUID of the specific backup to restore.
@@ -227,5 +239,5 @@ export const details = {
   group: 'eevee.bot',
   version: 'v1',
   scope: 'Namespaced',
-  shortName: 'BackupRestore',
+  shortName: 'backuprestore',
 };

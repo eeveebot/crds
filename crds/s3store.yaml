@@ -9,7 +9,7 @@ spec:
     plural: s3stores
     singular: s3store
     shortNames:
-      - S3Store
+      - s3store
   scope: Namespaced
   versions:
     - name: v1
@@ -106,6 +106,18 @@ spec:
                     For S3-compatible stores (MinIO, Garage, etc.) the region
                     may not matter — `us-east-1` is used as a default.
                     Default: "us-east-1"
+                signatureV2:
+                  type: boolean
+                  description: >-
+                    Use S3 v2 signature instead of v4. Set to true for Ceph
+                    RADOSGW
+
+                    and older S3-compatible stores that require v2 signatures.
+
+                    Modern stores (AWS S3, MinIO, Garage) support v4 — leave
+                    false.
+
+                    Default: false
                 pathStyle:
                   type: boolean
                   description: |-

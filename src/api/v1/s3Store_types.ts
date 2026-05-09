@@ -44,10 +44,11 @@ export class S3Store extends ApiObject implements S3StoreSpec {
   public bucket: string;
   public prefix?: string;
   public region?: string;
+  public signatureV2?: boolean;
   public pathStyle?: boolean;
 
   /**
-   * Returns the apiVersion and kind for "s3store"
+   * Returns the apiVersion and kind for "S3Store"
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
@@ -85,6 +86,7 @@ export class S3Store extends ApiObject implements S3StoreSpec {
     this.bucket = props?.spec?.bucket || '';
     this.prefix = props?.spec?.prefix;
     this.region = props?.spec?.region;
+    this.signatureV2 = props?.spec?.signatureV2;
     this.pathStyle = props?.spec?.pathStyle || false;
   }
 
@@ -136,6 +138,7 @@ export function toJson_S3StoreSpec(
     bucket: obj.bucket,
     prefix: obj.prefix,
     region: obj.region,
+    signatureV2: obj.signatureV2,
     pathStyle: obj.pathStyle,
   };
   // filter undefined values
@@ -212,6 +215,14 @@ export interface S3StoreSpec {
   region?: string;
 
   /**
+   * Use S3 v2 signature instead of v4. Set to true for Ceph RADOSGW
+   * and older S3-compatible stores that require v2 signatures.
+   * Modern stores (AWS S3, MinIO, Garage) support v4 — leave false.
+   * Default: false
+   */
+  signatureV2?: boolean;
+
+  /**
    * Use path-style addressing (host_base/bucket) instead of
    * virtual-hosted-style (bucket.host_base). Required for MinIO
    * and many S3-compatible stores.
@@ -273,5 +284,5 @@ export const details = {
   group: 'eevee.bot',
   version: 'v1',
   scope: 'Namespaced',
-  shortName: 'S3Store',
+  shortName: 's3store',
 };

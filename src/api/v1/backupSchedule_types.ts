@@ -43,9 +43,10 @@ export class BackupSchedule extends ApiObject implements BackupScheduleSpec {
   public schedule: string;
   public s3Store: S3StoreReference;
   public image: string;
+  public imagePullPolicy?: string;
 
   /**
-   * Returns the apiVersion and kind for "backupschedule"
+   * Returns the apiVersion and kind for "BackupSchedule"
    */
   public static readonly GVK: GroupVersionKind = {
     apiVersion: 'eevee.bot/v1',
@@ -79,7 +80,8 @@ export class BackupSchedule extends ApiObject implements BackupScheduleSpec {
     });
     this.schedule = props?.spec?.schedule || '';
     this.s3Store = props?.spec?.s3Store!;
-    this.image = props?.spec?.image || '';
+    this.image = props?.spec?.image || 'ghcr.io/eeveebot/backupJob:latest';
+    this.imagePullPolicy = props?.spec?.imagePullPolicy;
   }
 
   /**
@@ -127,6 +129,7 @@ export function toJson_BackupScheduleSpec(
     schedule: obj.schedule,
     s3Store: toJson_S3StoreReference(obj.s3Store),
     image: obj.image,
+    imagePullPolicy: obj.imagePullPolicy,
   };
   // filter undefined values
   return Object.entries(result).reduce(
@@ -145,7 +148,7 @@ export interface BackupScheduleSpec {
   schedule: string;
 
   /**
-   * Reference to the s3store CR instance
+   * Reference to the S3Store CR instance
    */
   s3Store: S3StoreReference;
 
@@ -154,6 +157,13 @@ export interface BackupScheduleSpec {
    * (e.g. "ghcr.io/eevee/backup:latest")
    */
   image: string;
+
+  /**
+   * Image pull policy for the backup job container.
+   * One of "Always", "IfNotPresent", "Never".
+   * Default: "IfNotPresent"
+   */
+  imagePullPolicy?: string;
 }
 
 export type BackupScheduleStatusCondition = {
@@ -209,5 +219,5 @@ export const details = {
   group: 'eevee.bot',
   version: 'v1',
   scope: 'Namespaced',
-  shortName: 'BackupSchedule',
+  shortName: 'backupschedule',
 };

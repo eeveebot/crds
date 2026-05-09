@@ -12,7 +12,7 @@ export enum StatusReasons {
 
 export interface S3StoreReference {
   /**
-   * Name of the s3store resource in the same namespace
+   * Name of the S3Store resource in the same namespace
    */
   name: string;
 }
@@ -35,7 +35,7 @@ export function toJson_S3StoreReference(
 
 export interface BotModuleReference {
   /**
-   * Name of the botmodule resource in the same namespace
+   * Name of the BotModule resource in the same namespace
    */
   name: string;
 }

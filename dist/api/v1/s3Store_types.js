@@ -23,9 +23,10 @@ export class S3Store extends ApiObject {
     bucket;
     prefix;
     region;
+    signatureV2;
     pathStyle;
     /**
-     * Returns the apiVersion and kind for "s3store"
+     * Returns the apiVersion and kind for "S3Store"
      */
     static GVK = {
         apiVersion: 'eevee.bot/v1',
@@ -61,6 +62,7 @@ export class S3Store extends ApiObject {
         this.bucket = props?.spec?.bucket || '';
         this.prefix = props?.spec?.prefix;
         this.region = props?.spec?.region;
+        this.signatureV2 = props?.spec?.signatureV2;
         this.pathStyle = props?.spec?.pathStyle || false;
     }
     /**
@@ -96,6 +98,7 @@ export function toJson_S3StoreSpec(obj) {
         bucket: obj.bucket,
         prefix: obj.prefix,
         region: obj.region,
+        signatureV2: obj.signatureV2,
         pathStyle: obj.pathStyle,
     };
     // filter undefined values
@@ -127,5 +130,5 @@ export const details = {
     group: 'eevee.bot',
     version: 'v1',
     scope: 'Namespaced',
-    shortName: 'S3Store',
+    shortName: 's3store',
 };

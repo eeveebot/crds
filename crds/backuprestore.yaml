@@ -9,7 +9,7 @@ spec:
     plural: backuprestores
     singular: backuprestore
     shortNames:
-      - BackupRestore
+      - backuprestore
   scope: Namespaced
   versions:
     - name: v1
@@ -36,24 +36,30 @@ spec:
                   properties:
                     name:
                       type: string
-                      description: Name of the botmodule resource in the same namespace
+                      description: Name of the BotModule resource in the same namespace
                   required:
                     - name
-                  description: Reference to the botmodule whose PVC will be restored
+                  description: Reference to the BotModule whose PVC will be restored
                 s3Store:
                   type: object
                   properties:
                     name:
                       type: string
-                      description: Name of the s3store resource in the same namespace
+                      description: Name of the S3Store resource in the same namespace
                   required:
                     - name
-                  description: Reference to the s3store CR instance containing the backup
+                  description: Reference to the S3Store CR instance containing the backup
                 image:
                   type: string
                   description: |-
                     Container image to use for the restore job
                     (e.g. "ghcr.io/eevee/backup:latest")
+                imagePullPolicy:
+                  type: string
+                  description: |-
+                    Image pull policy for the restore job container.
+                    One of "Always", "IfNotPresent", "Never".
+                    Default: "IfNotPresent"
                 backupId:
                   type: string
                   description: >-

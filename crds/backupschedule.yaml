@@ -9,7 +9,7 @@ spec:
     plural: backupschedules
     singular: backupschedule
     shortNames:
-      - BackupSchedule
+      - backupschedule
   scope: Namespaced
   versions:
     - name: v1
@@ -46,15 +46,21 @@ spec:
                   properties:
                     name:
                       type: string
-                      description: Name of the s3store resource in the same namespace
+                      description: Name of the S3Store resource in the same namespace
                   required:
                     - name
-                  description: Reference to the s3store CR instance
+                  description: Reference to the S3Store CR instance
                 image:
                   type: string
                   description: |-
                     Container image to use for the backup job
                     (e.g. "ghcr.io/eevee/backup:latest")
+                imagePullPolicy:
+                  type: string
+                  description: |-
+                    Image pull policy for the backup job container.
+                    One of "Always", "IfNotPresent", "Never".
+                    Default: "IfNotPresent"
               required:
                 - schedule
                 - s3Store

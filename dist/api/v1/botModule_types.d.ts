@@ -1,6 +1,6 @@
 import * as cdk8splus from 'cdk8s-plus-33';
 import KubernetesObject from '@thehonker/k8s-operator';
-import { V1ObjectMeta, V1PersistentVolumeClaimSpec, V1Probe } from '@kubernetes/client-node';
+import { V1ObjectMeta, V1PersistentVolumeClaimSpec, V1Probe, V1ResourceRequirements } from '@kubernetes/client-node';
 import { ApiObject, ApiObjectMetadata, GroupVersionKind } from 'cdk8s';
 import { Construct } from 'constructs';
 import { S3StoreReference } from './enums/index.mjs';
@@ -23,8 +23,9 @@ export declare class ApiResource implements cdk8splus.IApiResource {
 }
 export declare class BotModule extends ApiObject implements BotModuleSpec {
     size: number;
-    image: string;
-    pullPolicy: string;
+    image?: string;
+    imagePullPolicy?: string;
+    pullPolicy?: string;
     metrics: boolean;
     metricsPort: number;
     ipcConfig: string;
@@ -40,8 +41,9 @@ export declare class BotModule extends ApiObject implements BotModuleSpec {
     startupProbe?: V1Probe;
     backupSchedule?: BackupScheduleReference;
     bootstrapFromBackup?: BootstrapFromBackup;
+    resources?: V1ResourceRequirements;
     /**
-     * Returns the apiVersion and kind for "botmodule"
+     * Returns the apiVersion and kind for "BotModule"
      */
     static readonly GVK: GroupVersionKind;
     /**
@@ -77,12 +79,18 @@ export interface BotModuleSpec {
      */
     size?: number;
     /**
-     * Image defines the container image to use
-     * Default: "ghcr.io/eeveebot/module:latest"
+     * Image defines the container image to use (required)
      */
     image?: string;
     /**
+     * ImagePullPolicy defines the image pull policy to use
+     * One of "Always", "IfNotPresent", "Never".
+     * Default: "IfNotPresent"
+     */
+    imagePullPolicy?: string;
+    /**
      * PullPolicy defines the image pull policy to use
+     * @deprecated Use imagePullPolicy instead
      * Default: "Always"
      */
     pullPolicy?: string;
@@ -93,7 +101,7 @@ export interface BotModuleSpec {
     metrics?: boolean;
     /**
      * MetricsPort defines the port to expose metrics on
-     * Default: 8080
+     * Default: 9000
      */
     metricsPort?: number;
     /**
@@ -158,24 +166,35 @@ export interface BotModuleSpec {
      * Subsequent reconciliations ignore this field (no re-restore).
      */
     bootstrapFromBackup?: BootstrapFromBackup;
+    /**
+     * Resource requirements for the module container.
+     * If not set, no resource requests or limits are applied.
+     */
+    resources?: V1ResourceRequirements;
 }
 export interface BackupScheduleReference {
     /**
-     * Name of the backupschedule resource in the same namespace
+     * Name of the BackupSchedule resource in the same namespace
      */
     name: string;
 }
 export declare function toJson_BackupScheduleReference(obj: BackupScheduleReference | undefined): Record<string, unknown> | undefined;
 export interface BootstrapFromBackup {
     /**
-     * Reference to the s3store CR instance containing the backup
+     * Reference to the S3Store CR instance containing the backup
      */
     s3Store: S3StoreReference;
     /**
      * Container image to use for the restore job
-     * (e.g. "ghcr.io/eevee/backup:latest")
+     * Default: "ghcr.io/eeveebot/backupJob:latest"
      */
-    image: string;
+    image?: string;
+    /**
+     * Image pull policy for the restore job container.
+     * One of "Always", "IfNotPresent", "Never".
+     * Default: "IfNotPresent"
+     */
+    imagePullPolicy?: string;
 }
 export declare function toJson_BootstrapFromBackup(obj: BootstrapFromBackup | undefined): Record<string, unknown> | undefined;
 export type BotModuleStatusCondition = {

@@ -25,8 +25,9 @@ export declare class BackupSchedule extends ApiObject implements BackupScheduleS
     schedule: string;
     s3Store: S3StoreReference;
     image: string;
+    imagePullPolicy?: string;
     /**
-     * Returns the apiVersion and kind for "backupschedule"
+     * Returns the apiVersion and kind for "BackupSchedule"
      */
     static readonly GVK: GroupVersionKind;
     /**
@@ -62,7 +63,7 @@ export interface BackupScheduleSpec {
      */
     schedule: string;
     /**
-     * Reference to the s3store CR instance
+     * Reference to the S3Store CR instance
      */
     s3Store: S3StoreReference;
     /**
@@ -70,6 +71,12 @@ export interface BackupScheduleSpec {
      * (e.g. "ghcr.io/eevee/backup:latest")
      */
     image: string;
+    /**
+     * Image pull policy for the backup job container.
+     * One of "Always", "IfNotPresent", "Never".
+     * Default: "IfNotPresent"
+     */
+    imagePullPolicy?: string;
 }
 export type BackupScheduleStatusCondition = {
     /**

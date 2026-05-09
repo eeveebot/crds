@@ -25,9 +25,11 @@ export declare class BackupRestore extends ApiObject implements BackupRestoreSpe
     botModule: BotModuleReference;
     s3Store: S3StoreReference;
     image: string;
+    imagePullPolicy?: string;
     backupId?: string;
+    cleanRestore?: boolean;
     /**
-     * Returns the apiVersion and kind for "backuprestore"
+     * Returns the apiVersion and kind for "BackupRestore"
      */
     static readonly GVK: GroupVersionKind;
     /**
@@ -58,11 +60,11 @@ export declare function toJson_BackupRestoreProps(obj: BackupRestoreProps | unde
 export declare function toJson_BackupRestoreSpec(obj: BackupRestoreSpec | undefined): Record<string, unknown> | undefined;
 export interface BackupRestoreSpec {
     /**
-     * Reference to the botmodule whose PVC will be restored
+     * Reference to the BotModule whose PVC will be restored
      */
     botModule: BotModuleReference;
     /**
-     * Reference to the s3store CR instance containing the backup
+     * Reference to the S3Store CR instance containing the backup
      */
     s3Store: S3StoreReference;
     /**
@@ -70,6 +72,12 @@ export interface BackupRestoreSpec {
      * (e.g. "ghcr.io/eevee/backup:latest")
      */
     image: string;
+    /**
+     * Image pull policy for the restore job container.
+     * One of "Always", "IfNotPresent", "Never".
+     * Default: "IfNotPresent"
+     */
+    imagePullPolicy?: string;
     /**
      * UUID of the specific backup to restore.
      * If omitted, the operator restores the latest backup for this module

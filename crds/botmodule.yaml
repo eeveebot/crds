@@ -9,7 +9,7 @@ spec:
     plural: botmodules
     singular: botmodule
     shortNames:
-      - BotModule
+      - botmodule
   scope: Namespaced
   versions:
     - name: v1
@@ -42,14 +42,16 @@ spec:
                     Default: 1
                 image:
                   type: string
-                  description: |-
-                    Image defines the container image to use
-                    Default: "ghcr.io/eeveebot/module:latest"
-                pullPolicy:
+                  description: Image defines the container image to use (required)
+                imagePullPolicy:
                   type: string
                   description: |-
-                    PullPolicy defines the image pull policy to use
-                    Default: "Always"
+                    ImagePullPolicy defines the image pull policy to use
+                    One of "Always", "IfNotPresent", "Never".
+                    Default: "IfNotPresent"
+                pullPolicy:
+                  type: string
+                  description: PullPolicy defines the image pull policy to use
                 metrics:
                   type: boolean
                   description: |-
@@ -59,7 +61,7 @@ spec:
                   type: number
                   description: |-
                     MetricsPort defines the port to expose metrics on
-                    Default: 8080
+                    Default: 9000
                 ipcConfig:
                   type: string
                   description: IPC configuration name
@@ -669,7 +671,7 @@ spec:
                   properties:
                     name:
                       type: string
-                      description: Name of the backupschedule resource in the same namespace
+                      description: Name of the BackupSchedule resource in the same namespace
                   required:
                     - name
                   description: >-
@@ -685,18 +687,23 @@ spec:
                       properties:
                         name:
                           type: string
-                          description: Name of the s3store resource in the same namespace
+                          description: Name of the S3Store resource in the same namespace
                       required:
                         - name
-                      description: Reference to the s3store CR instance containing the backup
+                      description: Reference to the S3Store CR instance containing the backup
                     image:
                       type: string
                       description: |-
                         Container image to use for the restore job
-                        (e.g. "ghcr.io/eevee/backup:latest")
+                        Default: "ghcr.io/eeveebot/backupJob:latest"
+                    imagePullPolicy:
+                      type: string
+                      description: |-
+                        Image pull policy for the restore job container.
+                        One of "Always", "IfNotPresent", "Never".
+                        Default: "IfNotPresent"
                   required:
                     - s3Store
-                    - image
                   description: >-
                     When set, the operator will restore the latest backup from
                     S3 into
@@ -706,6 +713,52 @@ spec:
 
                     Subsequent reconciliations ignore this field (no
                     re-restore).
+                resources:
+                  type: object
+                  properties:
+                    claims:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            description: Name must match the name of one entry in pod.spec.resourceClaims of
+                              the Pod where this field is used. It makes that
+                              resource available inside a container.
+                          request:
+                            type: string
+                            description: Request is the name chosen for a request in the referenced claim.
+                              If empty, everything from the claim is made
+                              available, otherwise only the result of this
+                              request.
+                        required:
+                          - name
+                      description: Claims lists the names of resources, defined in
+                        spec.resourceClaims, that are used by this
+                        container.  This field depends on the
+                        DynamicResourceAllocation feature gate.  This field is
+                        immutable. It can only be set for containers.
+                    limits:
+                      type: object
+                      properties: {}
+                      description: "Limits describes the maximum amount of compute resources allowed.
+                        More info:
+                        https://kubernetes.io/docs/concepts/configuration/manag\
+                        e-resources-containers/"
+                    requests:
+                      type: object
+                      properties: {}
+                      description: "Requests describes the minimum amount of compute resources
+                        required. If Requests is omitted for a container, it
+                        defaults to Limits if that is explicitly specified,
+                        otherwise to an implementation-defined value. Requests
+                        cannot exceed Limits. More info:
+                        https://kubernetes.io/docs/concepts/configuration/manag\
+                        e-resources-containers/"
+                  description: |-
+                    Resource requirements for the module container.
+                    If not set, no resource requests or limits are applied.
               required: []
             status:
               type: object
