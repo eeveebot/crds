@@ -49,7 +49,7 @@ jobs:
           npm install --include=dev --legacy-peer-deps
           npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create tarball of crds
         shell: bash
