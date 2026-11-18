@@ -15,7 +15,7 @@
     "url": "git+https://github.com/eeveebot/crds.git"
   },
   "type": "module",
-  "license": "CC-BY-SA-4.0",
+  "license": "AGPL-3.0-or-later",
   "author": "Edwin Pers <pers.edwin@gmail.com>",
   "main": "dist/index.mjs",
   "typings": "dist/index.d.mjs",

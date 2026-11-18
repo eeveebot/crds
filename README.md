@@ -448,4 +448,4 @@ See the [eevee eevee contributing guide](https://github.com/eeveebot/eevee) for 
 
 ## License
 
-[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) — see [LICENSE](./LICENSE) for the full text.
+[AGPL-3.0-or-later](https://www.gnu.org/licenses/agpl-3.0.en.html) — see [LICENSE](./LICENSE) for the full text.
